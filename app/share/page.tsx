@@ -6,9 +6,30 @@ export default function Page({ children }: { children: React.ReactNode }) {
     <main className={styles.share}>{children}
       <div>
         <ul>
-          <li><Link href={`/share/1`}>Verse 1</Link></li>
-          <li><Link href={`/share/2`}>Verse 2</Link></li>
-          <li><Link href={`/share/3`}>Verse 3</Link></li>
+          <li>
+            <Link 
+              href={{
+                pathname: `/share/1`,
+                query: { imageSrc: '/images/bg_1.webp' },
+              }}>Verse 1
+              </Link>
+          </li>
+          <li>
+            <Link 
+              href={{
+                pathname: `/share/2`,
+                query: { imageSrc: '/images/bg_1.webp' },
+              }}>Verse 2
+              </Link>
+          </li>
+          <li>
+            <Link 
+              href={{
+                pathname: `/share/3`,
+                query: { imageSrc: '/images/bg_1.webp' },
+              }}>Verse 3
+              </Link>
+          </li>
         </ul>
       </div>
     </main>
