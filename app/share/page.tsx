@@ -18,7 +18,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
             <Link 
               href={{
                 pathname: `/share/2`,
-                query: { imageSrc: '/images/bg_1.webp' },
+                query: { imageSrc: '/images/bg_2.webp' },
               }}>Verse 2
               </Link>
           </li>
@@ -26,7 +26,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
             <Link 
               href={{
                 pathname: `/share/3`,
-                query: { imageSrc: '/images/bg_1.webp' },
+                query: { imageSrc: '/images/bg_3.webp' },
               }}>Verse 3
               </Link>
           </li>
