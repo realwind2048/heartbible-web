@@ -9,17 +9,6 @@ export default function Page() {
   const searchParams = useSearchParams()
   const search = searchParams.get('imageSrc')
   return (
-    <div>
-        <Image 
-            src={search}
-            alt="image" 
-            width={100}
-            height={100}
-            style={{objectFit: "cover"}}
-        />
-        <div>
-            <h1 color="black">Hello, verse-card Page!</h1>
-        </div>
-    </div>
+    <div className="bg-[url('/images/bg_1.webp')] w-full h-full bg-cover bg-center"></div>
   )
 }
