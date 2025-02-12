@@ -36,5 +36,10 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-## 구글 마테리얼 디자인 아이콘 사용하기
+## 리소스
+
+### 구글 마테리얼 디자인 아이콘 사용하기
 https://fonts.google.com/icons?selected=Material+Symbols+Outlined:share:FILL@0;wght@400;GRAD@0;opsz@24&icon.query=share&icon.size=24&icon.color=%235f6368&icon.platform=web
+
+### tailwind css 버튼 모음
+https://buttons.ibelick.com/

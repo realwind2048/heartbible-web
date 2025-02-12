@@ -5,7 +5,7 @@ export function ShareButton() {
     return (
         <div className="absolute flex w-full bottom-40 items-center justify-center p-5">
             <button 
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full inline-flex items-center"
+                class="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 shadow-lg shadow-neutral-500/20 transition active:scale-95"
                 onClick={() => {alert("test");}}>
                 <ShareIcon />
                 <span className="ml-3">공유하기</span>
