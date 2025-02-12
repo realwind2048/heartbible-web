@@ -1,10 +1,12 @@
 import styles from './styles.module.css'
 import Link from 'next/link'
+import { MyComponent } from '../components/MyComponent'
 
 export default function Page({ children }: { children: React.ReactNode }) {
   return (
     <main className={styles.share}>{children}
       <div>
+        <MyComponent />
         <ul>
           <li>
             <Link 
