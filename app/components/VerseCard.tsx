@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image';
+import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 
 export function VerseCard({ imageSrc, verseString, indexString }) {
     return (
@@ -25,6 +26,7 @@ export function VerseCard({ imageSrc, verseString, indexString }) {
                     </div>
                 </div>
             </div>
+            <HeratBibleSignTextLogo />
         </div>
     );
   }
