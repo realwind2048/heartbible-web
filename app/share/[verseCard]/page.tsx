@@ -6,6 +6,10 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image';
 import { VerseCard } from '../../components/VerseCard'
 
+/**
+ * id 를 받아서 VerseCard 컴포넌트를 렌더링하는 페이지
+ * TODO : id 를 받아서 해당 id 에 맞는 이미지와 구절을 렌더링하도록 수정
+ */
 export default function Page() {
   const searchParams = useSearchParams()
   const search = searchParams.get('imageSrc')
