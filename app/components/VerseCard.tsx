@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
+import { ShareButton } from './ShareButton';
 
 export function VerseCard({ imageSrc, verseString, indexString }) {
     return (
@@ -27,6 +28,7 @@ export function VerseCard({ imageSrc, verseString, indexString }) {
                 </div>
             </div>
             <HeratBibleSignTextLogo />
+            <ShareButton />
         </div>
     );
   }
