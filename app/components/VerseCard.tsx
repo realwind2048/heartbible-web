@@ -8,8 +8,8 @@ export function VerseCard({ imageSrc, verseString, indexString }) {
             <div className={`absolute w-full h-full brightness-50`}>
                 <Image 
                     src={imageSrc} 
-                    layout="fill" 
-                    objectFit="cover" 
+                    fill 
+                    style={{ objectFit: 'cover' }} 
                     alt="VerseCard Background Image"/>
             </div>
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
