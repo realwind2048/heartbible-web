@@ -15,8 +15,8 @@ export default function Page() {
   const indexString = searchParams.get('indexString')
   return (
     <VerseCard 
-      imageSrc={search} 
-      verseString={verseString} 
-      indexString={indexString}/>
+      imageSrc={search || ""} 
+      verseString={verseString || ""} 
+      indexString={indexString || ""}/>
   )
 }

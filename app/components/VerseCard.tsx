@@ -4,7 +4,13 @@ import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
 
-export function VerseCard({ imageSrc, verseString, indexString }) {
+interface Props {
+    imageSrc: string;
+    verseString: string;
+    indexString: string;
+}
+
+export function VerseCard({ imageSrc, verseString, indexString } : Props) {
     return (
         <div className="absolute top-0 left-0 w-full h-full text-center">
             <div className={`absolute w-full h-full brightness-50`}>
