@@ -1,9 +1,9 @@
 import styles from './styles.module.css'
 import Link from 'next/link'
 
-export default function Page({ children }: { children: React.ReactNode }) {
+export default function Page() {
   return (
-    <main className={styles.share}>{children}
+    <main className={styles.share}>
       <div>
         <ul>
         <li>
