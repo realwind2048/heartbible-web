@@ -3,7 +3,6 @@
 // use serchParams to get the imageSrc from the URL
 // https://nextjs.org/docs/app/api-reference/functions/use-search-params
 import { useSearchParams } from 'next/navigation'
-import Image from 'next/image';
 import { VerseCard } from '../../components/VerseCard'
 
 /**

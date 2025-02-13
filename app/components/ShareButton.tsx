@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { ShareIcon } from './ShareIcon';
 
 export function ShareButton() {
