@@ -1,16 +1,14 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'My Site for testing nextjs',
-  description: 'This is my site',
+  title: '마음말씀',
+  description: '마음말씀 사이트입니다.',
 }
 
-const roboto = Roboto({
-    weight: '400',
-    subsets: ['latin'],
-})
+// Font files can be colocated inside of `pages`
+const fontPretendard = localFont({ src: './font/PretendardVariable.woff2' })
 
 export default function RootLayout({
   children,
@@ -18,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={roboto.className}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className={fontPretendard.className}>{children}</body>
     </html>
   )
 }
