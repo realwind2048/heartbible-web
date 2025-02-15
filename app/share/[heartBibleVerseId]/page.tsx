@@ -12,16 +12,22 @@ export default function Page() {
   const params = useParams();
   const heartBibleVerseId = Number(params.heartBibleVerseId);
   console.log('heartBibleVerseId:', heartBibleVerseId);
-  const [data, setData] = useState<any>(null);
+  interface VerseData {
+    verseKo: string;
+    bookKo: string;
+    indexKo: string;
+  }
+
+  const [data, setData] = useState<VerseData | null>(null)
 
   useEffect(() => {
     console.log('Page useEffect');
     getHeartBibleVerse(heartBibleVerseId)
     .then((data) => {
       console.log('Verse 0:', data);
-      setData(data);
+      setData(data as VerseData);
     })
-  }, [])
+  }, [heartBibleVerseId])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
