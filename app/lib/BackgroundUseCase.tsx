@@ -1,4 +1,4 @@
-let backgroundImageList: any[] = [];
+const backgroundImageList: string[] = [];
 const maxBackgroundImageCount = 232;
 
 export function getRandomBackgroundImageSrc() {
