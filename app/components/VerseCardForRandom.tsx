@@ -12,7 +12,7 @@ export function VerseCardForRandom() {
     // create random indexString
     const indexString = "요한복음 3:3"
     // get Random imageSrc from /image/bg folder files
-    const [imageSrc, setImageSrc] = useState<string>('/images/bg/bg_1.webp');
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     useEffect(() => {
         console.log('Page useEffect');
@@ -22,11 +22,13 @@ export function VerseCardForRandom() {
     return (
         <div className="absolute top-0 left-0 w-full h-full text-center">
             <div className={`absolute w-full h-full brightness-50`}>
-                <Image 
-                    src={imageSrc} 
-                    fill 
-                    style={{ objectFit: 'cover' }} 
-                    alt="VerseCard Background Image"/>
+                { imageSrc ? 
+                    <Image 
+                        src={imageSrc} 
+                        fill 
+                        style={{ objectFit: 'cover' }} 
+                        alt="VerseCard Background Image" 
+                        /> : <div>Loading...</div> }
             </div>
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
                 <div className={`m-auto max-w-sm rounded overflow-hidden`}>
