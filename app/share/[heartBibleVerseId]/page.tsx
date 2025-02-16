@@ -31,7 +31,13 @@ export default function Page() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {data ? <VerseCardForProp verseString={data.verseKo} indexString={`${data.bookKo} ${data.indexKo}`} /> : <div>Loading...</div>}
+      { data ? 
+        <VerseCardForProp 
+          verseString={data.verseKo} 
+          indexString={`${data.bookKo} ${data.indexKo}`} 
+          imageSrc={`/images/bg/bg_1.webp`}
+        /> : <div>Loading...</div>
+      }
     </Suspense>
   )
 }

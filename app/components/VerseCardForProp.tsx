@@ -3,18 +3,14 @@
 import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
-// use serchParams to get the imageSrc from the URL
-// https://nextjs.org/docs/app/api-reference/functions/use-search-params
-import { useSearchParams } from 'next/navigation'
 
 export interface VerseCardForPropProps {
     verseString: string;
     indexString: string;
+    imageSrc: string;
 }
 
-export function VerseCardForProp({ verseString, indexString }: VerseCardForPropProps) {
-    const searchParams = useSearchParams()
-    const imageSrc = searchParams.get('imageSrc') || '/images/bg/bg_1.webp'
+export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCardForPropProps) {
     return (
         <div className="absolute top-0 left-0 w-full h-full text-center">
             <div className={`absolute w-full h-full brightness-50`}>
