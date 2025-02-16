@@ -35,6 +35,11 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## 운영
+
+### bg 이미지 추가
+1. images/bg/ 안에 bg_숫자.webp 파일을 가장 마지막 숫자 + 1 로 넣는다.
+2. BackgroundUseCase 의 maxBackgroundImageCount 값을 + 1 한다.
 
 ## 리소스
 

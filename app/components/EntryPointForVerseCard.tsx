@@ -11,11 +11,6 @@ export default function EntryPointForVerseCard() {
       <Link 
             href={{
               pathname: `/share/versecard`,
-              query: { 
-                imageSrc: '/images/bg/bg_4.webp',
-                verseString: "예수께서 대답하여 이르시되 진실로 진실로 내게 이르노니 사람이 거듭나지 아니하면 하나님의 나라를 볼 수 없느니라",
-                indexString: "요한복음 3:3",
-              },
             }}>
         <div className="m-auto max-w-sm rounded overflow-hidden shadow-lg">
         <Image 

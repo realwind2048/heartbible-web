@@ -3,14 +3,22 @@
 import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
+import { getRandomBackgroundImageSrc } from '../lib/BackgroundUseCase';
+import { useEffect, useState } from 'react'
 
-export interface VerseCardForPropProps {
-    verseString: string;
-    indexString: string;
-    imageSrc: string;
-}
+export function VerseCardForRandom() {
+    // create random verseString
+    const verseString = "예수께서 대답하여 이르시되 진실로 진실로 내게 이르노니 사람이 거듭나지 아니하면 하나님의 나라를 볼 수 없느니라"
+    // create random indexString
+    const indexString = "요한복음 3:3"
+    // get Random imageSrc from /image/bg folder files
+    const [imageSrc, setImageSrc] = useState<string>('/images/bg/bg_1.webp');
 
-export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCardForPropProps) {
+    useEffect(() => {
+        console.log('Page useEffect');
+        setImageSrc(getRandomBackgroundImageSrc());
+    }, [])
+
     return (
         <div className="absolute top-0 left-0 w-full h-full text-center">
             <div className={`absolute w-full h-full brightness-50`}>

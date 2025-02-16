@@ -1,4 +1,6 @@
-import { VerseCardForQuery } from '../../components/VerseCardForQuery'
+'use client'
+
+import { VerseCardForRandom } from '../../components/VerseCardForRandom'
 import { Suspense } from 'react'
 
 /**
@@ -7,7 +9,7 @@ import { Suspense } from 'react'
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <VerseCardForQuery />
+      <VerseCardForRandom />
     </Suspense>
   )
 }
