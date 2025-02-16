@@ -5,18 +5,26 @@ import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
 import { getRandomBackgroundImageSrc } from '../lib/BackgroundUseCase';
 import { useEffect, useState } from 'react'
+import { getRandomHeartBibleVerse } from '../lib/HeartBibleVerseUseCase';
 
 export function VerseCardForRandom() {
-    // create random verseString
-    const verseString = "예수께서 대답하여 이르시되 진실로 진실로 내게 이르노니 사람이 거듭나지 아니하면 하나님의 나라를 볼 수 없느니라"
-    // create random indexString
-    const indexString = "요한복음 3:3"
     // get Random imageSrc from /image/bg folder files
     const [imageSrc, setImageSrc] = useState<string | null>(null);
+    const [data, setData] = useState<VerseData | null>(null)
+    interface VerseData {
+        verseKo: string;
+        bookKo: string;
+        indexKo: string;
+      }
 
     useEffect(() => {
         console.log('Page useEffect');
         setImageSrc(getRandomBackgroundImageSrc());
+        getRandomHeartBibleVerse()
+        .then((data) => {
+            console.log('Verse 0:', data);
+            setData(data as VerseData);
+        })
     }, [])
 
     return (
@@ -34,11 +42,11 @@ export function VerseCardForRandom() {
                 <div className={`m-auto max-w-sm rounded overflow-hidden`}>
                     <div className="px-6 py-4">
                         <div className="text-xl mb-2 text-white">
-                            {verseString}
+                            { data ? data.verseKo : "Loading..." }
                         </div>
                         <hr className="w-10 h-px mx-auto my-4 bg-gray-100 border-0 rounded-sm md:my-10 dark:bg-gray-700"></hr>
                         <p className="text-white text-base">
-                            {indexString}
+                            { data ? `${data.bookKo} ${data.indexKo}` : "Loading..." }
                         </p>
                     </div>
                 </div>
