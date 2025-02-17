@@ -16,7 +16,8 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
             <div className={`absolute w-full h-full brightness-50`}>
                 <Image 
                     src={imageSrc} 
-                    fill 
+                    fill
+                    style={{ objectFit: 'cover' }} 
                     alt="VerseCard Background Image"/>
             </div>
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
