@@ -17,7 +17,6 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
                 <Image 
                     src={imageSrc} 
                     fill 
-                    style={{ objectFit: 'cover' }} 
                     alt="VerseCard Background Image"/>
             </div>
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
@@ -30,11 +29,11 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
                         <p className="text-white text-base">
                             {indexString}
                         </p>
+                        <ShareButton />
                     </div>
                 </div>
             </div>
             <HeratBibleSignTextLogo />
-            <ShareButton/>
         </div>
     );
   }
