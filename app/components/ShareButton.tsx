@@ -13,6 +13,7 @@ const handle = (currentUrl: string) => {
         });
     } else {
         alert("공유하기가 지원되지 않는 환경 입니다.")
+        // TODO 카카오톡에서 여기로 옴. 복사하기로 해야할까.. 고민
     }
   }
 
