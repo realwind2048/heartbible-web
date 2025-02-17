@@ -34,7 +34,7 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
                 </div>
             </div>
             <HeratBibleSignTextLogo />
-            <ShareButton />
+            <ShareButton/>
         </div>
     );
   }
