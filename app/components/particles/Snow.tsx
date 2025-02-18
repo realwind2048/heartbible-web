@@ -38,6 +38,13 @@ export function Snow() {
   const options: ISourceOptions = useMemo(
     () => ({
         "particles":{
+            "interactivity":{
+               "events":{
+                  "onClick":{
+                     "enable":false,
+                  }
+               }
+            },
            "color":{
               "value":"#fff"
            },
