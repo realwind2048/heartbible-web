@@ -48,3 +48,11 @@ https://fonts.google.com/icons?selected=Material+Symbols+Outlined:share:FILL@0;w
 
 ### tailwind css 버튼 모음
 https://buttons.ibelick.com/
+
+### 말씀 카드 이미지 파티클 효과 tsparticles
+https://github.com/tsparticles/tsparticles
+
+- 트러블 슈팅
+   - https://stackoverflow.com/questions/77395525/is-it-in-any-way-possible-to-use-tsparticles-with-next-js-and-ssr
+   - https://medium.com/@travilabs/particle-tsx-component-in-nextjs-the-bloody-rain-effect-d47b4ffd342d
+
