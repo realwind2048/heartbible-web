@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
-import { SnowPage } from '../../app/test/page';
+import { Snow } from '../components/particles/Snow';
 export interface VerseCardForPropProps {
     verseString: string;
     indexString: string;
@@ -35,7 +35,7 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
                 </div>
             </div>
             <HeratBibleSignTextLogo />
-            <SnowPage />
+            <Snow />
         </div>
     );
   }
