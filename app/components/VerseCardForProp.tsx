@@ -5,6 +5,7 @@ import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
 import { Snow } from '../components/particles/Snow';
 // import { Starts } from '@/components/particles/Stars';
+// import { Growing } from '../components/particles/Growing';
 export interface VerseCardForPropProps {
     verseString: string;
     indexString: string;
