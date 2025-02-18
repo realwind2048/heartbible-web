@@ -12,7 +12,7 @@ import {
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
 
-export default function Page() {
+export function SnowPage() {
   const [init, setInit] = useState(false);
 
   // this should be run only once per application lifetime
@@ -34,74 +34,49 @@ export default function Page() {
     console.log(container);
   };
 
+  // snow preset
+  // https://dev.to/tsparticles/how-to-create-snow-effects-for-this-christmas-with-tsparticles-4mpd
   const options: ISourceOptions = useMemo(
     () => ({
-      background: {
-        color: {
-          value: "#0d47a1",
-        },
-      },
-      fpsLimit: 120,
-      interactivity: {
-        events: {
-          onClick: {
-            enable: true,
-            mode: "push",
-          },
-          onHover: {
-            enable: true,
-            mode: "repulse",
-          },
-        },
-        modes: {
-          push: {
-            quantity: 4,
-          },
-          repulse: {
-            distance: 200,
-            duration: 0.4,
-          },
-        },
-      },
-      particles: {
-        color: {
-          value: "#ffffff",
-        },
-        links: {
-          color: "#ffffff",
-          distance: 150,
-          enable: true,
-          opacity: 0.5,
-          width: 1,
-        },
-        move: {
-          direction: MoveDirection.none,
-          enable: true,
-          outModes: {
-            default: OutMode.out,
-          },
-          random: false,
-          speed: 6,
-          straight: false,
-        },
-        number: {
-          density: {
-            enable: true,
-          },
-          value: 80,
-        },
-        opacity: {
-          value: 0.5,
-        },
-        shape: {
-          type: "circle",
-        },
-        size: {
-          value: { min: 1, max: 5 },
-        },
-      },
-      detectRetina: true,
-    }),
+        "particles":{
+           "color":{
+              "value":"#fff"
+           },
+           "move":{
+              "direction":"bottom",
+              "enable":true,
+              "outModes":"out",
+              "speed":2
+           },
+           "number":{
+              "density":{
+                 "enable":true,
+                 "area":800
+              },
+              "value":400
+           },
+           "opacity":{
+              "value":0.7
+           },
+           "shape":{
+              "type":"circle"
+           },
+           "size":{
+              "value":10
+           },
+           "wobble":{
+              "enable":true,
+              "distance":10,
+              "speed":10
+           },
+           "zIndex":{
+              "value":{
+                 "min":0,
+                 "max":100
+              }
+           }
+        }
+     }),
     [],
   );
 
