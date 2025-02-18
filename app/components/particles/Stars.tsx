@@ -11,7 +11,7 @@ import {
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
 
-export function Snow() {
+export function Starts() {
   const [init, setInit] = useState(false);
 
   // this should be run only once per application lifetime
@@ -33,51 +33,50 @@ export function Snow() {
     console.log(container);
   };
 
-  // snow preset
+  // starts preset
   // https://dev.to/tsparticles/how-to-create-snow-effects-for-this-christmas-with-tsparticles-4mpd
   const options: ISourceOptions = useMemo(
-    () => ({
-        "particles":{
-           "color":{
-              "value":"#fff"
-           },
-           "move":{
-              "direction":"bottom",
-              "enable":true,
-              "outModes":"out",
-              "speed":2
-           },
-           "number":{
-              "density":{
-                 "enable":true,
-                 "area":800
-              },
-              "value":400
-           },
-           "opacity":{
-              "value":0.7
-           },
-           "shape":{
-              "type":"circle"
-           },
-           "size":{
-              "value":10
-           },
-           "wobble":{
-              "enable":true,
-              "distance":10,
-              "speed":10
-           },
-           "zIndex":{
-              "value":{
-                 "min":0,
-                 "max":100
-              }
-           }
-        }
-     }),
-    [],
-  );
+   () => ({
+       "particles":{
+          "color":{
+             "value":"#fff"
+          },
+          "move":{
+             "enable":true,
+             "outModes":"out",
+             "speed":2
+          },
+          "number":{
+             "density":{
+                "enable":true,
+                "area":800
+             },
+             "value":400
+          },
+          "opacity":{
+             "value":0.7
+          },
+          "shape":{
+             "type":"circle"
+          },
+          "size":{
+             "value":3
+          },
+          "wobble":{
+             "enable":true,
+             "distance":10,
+             "speed":10
+          },
+          "zIndex":{
+             "value":{
+                "min":0,
+                "max":100
+             }
+          }
+       }
+    }),
+   [],
+ );
 
   if (init) {
     return (

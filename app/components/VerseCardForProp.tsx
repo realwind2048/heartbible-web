@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
 import { Snow } from '../components/particles/Snow';
+// import { Starts } from '@/components/particles/Stars';
 export interface VerseCardForPropProps {
     verseString: string;
     indexString: string;
