@@ -10,7 +10,7 @@ export default function EntryPointForVerseCard() {
       {/* TODO fix Link */}
       <Link 
             href={{
-              pathname: `/share/versecard`,
+              pathname: `/share/heartbible/random`,
             }}>
         <div className="m-auto max-w-sm rounded overflow-hidden shadow-lg">
         <Image 

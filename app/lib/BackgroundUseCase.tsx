@@ -8,10 +8,15 @@ export function getRandomBackgroundImageSrc() {
         backgroundImageList.push(`/images/bg/bg_${i}.webp`);
     }
     // get Random imageSrc from /image/bg folder files
-    const ramdomIndex = Math.floor(Math.random() * maxBackgroundImageCount);
+    const ramdomIndex = getRandomBackgroundId();
     const randomimageSrc = backgroundImageList[ramdomIndex];
     console.log('randomimageSrc:', randomimageSrc);
     return randomimageSrc;
+}
+
+export function getRandomBackgroundId(): number {
+    const ramdomIndex = Math.floor(Math.random() * maxBackgroundImageCount);
+    return ramdomIndex;
 }
 
 /**
