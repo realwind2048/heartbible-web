@@ -11,7 +11,7 @@ import {
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
 
-export function Starts() {
+export function Stars() {
   const [init, setInit] = useState(false);
 
   // this should be run only once per application lifetime

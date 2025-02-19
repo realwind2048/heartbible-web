@@ -3,10 +3,7 @@
 import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
 import { ShareButton } from './ShareButton';
-import { Snow } from '../components/particles/Snow';
-// import { SlideStar } from '../components/particles/SlideStar';
-// import { Starts } from '@/components/particles/Stars';
-// import { Growing } from '../components/particles/Growing';
+import { Particles } from './particles/Particles';
 export interface VerseCardForPropProps {
     verseString: string;
     indexString: string;
@@ -23,7 +20,7 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
                     style={{ objectFit: 'cover' }} 
                     alt="VerseCard Background Image"/>
             </div>
-            <Snow />
+            <Particles id="1" />
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
                 <div className={`m-auto max-w-sm rounded overflow-hidden`}>
                     <div className="px-6 py-4">
