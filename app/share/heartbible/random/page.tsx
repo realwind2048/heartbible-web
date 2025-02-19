@@ -1,7 +1,8 @@
 'use client'
 
 import { redirect } from 'next/navigation'
-import { getRandomBackgroundId } from '../../../lib/BackgroundUseCase';
+import { getRandomBackgroundId } from '@/app/lib/BackgroundUseCase';
+import { getRandomParticlesId } from '@/app/lib/ParticlesUseCase';
 import { useEffect, useState } from 'react'
 import { getRandomHeartBibleVerse } from '@/app/lib/HeartBibleVerseUseCase';
 
@@ -10,6 +11,7 @@ import { getRandomHeartBibleVerse } from '@/app/lib/HeartBibleVerseUseCase';
  */
 export default function Page() {
   // get Random imageSrc from /image/bg folder files
+  const [pt, setPtId] = useState<number | null>(null);
   const [bgId, setBgId] = useState<number | null>(null);
   const [data, setData] = useState<VerseData | null>(null)
   interface VerseData {
@@ -22,6 +24,7 @@ export default function Page() {
   useEffect(() => {
       console.log('Page useEffect');
       setBgId(getRandomBackgroundId());
+      setPtId(getRandomParticlesId());
       getRandomHeartBibleVerse()
       .then((data) => {
           console.log('Verse 0:', data);
@@ -30,7 +33,7 @@ export default function Page() {
   }, [])
 
   { return data ?
-    redirect(`/share/heartbible/${data.id}?bg=${bgId}`)
+    redirect(`/share/heartbible/${data.id}?bg=${bgId}&pt=${pt}`)
     : console.log('Loading...')
   }
 }
