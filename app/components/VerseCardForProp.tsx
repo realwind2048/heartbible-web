@@ -8,9 +8,10 @@ export interface VerseCardForPropProps {
     verseString: string;
     indexString: string;
     imageSrc: string;
+    particlesId: string;
 }
 
-export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCardForPropProps) {
+export function VerseCardForProp({ verseString, indexString, imageSrc, particlesId }: VerseCardForPropProps) {
     return (
         <div className="absolute top-0 left-0 w-full h-full text-center">
             <div className={`absolute w-full h-full brightness-50`}>
@@ -20,7 +21,7 @@ export function VerseCardForProp({ verseString, indexString, imageSrc }: VerseCa
                     style={{ objectFit: 'cover' }} 
                     alt="VerseCard Background Image"/>
             </div>
-            <Particles id="1" />
+            <Particles id={particlesId} />
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
                 <div className={`m-auto max-w-sm rounded overflow-hidden`}>
                     <div className="px-6 py-4">

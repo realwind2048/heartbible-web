@@ -16,6 +16,7 @@ export default function Page() {
 
   const searchParams = useSearchParams()
   const imageSrc = getRandomBackgroundImageSrcFromBgId(searchParams.get('bg'))
+  const particlesId = searchParams.get('pt') || ''
 
   interface VerseData {
     verseKo: string;
@@ -41,6 +42,7 @@ export default function Page() {
           verseString={data.verseKo} 
           indexString={`${data.bookKo} ${data.indexKo}`} 
           imageSrc={imageSrc}
+          particlesId={particlesId}
         /> : <div>Loading...</div>
       }
     </Suspense>

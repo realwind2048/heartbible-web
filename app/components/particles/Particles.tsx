@@ -16,13 +16,13 @@ interface ParticlesProps {
 
 export function Particles({ id }: ParticlesProps) {
   switch (Number(id)) {
-    case 0:
-      return <Snow />;
     case 1:
-      return <SlideStar />;
+      return <Snow />;
     case 2:
-      return <Stars />;
+      return <SlideStar />;
     case 3:
+      return <Stars />;
+    case 4:
       return <Growing />;
     default:
       return null;

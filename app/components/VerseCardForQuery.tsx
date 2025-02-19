@@ -14,6 +14,7 @@ export function VerseCardForQuery() {
         <VerseCardForProp 
             verseString={verseString}
             indexString={indexString}
-            imageSrc={imageSrc}/>
+            imageSrc={imageSrc}
+            particlesId=''/>
     );
   }
