@@ -3,7 +3,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-export function VerseFeedItem() {
+export interface VerseFeedItemProps {
+    verseString: string;
+    indexString: string;
+}
+
+export function VerseFeedItem({ verseString, indexString }: VerseFeedItemProps) {
     return (
         <>
             {/* TODO fix Link */}
@@ -23,7 +28,8 @@ export function VerseFeedItem() {
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">말씀 카드</div>
                     <p className="text-gray-700 text-base">
-                    좋은 말씀이 담긴 카드를 묵상하고 공유할 수 있습니다.
+                        {verseString}
+                        {indexString}
                     </p>
                 </div>
                 <div className="px-6 pt-4 pb-2">
