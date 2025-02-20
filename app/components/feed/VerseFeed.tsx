@@ -25,7 +25,7 @@ export function VerseFeed() {
     return (
         <>
             {heartBibleVerses.map((verse, index) => (
-                <VerseFeedItem verseString={verse.verseKo} indexString={verse.indexKo} key={index}/>
+                <VerseFeedItem verseString={verse.verseKo} indexString={`${verse.bookKo} ${verse.indexKo}`} key={index}/>
             ))}
         </>
     );
