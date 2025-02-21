@@ -1,8 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
-import { Suspense, useEffect, useState } from 'react'
 import { getRandomBackgroundImageSrc } from '@/app/lib/BackgroundUseCase';
 
 export interface VerseFeedItemProps {
