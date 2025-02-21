@@ -1,5 +1,5 @@
 
-const HeartBibleVerses = 
+const heartBibleVerses = 
 [
     {
         "id": 1,
@@ -8265,4 +8265,10 @@ const HeartBibleVerses =
     }
 ];
 
-export default HeartBibleVerses;
+export function getHeartBibleVerseById(id: number) {
+    return heartBibleVerses.find(verse => verse.id === id);
+}
+
+export function getHeartBibleVerseSize() {
+    return heartBibleVerses.length;
+}

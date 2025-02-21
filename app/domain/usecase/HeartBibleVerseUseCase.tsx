@@ -1,8 +1,11 @@
 'use client'
 
-import { getHeartBibleVerse } from "./firebase/RealtimeDatabase"
 
-const maxHeartBibleVerseCount = 918;
+// import { getHeartBibleVerse } from "../../lib/firebase/RealtimeDatabase"
+// 속도 개선을 위해 local data를 사용하도록 변경함
+import { getHeartBibleVerseById, getHeartBibleVerseSize } from "../../data/HeartBibleVerses"
+
+const maxHeartBibleVerseCount = getHeartBibleVerseSize();
 
 export function getRandomHeartBibleVerseId() {
     const randomHeartBibleVerseId = Math.floor(Math.random() * maxHeartBibleVerseCount);
@@ -12,10 +15,9 @@ export function getRandomHeartBibleVerseId() {
 
 export async function getRandomHeartBibleVerse() {
     const randomHeartBibleVerseId = getRandomHeartBibleVerseId();
-    return getHeartBibleVerse(randomHeartBibleVerseId);
+    return getHeartBibleVerseById(randomHeartBibleVerseId);
 }
 
-// TODO network 요청, db 접근이 너무 많지 않게 개선 필요
 export async function getRandomHeartBibleVerses(count: number) {
     const randomHeartBibleVerses = [];
     for (let i = 0; i < count; i++) {

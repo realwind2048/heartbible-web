@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { VerseFeedItem } from './VerseFeedItem'
-import { getRandomHeartBibleVerses } from '@/libs/HeartBibleVerseUseCase'
+import { getRandomHeartBibleVerses } from '@/app/domain/usecase/HeartBibleVerseUseCase'
 
 export function VerseFeed() {
     const [heartBibleVerses, setHeartBibleVerses] = useState<VerseData[]>([]);

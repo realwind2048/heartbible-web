@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { getRandomBackgroundId } from '@/app/lib/BackgroundUseCase';
 import { getRandomParticlesId } from '@/app/lib/ParticlesUseCase';
 import { useEffect, useState } from 'react'
-import { getRandomHeartBibleVerse } from '@/app/lib/HeartBibleVerseUseCase';
+import { getRandomHeartBibleVerse } from '@/app/domain/usecase/HeartBibleVerseUseCase';
 
 /**
  * 랜덤 이미지와 성경 구절을 받아서 공유 페이지로 리다이렉트하는 페이지
