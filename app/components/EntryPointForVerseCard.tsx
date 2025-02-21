@@ -12,7 +12,7 @@ export default function EntryPointForVerseCard() {
             href={{
               pathname: `/share/heartbible/random`,
             }}>
-        <div className="m-auto max-w-sm rounded overflow-hidden shadow-lg">
+        <div className="rounded overflow-hidden shadow-lg">
         <Image 
           className="object-cover" 
           src="/images/image_bible.webp" 

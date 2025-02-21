@@ -24,7 +24,7 @@ export function VerseFeedItem({ verseString, indexString }: VerseFeedItemProps) 
                 href={{
                     pathname: `/share/heartbible/random`,
                 }}>
-                <div className="relative m-auto max-w-sm rounded overflow-hidden shadow-lg">
+                <div className="relative rounded overflow-hidden shadow-lg">
                     <div 
                         className={`relative top-0 left-0 brightness-50 h-300`} 
                         style={{ aspectRatio: '3/2' }} >

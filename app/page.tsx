@@ -6,14 +6,15 @@ import { HeratBibleMainSignTextLogo } from "./components/HeartBibleMainSignTextL
 export default function Page() {
   return (
     <>
-      <div className="flex flex-col items-center justify-center "> 
+      <div className="flex flex-col gap-4 justify-center gap-4 px-5 md:px-10"> 
         <div>
           <HeratBibleMainSignTextLogo />
         </div>
-        <div className="grid items-center justify-center gap-4">
+        <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
           <EntryPointForVerseCard />
           <EntryPointForMakeVerseCard />
-        <div/>
+        </div>
+        <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
           <VerseFeed />
         </div>
       </div>
