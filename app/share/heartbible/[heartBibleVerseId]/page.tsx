@@ -2,10 +2,10 @@
 
 import { VerseCardForProp } from '@/app/components/VerseCardForProp'
 import { Suspense } from 'react'
-import { getHeartBibleVerse } from '@/app/lib/firebase/RealtimeDatabase'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import { getRandomBackgroundImageSrcFromBgId } from '@/app/lib/BackgroundUseCase'
+import { getHeartBibleVerseById } from '@/app/data/HeartBibleVerses'
 /**
  * 정보를 받아서 VerseCard 컴포넌트를 렌더링하는 페이지
  */
@@ -28,11 +28,7 @@ export default function Page() {
 
   useEffect(() => {
     console.log('Page useEffect');
-    getHeartBibleVerse(heartBibleVerseId)
-    .then((data) => {
-      console.log('Verse 0:', data);
-      setData(data as VerseData);
-    })
+    setData(getHeartBibleVerseById(heartBibleVerseId) as VerseData);
   }, [heartBibleVerseId])
 
   return (
