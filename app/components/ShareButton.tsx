@@ -8,11 +8,11 @@ const handle = (currentUrl: string) => {
     if (navigator.share) {
         navigator.share({
             title: '마음말씀',
-            text: '마음말씀 카드 공유',
+            text: '성경 말씀이 도착했어요',
             url: currentUrl,
         });
     } else {
-        alert("공유하기가 지원되지 않는 환경 입니다.")
+        alert("공유하기가 지원되지 않는 환경 입니다. 주소를 공유해보세요.");
         // TODO 카카오톡에서 여기로 옴. 복사하기로 해야할까.. 고민
     }
   }
