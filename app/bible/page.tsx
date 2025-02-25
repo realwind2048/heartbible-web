@@ -12,9 +12,7 @@ interface Verse {
 }
 
 const getVerses = async (): Promise<Verse[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 2000)); // 지연
-  // TODO FIX [ Server ] Error: no such table: bible
-  return db.prepare("SELECT id, book, chapter, verse, content FROM bible LIMIT 10").all() as Verse[]; // 데이터 가져오기
+  return db.prepare(`SELECT id, book, chapter, verse, content FROM bible WHERE book=${1} AND chapter=${1}`).all() as Verse[]; // 데이터 가져오기
 };
 
 export default async function Page() {
