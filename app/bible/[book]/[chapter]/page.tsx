@@ -1,4 +1,4 @@
-import { getVersesFromFreeBible, getBookChapterMap } from '@/app/domain/usecase/FreeBibleUseCase'
+import { getVersesFromFreeBible, getBookChapterMap, fetchBookNameFromId } from '@/app/domain/usecase/FreeBibleUseCase'
 
 interface Verse {
   id: number;
@@ -10,14 +10,15 @@ interface Verse {
 
 export default async function Page({ params }: { params: Promise<{ book: number, chapter: number }> }) {
   const { book, chapter } = await params;
+  const bookName: string = await fetchBookNameFromId(book);
   const verses: Verse[] = await getVersesFromFreeBible(book, chapter);
   return (
     <>
       <div className="flex flex-col gap-2 justify-center p-5 md:p-10"> 
             <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">개역개정</span>
             <div className="flex gap-2 justify-center p-2 md:p-4">
-              <h1 className="basis-auto">책 {book}</h1>
-              <h2 className="basis-auto">챕터 {chapter}</h2>
+              <h1 className="basis-auto">{bookName}</h1>
+              <h2 className="basis-auto">{chapter}</h2>
             </div>
             <ol className="list-none">
               {verses.map((verse) => (
