@@ -11,12 +11,12 @@ import { getHeartBibleVerseById } from '@/app/data/HeartBibleVerses'
  */
 export default function Page() {
   const params = useParams();
-  const heartBibleVerseId = Number(params.heartBibleVerseId);
+  const heartBibleVerseId = params ? Number(params.heartBibleVerseId) : 0;
   console.log('heartBibleVerseId:', heartBibleVerseId);
 
   const searchParams = useSearchParams()
-  const imageSrc = getRandomBackgroundImageSrcFromBgId(searchParams.get('bg'))
-  const particlesId = searchParams.get('pt') || ''
+  const imageSrc = searchParams ? getRandomBackgroundImageSrcFromBgId(searchParams.get('bg')) : ''
+  const particlesId = searchParams ? searchParams.get('pt') || '' : ''
 
   interface VerseData {
     verseKo: string;
