@@ -1,5 +1,5 @@
 import EntryPointForVerseCard from "./components/EntryPointForVerseCard";
-import EntryPointForMakeVerseCard from "./components/EntryPointForMakeVerseCard";
+import EntryPointForBible from "./components/EntryPointForBible";
 import { VerseFeed } from "./components/feed/VerseFeed";
 import { HeratBibleMainSignTextLogo } from "./components/HeartBibleMainSignTextLogo";
 
@@ -12,7 +12,7 @@ export default function Page() {
         </div>
         <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
           <EntryPointForVerseCard />
-          <EntryPointForMakeVerseCard />
+          <EntryPointForBible />
         </div>
         <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
           <VerseFeed />
