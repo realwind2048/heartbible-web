@@ -155,10 +155,18 @@ const newTestamentBooks = [
 ]
 const allBooks = [...oldTestamentBooks, ...newTestamentBooks];
 
-export const getBookNameFromId = async (book: number): Promise<string> => {
+export const getBookNameFromId = (book: number): string => {
     const bookObj = allBooks.find((bookObj) => bookObj.id == book);
     if (bookObj) {
         return bookObj.nameKo;
     }
     return '';      
+}
+
+export const getAllBooks = (): { book: number, name: string, chapterCount: number }[] => {
+    return allBooks.map((bookObj) => ({
+        book: bookObj.id,
+        name: bookObj.nameKo,
+        chapterCount: bookObj.chapterCount
+    }));
 }

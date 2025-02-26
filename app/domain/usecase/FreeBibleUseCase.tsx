@@ -2,7 +2,7 @@ import sql from "better-sqlite3"
 
 // 데이터베이스 연결
 const db = sql("free-bible-kor-nkrv.db");
-import { getBookNameFromId } from './BibleBookUseCase';
+import { getBookNameFromId, getAllBooks } from './BibleBookUseCase';
 
 interface Verse {
   id: number;
@@ -20,6 +20,10 @@ export const getBookChapterMap = async (): Promise<{ book: number, chapter: numb
     return db.prepare(`SELECT DISTINCT book, chapter FROM bible`).all() as { book: number, chapter: number }[]; // 데이터 가져오기
 }
 
-export const fetchBookNameFromId = async (book: number): Promise<string> => {
+export const fetchAllBooks = (): { book: number, name: string, chapterCount: number }[] => {
+    return getAllBooks();
+}
+
+export const fetchBookNameFromId = (book: number): string => {
   return getBookNameFromId(book);
 }
