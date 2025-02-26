@@ -1,4 +1,3 @@
-import type { Metadata, ResolvingMetadata } from 'next'
 import { getVersesFromFreeBible, getBookChapterMap, fetchBookNameFromId } from '@/app/domain/usecase/FreeBibleUseCase'
 
 interface Verse {
@@ -32,7 +31,7 @@ export default async function Page({ params }: { params: Promise<{ book: number,
               ))}
             </ol>
             <div className="flex gap-2 justify-center p-2 md:p-4">
-              <h1 className="basis-auto text-xs text-gray-200">"본서에 사용한 『성경전서 개역개정판』의 저작권은 재단법인 대한성서공회 소유이며 재단법인 대한성서공회의 허락을 받고 사용하였음"</h1>
+              <h1 className="basis-auto text-xs text-gray-200">본서에 사용한 『성경전서 개역개정판』의 저작권은 재단법인 대한성서공회 소유이며 재단법인 대한성서공회의 허락을 받고 사용하였음</h1>
             </div>
       </div>
     </>
