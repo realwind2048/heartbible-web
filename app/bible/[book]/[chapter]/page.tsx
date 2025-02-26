@@ -13,16 +13,21 @@ export default async function Page({ params }: { params: Promise<{ book: number,
   const verses: Verse[] = await getVersesFromFreeBible(book, chapter);
   return (
     <>
-      <div className="flex flex-col gap-4 justify-center gap-4 px-5 md:px-10"> 
+      <div className="flex flex-col gap-2 justify-center p-5 md:p-10"> 
+            <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">한글성경뱃지</span>
+            <div className="flex gap-2 justify-center p-2 md:p-4">
+              <h1 className="basis-auto">책 {book}</h1>
+              <h2 className="basis-auto">챕터 {chapter}</h2>
+            </div>
             {verses.map((verse) => (
-              <li key={verse.id}>
-                <div className="flex">
-                    <h1 className="size-10 flex-non">{verse.book}</h1>
-                    <h2 className="size-10 flex-non">{verse.chapter}</h2>
-                    <p className="size-10 flex-non">{verse.verse}</p>
-                    <p className="size-10 flex-grow">{verse.content}</p>
-                </div>
-              </li>
+              <ol className="list-none">
+                  <li key={verse.id}>
+                    <div className="flex">
+                        <p className="basis-8">{verse.verse}</p>
+                        <p className="basis-full">{verse.content}</p>
+                    </div>
+                  </li>
+              </ol>
             ))}
       </div>
     </>
