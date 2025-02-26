@@ -156,7 +156,6 @@ const newTestamentBooks = [
 const allBooks = [...oldTestamentBooks, ...newTestamentBooks];
 
 export const getBookNameFromId = async (book: number): Promise<string> => {
-  console.log('book:', book);
     const bookObj = allBooks.find((bookObj) => bookObj.id == book);
     if (bookObj) {
         return bookObj.nameKo;
