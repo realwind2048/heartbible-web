@@ -1,4 +1,4 @@
-import { getVersesFromFreeBible } from '@/app/domain/usecase/FreeBibleUseCase'
+import { getVersesFromFreeBible, getBookChapterMap } from '@/app/domain/usecase/FreeBibleUseCase'
 
 interface Verse {
   id: number;
@@ -19,16 +19,16 @@ export default async function Page({ params }: { params: Promise<{ book: number,
               <h1 className="basis-auto">책 {book}</h1>
               <h2 className="basis-auto">챕터 {chapter}</h2>
             </div>
-            {verses.map((verse) => (
-              <ol className="list-none">
-                  <li key={verse.id}>
-                    <div className="flex">
-                        <p className="basis-8">{verse.verse}</p>
-                        <p className="basis-full">{verse.content}</p>
-                    </div>
-                  </li>
-              </ol>
-            ))}
+            <ol className="list-none">
+              {verses.map((verse) => (
+                    <li key={verse.id}>
+                      <div className="flex">
+                          <p className="basis-8">{verse.verse}</p>
+                          <p className="basis-full">{verse.content}</p>
+                      </div>
+                    </li>
+              ))}
+            </ol>
             <div className="flex gap-2 justify-center p-2 md:p-4">
               <h1 className="basis-auto text-xs text-gray-200">"본서에 사용한 『성경전서 개역개정판』의 저작권은 재단법인 대한성서공회 소유이며 재단법인 대한성서공회의 허락을 받고 사용하였음"</h1>
             </div>
@@ -38,36 +38,14 @@ export default async function Page({ params }: { params: Promise<{ book: number,
 }
 
 export async function generateStaticParams() {
-  const paths = [
-    {
-      params: {
-        book: '1',
-        chapter: '1'
-      }
-    },
-    {
-      params: {
-        book: '1',
-        chapter: '2'
-      }
-    },
-    {
-      params: {
-        book: '1',
-        chapter: '3'
-      }
-    },
-    {
-      params: {
-        book: '1',
-        chapter: '10'
-      }
-    }
-  ]
+  const paths = await getBookChapterMap();
+  console.log('paths:', paths);
   return paths.map((path) => ({
       params: {
-        book: path.params.book,
-        chapter: path.params.chapter
+        book: path.book,
+        chapter: path.chapter
       }
   }))
 }
+
+// TODO - add metadata
