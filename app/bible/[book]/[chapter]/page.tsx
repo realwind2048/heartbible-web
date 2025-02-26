@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from 'next'
 import { getVersesFromFreeBible, getBookChapterMap, fetchBookNameFromId } from '@/app/domain/usecase/FreeBibleUseCase'
 
 interface Verse {
@@ -49,4 +50,15 @@ export async function generateStaticParams() {
   }))
 }
 
-// TODO - add metadata
+// TODO - update metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ book: number, chapter: number }>
+}) {
+  const { book, chapter } = await params
+  const bookName: string = await fetchBookNameFromId(book);
+  return {
+    title: bookName + chapter + "장",
+  }
+}
