@@ -1,14 +1,8 @@
 import Link from 'next/link'
 import { getRandomBackgroundImageSrc } from '@/app/lib/BackgroundUseCase';
+import { HeartBibleVerse } from '@/app/types/models';
 
-export interface VerseFeedItemProps {
-    id: number;
-    verseKo: string;
-    bookKo: string;
-    indexKo: string
-}
-
-export async function VerseFeedItem({ heartBibleVerse }: { heartBibleVerse: VerseFeedItemProps} ) {
+export async function VerseFeedItem({ heartBibleVerse }: { heartBibleVerse: HeartBibleVerse}) {
     const imageSrc2 = getRandomBackgroundImageSrc();
     console.log('VerseFeedItem imageSrc2:', imageSrc2);
 
