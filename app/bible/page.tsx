@@ -1,10 +1,6 @@
 import { fetchAllBooks } from '@/app/domain/usecase/FreeBibleUseCase'
 import Link from 'next/link';
 
-function handleClick() {
-  console.log('Click happened');
-}
-
 export default async function Page() {
   const allBooks = fetchAllBooks();
   return (
@@ -20,9 +16,15 @@ export default async function Page() {
                         <div className="flex flex-wrap gap-3">
                             {[...Array(book.chapterCount)].map((x, i) =>
                               <Link href={`/bible/${book.book}/${i + 1}`} key={i}>
-                                <button type="button" key={i} className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                                <div className="aspect-square" style={{ width: '40px', height: '40px' }}>
+                                  <button 
+                                  type="button" 
+                                  key={i} 
+                                  className="aspect-square text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center justify-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500" 
+                                  style={{ width: '100%', height: '100%' }}>
                                     <div>{`${i + 1}`}</div>
-                                </button>
+                                  </button>
+                                </div>
                               </Link>
                             )}
                         </div>
