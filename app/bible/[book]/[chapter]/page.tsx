@@ -10,7 +10,7 @@ interface Verse {
 
 export default async function Page({ params }: { params: Promise<{ book: number, chapter: number }> }) {
   const { book, chapter } = await params;
-  const bookName: string = await fetchBookNameFromId(book);
+  const bookName: string = fetchBookNameFromId(book);
   const verses: Verse[] = await getVersesFromFreeBible(book, chapter);
   return (
     <>
