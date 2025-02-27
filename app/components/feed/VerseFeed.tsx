@@ -3,11 +3,11 @@ import { getRandomHeartBibleVerses } from '@/app/domain/usecase/HeartBibleVerseU
 
 export async function VerseFeed() {
     console.log('VerseFeed');
-    const verses = await getRandomHeartBibleVerses(10) as { verseKo: string, bookKo: string, indexKo: string }[];
+    const verses = await getRandomHeartBibleVerses(10) as { id: number, verseKo: string, bookKo: string, indexKo: string }[];
     return (
         <>
             {verses.map((verse, index) => (
-                <VerseFeedItem verseString={verse.verseKo} indexString={`${verse.bookKo} ${verse.indexKo}`} key={index}/>
+                <VerseFeedItem heartBibleVerse={verse} key={index}/>
             ))}
         </>
     );

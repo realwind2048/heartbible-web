@@ -2,11 +2,13 @@ import Link from 'next/link'
 import { getRandomBackgroundImageSrc } from '@/app/lib/BackgroundUseCase';
 
 export interface VerseFeedItemProps {
-    verseString: string;
-    indexString: string;
+    id: number;
+    verseKo: string;
+    bookKo: string;
+    indexKo: string
 }
 
-export async function VerseFeedItem({ verseString, indexString }: VerseFeedItemProps) {
+export async function VerseFeedItem({ heartBibleVerse }: { heartBibleVerse: VerseFeedItemProps} ) {
     const imageSrc2 = getRandomBackgroundImageSrc();
     console.log('VerseFeedItem imageSrc2:', imageSrc2);
 
@@ -26,11 +28,11 @@ export async function VerseFeedItem({ verseString, indexString }: VerseFeedItemP
                             <div className={`rounded`}>
                                 <div className="px-6 py-4">
                                     <div className="text-xl mb-2 text-white">
-                                        {verseString}
+                                        {heartBibleVerse.verseKo}
                                     </div>
                                     <hr className="w-10 h-px mx-auto my-4 bg-gray-100 border-0 rounded-sm md:my-10 dark:bg-gray-700"></hr>
                                     <p className="text-white text-base">
-                                        {indexString}
+                                        {heartBibleVerse.bookKo} {heartBibleVerse.indexKo}
                                     </p>
                                 </div>
                             </div>
