@@ -10,7 +10,7 @@ export async function VerseFeedItem({ heartBibleVerse }: { heartBibleVerse: Hear
         <>
             <Link 
                 href={{
-                    pathname: `/share/heartbible/random`,
+                    pathname: `/share/heartbible/${heartBibleVerse.id}`,
                 }}>
                 <div 
                     className="bg-cover rounded overflow-hidden shadow-lg"
