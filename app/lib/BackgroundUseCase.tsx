@@ -1,5 +1,3 @@
-'use client'
-
 const backgroundImageList: string[] = [];
 const maxBackgroundImageCount = 232;
 

@@ -1,6 +1,3 @@
-'use client'
-
-
 // import { getHeartBibleVerse } from "../../lib/firebase/RealtimeDatabase"
 // 속도 개선을 위해 local data를 사용하도록 변경함
 import { getHeartBibleVerseById, getHeartBibleVerseSize } from "../../data/HeartBibleVerses"

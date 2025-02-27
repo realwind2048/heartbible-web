@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { getRandomBackgroundImageSrc } from '@/app/lib/BackgroundUseCase';
 
@@ -8,7 +6,7 @@ export interface VerseFeedItemProps {
     indexString: string;
 }
 
-export function VerseFeedItem({ verseString, indexString }: VerseFeedItemProps) {
+export async function VerseFeedItem({ verseString, indexString }: VerseFeedItemProps) {
     const imageSrc2 = getRandomBackgroundImageSrc();
     console.log('VerseFeedItem imageSrc2:', imageSrc2);
 
