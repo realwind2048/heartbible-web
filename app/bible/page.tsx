@@ -1,6 +1,5 @@
 import { fetchAllBooks } from '@/app/domain/usecase/FreeBibleUseCase'
 import Link from 'next/link';
-import { HeratBibleMainSignTextLogo } from '../components/HeartBibleMainSignTextLogo';
 
 export default async function Page() {
   const allBooks = fetchAllBooks();
@@ -16,7 +15,7 @@ export default async function Page() {
                     <div className="basis-full">
                     <div className="flex flex-wrap gap-3">
                         {[...Array(book.chapterCount)].map((x, i) =>
-                          <Link href={`/bible/${book.book}/${i + 1}`} key={i}>
+                          <Link href={`/bible/nkrv/${book.book}/${i + 1}`} key={i}>
                             <div className="aspect-square" style={{ width: '40px', height: '40px' }}>
                               <button 
                               type="button" 

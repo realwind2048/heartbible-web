@@ -1,7 +1,6 @@
 import EntryPointForVerseCard from "./components/EntryPointForVerseCard";
 import EntryPointForBible from "./components/EntryPointForBible";
 import { VerseFeed } from "./components/feed/VerseFeed";
-import { HeratBibleMainSignTextLogo } from "./components/HeartBibleMainSignTextLogo";
 
 export default function Page() {
   return (

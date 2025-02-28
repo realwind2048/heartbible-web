@@ -1,4 +1,3 @@
-import { HeratBibleMainSignTextLogo } from '@/app/components/HeartBibleMainSignTextLogo';
 import { getVersesFromFreeBible, getBookChapterMap, fetchBookNameFromId } from '@/app/domain/usecase/FreeBibleUseCase'
 
 interface Verse {
