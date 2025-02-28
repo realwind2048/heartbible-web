@@ -16,9 +16,6 @@ export default async function Page({ params }: { params: Promise<{ book: number,
   return (
     <>
       <div className="flex flex-col gap-2 justify-center p-5 md:p-10"> 
-        <div>
-              <HeratBibleMainSignTextLogo />
-        </div>
         <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">개역개정</span>
         <div className="flex gap-2 justify-center p-2 md:p-4">
           <h1 className="basis-auto">{bookName}</h1>
