@@ -6,7 +6,7 @@ export default async function Page() {
   const allBooks = fetchAllBooks();
   return (
     <>
-      <div className="flex flex-col gap-2 justify-center p-5 md:p-10"> 
+      <div className="flex flex-col gap-2 justify-center px-5 md:px-10"> 
         <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">개역개정</span>
         <ol className="list-none">
           {allBooks.map((book) => (
