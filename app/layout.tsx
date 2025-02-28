@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { Navbar } from './components/navbar/navbar'
 
 export const metadata: Metadata = {
   title: '마음말씀',
@@ -18,7 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={fontPretendard.className}>{children}</body>
+      <body className={fontPretendard.className}>
+        <Navbar />
+        {children}
+      </body>
       <GoogleAnalytics gaId="G-N7BTSPTN3T" />
     </html>
   )
