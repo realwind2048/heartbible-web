@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         })
     })
     return biblePages.map((biblePage) => ({
-        url: `${BASE_URL}${biblePage.bible}/${biblePage.book}/${biblePage.chapter}`,
+        url: `${BASE_URL}bible/${biblePage.bible}/${biblePage.book}/${biblePage.chapter}`,
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 0.8,
