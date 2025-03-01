@@ -41,6 +41,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 1. images/bg/ 안에 bg_숫자.webp 파일을 가장 마지막 숫자 + 1 로 넣는다.
 2. BackgroundUseCase 의 maxBackgroundImageCount 값을 + 1 한다.
 
+### 사이트 맵
+1. 사이트맵 인덱스 (public/sitemap_index.xml) 파일이 root 따라서 sitemap 추가 삭제등의 변동사항은 여기에 반영해야한다.
+2. app/sitemap.tsx 파일은 기본적으로 거의 모든 페이지를 관리한다. (bible 제외)
+3. app/bible/[bible]sitemap.tsx 파일은 성경 관련 페이지를 관리한다.
+
 ## 리소스
 
 ### 구글 마테리얼 디자인 아이콘 사용하기
@@ -57,3 +62,5 @@ github: https://github.com/tsparticles/tsparticles
    - https://stackoverflow.com/questions/77395525/is-it-in-any-way-possible-to-use-tsparticles-with-next-js-and-ssr
    - https://medium.com/@travilabs/particle-tsx-component-in-nextjs-the-bloody-rain-effect-d47b4ffd342d
 
+### Nextjs 한글 문서 - 사이트맵
+https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata/sitemap
