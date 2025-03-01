@@ -8204,7 +8204,7 @@ const heartBibleVerses =
         "id": 912,
         "bookKo": "요한복음 ",
         "indexKo": "9:31",
-        "verseKo": "하나님이 죄인의 말을 듣지 아니하시고 경견하여 그의 뜻대로 행하는 자의 말을 들으시는 줄을 우리가 아나이다",
+        "verseKo": "하나님이 죄인의 말을 듣지 아니하시고 경건하여 그의 뜻대로 행하는 자의 말을 들으시는 줄을 우리가 아나이다",
         "book": "John",
         "index": "9:31",
         "verse": "We know that God does not listen to sinners. He listens to the godly man who does his will."
