@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <sitemap>
+        <loc>https://heartbible.app/sitemap.xml</loc>
+        <lastmod>2022-06-05</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>https://heartbible.app/bible/nkrv/sitemap.xml</loc>
+        <lastmod>2025-03-01</lastmod>
+    </sitemap>
+</sitemapindex>
