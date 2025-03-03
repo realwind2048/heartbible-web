@@ -15,7 +15,7 @@ export default function EntryPointForVerseCard() {
         <div className="rounded overflow-hidden shadow-lg">
         <Image 
           className="object-cover" 
-          src="/images/image_bible.webp" 
+          src="/images/bg/bg_174.webp" 
           style={{ aspectRatio: '3/2' }} 
           alt="VerseCard Background Image"
           width={600}
