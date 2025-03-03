@@ -32,7 +32,9 @@ export function VerseCardForProp({ verseString, indexString, imageSrc, particles
                         <p className="text-white text-base">
                             {indexString}
                         </p>
-                        <ShareButton />
+                        <div className="py-10 items-center justify-center p-5">
+                            <ShareButton />
+                        </div>
                     </div>
                 </div>
             </div>

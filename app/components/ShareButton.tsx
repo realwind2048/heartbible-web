@@ -30,13 +30,11 @@ export function ShareButton() {
     }, [])
     
     return (
-        <div className="py-10 items-center justify-center p-5">
-            <button 
-                className="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 shadow-xl shadow-neutral-500/20 transition active:scale-95"
-                onClick={() => { handle(href) }}>
-                <ShareIcon />
-                <span className="ml-3">공유하기</span>
-            </button>
-        </div>
+        <button 
+            className="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 shadow-xl shadow-neutral-500/20 transition active:scale-95"
+            onClick={() => { handle(href) }}>
+            <ShareIcon />
+            <span className="ml-3">공유하기</span>
+        </button>
     );
   }
