@@ -32,7 +32,6 @@ export default function Page() {
   useEffect(() => {
     console.log('Page useEffect');
     setData(getHeartBibleVerseById(heartBibleVerseId) as VerseData);
-    console.log('111shareUrl:', shareUrl);
   }, [heartBibleVerseId])
 
   return (
