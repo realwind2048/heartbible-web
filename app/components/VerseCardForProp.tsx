@@ -2,16 +2,12 @@
 
 import Image from 'next/image';
 import { HeratBibleSignTextLogo } from './HeartBibleSignTextLogo';
-import { ShareButton } from './ShareButton';
+import { ShareHeartBibleVerseButton } from '@/components/share/ShareHeartBibleVerseButton';
 import { Particles } from './particles/Particles';
-export interface VerseCardForPropProps {
-    verseString: string;
-    indexString: string;
-    imageSrc: string;
-    particlesId: string;
-}
+import { VerseCardForPropProps } from '../types/models';
 
-export function VerseCardForProp({ verseString, indexString, imageSrc, particlesId }: VerseCardForPropProps) {
+export function VerseCardForProp({ verseString, indexString, imageSrc, particlesId, shareUrl }: VerseCardForPropProps) {
+    console.log('VerseCardForProp shareUrl:', shareUrl);
     return (
         <div className="absolute top-0 left-0 w-full h-full text-center">
             <div className={`absolute w-full h-full brightness-50`}>
@@ -33,7 +29,8 @@ export function VerseCardForProp({ verseString, indexString, imageSrc, particles
                             {indexString}
                         </p>
                         <div className="py-10 items-center justify-center p-5">
-                            <ShareButton />
+                            <ShareHeartBibleVerseButton 
+                                shareUrl={shareUrl}/>
                         </div>
                     </div>
                 </div>

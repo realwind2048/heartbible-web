@@ -7,3 +7,11 @@ export interface HeartBibleVerse {
     index: string;
     verse: string;
 }
+
+export interface VerseCardForPropProps {
+    verseString: string;
+    indexString: string;
+    imageSrc: string;
+    particlesId: string;
+    shareUrl: string;
+}
