@@ -16,6 +16,10 @@ export async function getRandomHeartBibleVerse() {
     return getHeartBibleVerseById(randomHeartBibleVerseId);
 }
 
+export async function getHeartBibleVerse(heartBibleVerseId: number) {
+    return getHeartBibleVerseById(heartBibleVerseId);
+}
+
 export async function getRandomHeartBibleVerses(count: number) {
     const randomHeartBibleVerses = [];
     for (let i = 0; i < count; i++) {
