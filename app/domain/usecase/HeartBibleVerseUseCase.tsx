@@ -31,7 +31,7 @@ export async function getRandomHeartBibleVerses(count: number) {
 /**
  * ex) https://heartbible.app/share/heartbible/254?bg=172&pt=1
  */
-export function getShareUrl(heartBibleVerseId: number, bgId: string, particlesId: string) {
+export function getShareUrl(heartBibleVerseId: number, bgId: string, particlesId: number) {
     let base_share_url: string = `${BASE_URL}share/heartbible/${heartBibleVerseId}`;
     if (bgId) {
         base_share_url += `?bg=${bgId}`;
