@@ -1,6 +1,6 @@
 import { VerseCardForProp } from '@/app/components/VerseCardForProp'
 import { getRandomBackgroundId, getRandomBackgroundImageSrcFromBgId } from '@/app/lib/BackgroundUseCase'
-import { getHeartBibleVerse, getRandomHeartBibleVerse, getShareUrl } from '@/app/domain/usecase/HeartBibleVerseUseCase'
+import { getHeartBibleVerse, getShareUrl } from '@/app/domain/usecase/HeartBibleVerseUseCase'
 /**
  * 정보를 받아서 VerseCard 컴포넌트를 렌더링하는 페이지
  */
@@ -27,7 +27,7 @@ export default async function Page({
     indexKo: string;
   }
 
-  let data = await getHeartBibleVerse(heartBibleVerseIdNumber) as VerseData;
+  const data = await getHeartBibleVerse(heartBibleVerseIdNumber) as VerseData;
   console.log('data:', data);
   console.log('shareUrl:', shareUrl);
   return (
