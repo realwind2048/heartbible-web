@@ -1,6 +1,7 @@
 import { VerseCardForProp } from '@/app/components/VerseCardForProp'
 import { getRandomBackgroundId, getRandomBackgroundImageSrcFromBgId } from '@/app/lib/BackgroundUseCase'
-import { getHeartBibleVerse, getRandomHeartBibleVerse, getShareUrl } from '@/app/domain/usecase/HeartBibleVerseUseCase'
+import { getHeartBibleVerse, getShareUrl } from '@/app/domain/usecase/HeartBibleVerseUseCase'
+// import { getParticlesId } from '@/app/lib/ParticlesUseCase';
 /**
  * 정보를 받아서 VerseCard 컴포넌트를 렌더링하는 페이지
  */
@@ -17,8 +18,10 @@ export default async function Page({
 
   const { bg, pt }: { bg?: string; pt?: string } = await searchParams;
   const bgId: string = bg || String(getRandomBackgroundId());
+  const ptId: string = pt || '';
   const imageSrc = getRandomBackgroundImageSrcFromBgId(bgId);
   const particlesId = pt || '';
+  // const particlesId = getParticlesId(ptId); // TODO 나중에 particlesId를 받아오는 로직을 추가해야함
   const shareUrl = getShareUrl(heartBibleVerseIdNumber, bgId, particlesId);
 
   interface VerseData {
