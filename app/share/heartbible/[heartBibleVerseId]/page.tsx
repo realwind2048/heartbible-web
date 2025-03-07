@@ -30,7 +30,6 @@ export default async function Page({
   }
 
   const data = await getHeartBibleVerse(heartBibleVerseIdNumber) as VerseData;
-  const data = await getHeartBibleVerse(heartBibleVerseIdNumber) as VerseData;
   console.log('data:', data);
   console.log('shareUrl:', shareUrl);
   return (
