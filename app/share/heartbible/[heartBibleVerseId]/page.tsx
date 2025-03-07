@@ -17,9 +17,11 @@ export default async function Page({
 
   const { bg, pt }: { bg?: string; pt?: string } = await searchParams;
   const bgId: string = bg || String(getRandomBackgroundId());
+  // const ptId: string = pt || '';
   const imageSrc = getRandomBackgroundImageSrcFromBgId(bgId);
   const particlesId = pt || '';
-  const shareUrl = getShareUrl(heartBibleVerseIdNumber, bgId, particlesId);
+  // const particlesId = getParticlesId(ptId); // TODO 나중에 particlesId를 받아오는 로직을 추가해야함
+  const shareUrl = getShareUrl(heartBibleVerseIdNumber, bgId, Number(particlesId));
 
   interface VerseData {
     verseKo: string;
@@ -27,6 +29,7 @@ export default async function Page({
     indexKo: string;
   }
 
+  const data = await getHeartBibleVerse(heartBibleVerseIdNumber) as VerseData;
   const data = await getHeartBibleVerse(heartBibleVerseIdNumber) as VerseData;
   console.log('data:', data);
   console.log('shareUrl:', shareUrl);
