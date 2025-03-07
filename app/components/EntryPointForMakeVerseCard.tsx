@@ -1,39 +1,27 @@
-import Link from 'next/link'
-import Image from 'next/image'
+'use client'
+
+import { useRouter } from 'next/navigation';
 
 /**
  * 정보를 받아서 VerseCard 컴포넌트를 렌더링하는 페이지
  */
-export default function EntryPointForMakeVerseCard() {
+export function EntryPointForMakeVerseCard() {
+  const router = useRouter();
+
+  const handleMakeVerseCard = () => {
+    router.push('/share/heartbible/make');
+  };
+
   return (
-    <>
-      {/* TODO fix Link */}
-      <Link 
-            href={{
-              pathname: `/share/heartbible/make`,
-            }}>
-        <div className="rounded overflow-hidden shadow-lg">
-        <Image 
-          className="object-cover" 
-          src="/images/image_bible.webp" 
-          style={{ aspectRatio: '3/2' }} 
-          alt="VerseCard Background Image"
-          width={600}
-          height={400}
-          />
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">말씀 카드 만들기</div>
-            <p className="text-gray-700 text-base">
-              좋은 말씀을 골라 카드를 만들어 공유할 수 있습니다.
-            </p>
-          </div>
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#말씀카드</span>
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#만들기</span>
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#공유</span>
-          </div>
-        </div>
-      </Link>
-    </>
-  )
+    <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold">말씀 카드 만들기</h2>
+      <p className="text-gray-600">나만의 말씀 카드를 만들어보세요</p>
+      <button
+        onClick={handleMakeVerseCard}
+        className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+      >
+      ✨ 말씀 카드 만들기
+    </button>
+    </div>
+  );
 }
