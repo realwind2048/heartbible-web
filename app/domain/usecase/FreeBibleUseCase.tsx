@@ -27,3 +27,13 @@ export const fetchAllBooks = (): { book: number, name: string, chapterCount: num
 export const fetchBookNameFromId = (book: number): string => {
   return getBookNameFromId(book);
 }
+
+// TODO Bound check
+export const getPrevChapterLink = (book: number, chapter: number): string => {
+  return `/bible/nkrv/${book}/${chapter - 1}`;
+}
+
+// TODO Bound check
+export const getNextChapterLink = (book: number, chapter: number): string => {
+  return `/bible/nkrv/${book}/${Number(chapter) + 1}`;
+}
