@@ -15,3 +15,10 @@ export interface VerseCardForPropProps {
     particlesId: string;
     shareUrl: string;
 }
+
+export interface Book {
+    book: string;
+    name: string;
+    chapterCount: number;
+  }
+  

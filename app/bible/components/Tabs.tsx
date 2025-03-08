@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Book } from '@/app/types/models';
+
 
 type TabsProps = {
-  oldTestament: any[];
-  newTestament: any[];
+  oldTestament: Book[];
+  newTestament: Book[];
 };
 
 export default function Tabs({ oldTestament, newTestament }: TabsProps) {
@@ -32,7 +34,7 @@ export default function Tabs({ oldTestament, newTestament }: TabsProps) {
     </button>
   );
 
-  const BibleSection = ({ books }: { books: any[] }) => (
+  const BibleSection = ({ books }: { books: Book[] }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {books.map((book) => (
         <div key={book.book} className="border rounded-lg p-4 dark:border-gray-700">

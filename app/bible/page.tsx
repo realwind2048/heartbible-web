@@ -1,11 +1,15 @@
 import { fetchAllBooks } from '@/app/domain/usecase/FreeBibleUseCase'
 import Tabs from './components/Tabs';
 import QuickNav from './components/QuickNav';
+import { Book } from '@/app/types/models';
 
 export default async function Page() {
-  const allBooks = fetchAllBooks();
-  const oldTestament = allBooks.slice(0, 39); // 창세기부터 말라기까지
-  const newTestament = allBooks.slice(39);    // 마태복음부터 요한계시록까지
+  const allBooks = fetchAllBooks().map(book => ({
+    ...book,
+    book: book.book.toString()
+  })) as Book[];
+  const oldTestament: Book[] = allBooks.slice(0, 39); // 창세기부터 말라기까지
+  const newTestament: Book[] = allBooks.slice(39);    // 마태복음부터 요한계시록까지
 
   return (
     <div className="container mx-auto px-4 py-8">
