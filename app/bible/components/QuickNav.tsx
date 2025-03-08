@@ -26,7 +26,7 @@ export default function QuickNav({ oldTestament, newTestament }: QuickNavProps) 
   useEffect(() => {
     // 책이 선택되면 해당 책의 장 수만큼 배열 생성
     if (selectedBook) {
-      const book = books.find(b => b.book === selectedBook);
+      const book = books.find(b => b.book == selectedBook);
       if (book) {
         setAvailableChapters(Array.from({ length: book.chapterCount }, (_, i) => i + 1));
       }
