@@ -1,6 +1,6 @@
 import { fetchAllBooks } from '@/app/domain/usecase/FreeBibleUseCase'
-import Link from 'next/link';
 import Tabs from './components/Tabs';
+import QuickNav from './components/QuickNav';
 
 export default async function Page() {
   const allBooks = fetchAllBooks();
@@ -15,6 +15,8 @@ export default async function Page() {
           개역개정
         </span>
 
+        <QuickNav oldTestament={oldTestament} newTestament={newTestament} />
+        
         <Tabs oldTestament={oldTestament} newTestament={newTestament} />
       </div>
     </div>
