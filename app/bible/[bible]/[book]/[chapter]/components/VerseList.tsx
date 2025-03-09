@@ -18,7 +18,7 @@ interface VerseListProps {
   bookName: string;
 }
 
-export function VerseList({ verses, bookName }: VerseListProps) {
+export function VerseList({ verses }: VerseListProps) {
   const router = useRouter();
   const [selectedVerses, setSelectedVerses] = useState<number[]>([]);
 
