@@ -61,7 +61,7 @@ export function BibleChapterView({ bookName, chapter, verses, prevChapterLink, n
       {/* 본문 영역 */}
       <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6">
         <div className="max-w-3xl mx-auto">
-          <VerseList verses={verses} />
+          <VerseList verses={verses} bookName={bookName} />
         </div>
       </div>
 

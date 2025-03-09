@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { getRandomBackgroundId } from '@/app/lib/BackgroundUseCase';
+import { getRandomParticlesId } from '@/app/lib/ParticlesUseCase';
 
 interface Verse {
   id: number;
@@ -12,9 +15,11 @@ interface Verse {
 
 interface VerseListProps {
   verses: Verse[];
+  bookName: string;
 }
 
-export function VerseList({ verses }: VerseListProps) {
+export function VerseList({ verses, bookName }: VerseListProps) {
+  const router = useRouter();
   const [selectedVerses, setSelectedVerses] = useState<number[]>([]);
 
   const handleVerseClick = (verseNumber: number) => {
@@ -23,9 +28,20 @@ export function VerseList({ verses }: VerseListProps) {
       if (isSelected) {
         return prev.filter(v => v !== verseNumber);
       } else {
-        return [...prev, verseNumber];
+        return [...prev, verseNumber].sort((a, b) => a - b);
       }
     });
+  };
+
+  const handleShare = () => {
+    if (selectedVerses.length === 0 || verses.length === 0) return;
+    
+    const firstVerse = verses[0];
+    const bgId = getRandomBackgroundId().toString();
+    const ptId = getRandomParticlesId().toString();
+    
+    const shareUrl = `/share/bible/nkrv?book=${firstVerse.book}&chapter=${firstVerse.chapter}&verses=${selectedVerses.join(',')}&bg=${bgId}&pt=${ptId}}`;
+    router.push(shareUrl);
   };
 
   return (
@@ -35,10 +51,8 @@ export function VerseList({ verses }: VerseListProps) {
           <li 
             key={verse.id}
             onClick={() => handleVerseClick(verse.verse)}
-            className={`cursor-pointer transition-colors duration-200 ${
-              selectedVerses.includes(verse.verse) 
-                ? 'bg-blue-100 hover:bg-blue-200' 
-                : 'hover:bg-gray-100'
+            className={`cursor-pointer transition-colors duration-200 hover:bg-gray-100 ${
+              selectedVerses.includes(verse.verse) ? 'bg-blue-100' : ''
             }`}
           >
             <div className="flex p-2">
@@ -49,33 +63,16 @@ export function VerseList({ verses }: VerseListProps) {
         ))}
       </ol>
       {selectedVerses.length > 0 && (
-        <div 
-          onClick={() => {
-            // 선택된 절들의 내용을 추출
-            const selectedContent = verses
-              .filter(verse => selectedVerses.includes(verse.verse))
-              .map(verse => `${verse.verse}. ${verse.content}`)
-              .join('\n');
-
-            // 공유할 텍스트 생성
-            const shareText = `${selectedContent}\n\n마음말씀에서 공유됨`;
-
-            // TBD: 카드 만들기
-            console.log('shareText:', shareText);
-
-          }}
-          className="fixed bottom-4 right-4 flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-        >
-          <div className="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
-            </svg>
-            <span className="font-medium">{selectedVerses.length}개 선택됨</span>
+        <div className="fixed bottom-4 right-4 flex gap-2">
+          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg">
+            선택된 절: {selectedVerses.length}개
           </div>
-          <div className="border-l border-blue-400 pl-3">
-            <span className="font-semibold">카드 만들기</span>
-          </div>
+          <button
+            onClick={handleShare}
+            className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition-colors"
+          >
+            공유하기
+          </button>
         </div>
       )}
     </>
