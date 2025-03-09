@@ -40,7 +40,7 @@ export function VerseList({ verses }: VerseListProps) {
     const bgId = getRandomBackgroundId().toString();
     const ptId = getRandomParticlesId().toString();
     
-    const shareUrl = `/share/bible/nkrv?book=${firstVerse.book}&chapter=${firstVerse.chapter}&verses=${selectedVerses.join(',')}&bg=${bgId}&pt=${ptId}}`;
+    const shareUrl = `/share/bible/nkrv?book=${firstVerse.book}&chapter=${firstVerse.chapter}&verses=${selectedVerses.join(',')}&bg=${bgId}&pt=${ptId}`;
     router.push(shareUrl);
   };
 
