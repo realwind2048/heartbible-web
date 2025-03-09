@@ -35,8 +35,10 @@ export function VerseList({ verses }: VerseListProps) {
           <li 
             key={verse.id}
             onClick={() => handleVerseClick(verse.verse)}
-            className={`cursor-pointer transition-colors duration-200 hover:bg-gray-100 ${
-              selectedVerses.includes(verse.verse) ? 'bg-blue-100' : ''
+            className={`cursor-pointer transition-colors duration-200 ${
+              selectedVerses.includes(verse.verse) 
+                ? 'bg-blue-100 hover:bg-blue-200' 
+                : 'hover:bg-gray-100'
             }`}
           >
             <div className="flex p-2">
