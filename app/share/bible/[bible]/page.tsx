@@ -56,9 +56,8 @@ export default async function Page({
   const verseNumbers = selectedVerses.join(',');
   const indexString = `${bookName} ${chapter}:${verseNumbers}`;
 
-  // 공유 URL 생성
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const shareUrl = `${origin}/share/bible/${book}?chapter=${chapter}&verses=${verses}&bg=${bgId}&pt=${particlesId}`;
+  const shareUrl = `${origin}/share/bible/nkrv?book\=${book}&chapter=${chapter}&verses=${verses}&bg=${bgId}&pt=${particlesId}`;
 
   return (
     <VerseCardForProp 
