@@ -51,8 +51,10 @@ export function VerseList({ verses, bookName }: VerseListProps) {
           <li 
             key={verse.id}
             onClick={() => handleVerseClick(verse.verse)}
-            className={`cursor-pointer transition-colors duration-200 hover:bg-gray-100 ${
-              selectedVerses.includes(verse.verse) ? 'bg-blue-100' : ''
+            className={`cursor-pointer transition-colors duration-200 ${
+              selectedVerses.includes(verse.verse) 
+                ? 'bg-blue-100 hover:bg-blue-200' 
+                : 'hover:bg-gray-100'
             }`}
           >
             <div className="flex p-2">
@@ -63,16 +65,20 @@ export function VerseList({ verses, bookName }: VerseListProps) {
         ))}
       </ol>
       {selectedVerses.length > 0 && (
-        <div className="fixed bottom-4 right-4 flex gap-2">
-          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg">
-            선택된 절: {selectedVerses.length}개
-          </div>
-          <button
-            onClick={handleShare}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition-colors"
+        <div 
+          onClick={handleShare}
+          className="fixed bottom-4 right-4 flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
-            공유하기
-          </button>
+          <div className="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+            </svg>
+            <span className="font-medium">{selectedVerses.length}개 선택됨</span>
+          </div>
+          <div className="border-l border-blue-400 pl-3">
+            <span className="font-semibold">카드 만들기</span>
+          </div>
         </div>
       )}
     </>
