@@ -52,6 +52,23 @@ export async function generateMetadata({
   const { book, chapter } = await params
   const bookName: string = await fetchBookNameFromId(book);
   return {
-    title: bookName + chapter + "장",
+    title: `${bookName} ${chapter}장`,
+    description: `성경 ${bookName} ${chapter}장을 읽고 공유해보세요.`,
+    openGraph: {
+      title: `${bookName} ${chapter}장`,
+      description: `성경 ${bookName} ${chapter}장을 읽고 공유해보세요.`,
+      type: 'article',
+      images: [
+        {
+          url: '/icon/icon_app_icon.png',
+          width: 1200,
+          height: 630,
+          alt: 'HeartBible',
+        },
+      ],
+    },
+    alternates: {
+      canonical: `/bible/nkrv/${book}/${chapter}`
+    }
   }
 }
