@@ -45,9 +45,11 @@ export default async function Page({
   const filteredVerses = allVerses.filter(verse => selectedVerses.includes(verse.verse));
   
   // 구절들을 하나의 문자열로 합침
-  const verseString = filteredVerses
-    .map(verse => `(${verse.verse}) ${verse.content}`)
-    .join(' ');
+  const verseString = filteredVerses.length === 1 
+    ? filteredVerses[0].content
+    : filteredVerses
+        .map(verse => `(${verse.verse}) ${verse.content}`)
+        .join(' ');
 
   // 책 이름 가져오기
   const bookName = fetchBookNameFromId(book);
