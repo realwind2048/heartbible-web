@@ -60,7 +60,7 @@ export async function generateMetadata({
       type: 'article',
       images: [
         {
-          url: '/icon/icon_app_icon.png',
+          url: '/images/icon/icon_app_icon.png',
           width: 1200,
           height: 630,
           alt: 'HeartBible',
