@@ -9,16 +9,18 @@ import { VerseCardForPropProps } from '../types/models';
 export function VerseCardForProp({ verseString, indexString, imageSrc, particlesId, shareUrl }: VerseCardForPropProps) {
     console.log('VerseCardForProp shareUrl:', shareUrl);
     return (
-        <div className="absolute top-0 left-0 w-full h-full text-center">
+        <div className="absolute top-0 left-0 w-full min-h-screen text-center">
             <div className={`absolute w-full h-full brightness-50`}>
                 <Image 
                     src={imageSrc} 
                     fill
                     style={{ objectFit: 'cover' }} 
-                    alt="VerseCard Background Image"/>
+                    alt="VerseCard Background Image"
+                    priority
+                />
             </div>
             <Particles id={particlesId} />
-            <div className="absolute top-0 left-0 flex h-screen w-full h-full">
+            <div className="absolute top-0 left-0 flex min-h-screen w-full">
                 <div className={`m-auto max-w-sm rounded overflow-hidden`}>
                     <div className="px-6 py-16">
                         <div className="text-xl mb-2 text-white">
