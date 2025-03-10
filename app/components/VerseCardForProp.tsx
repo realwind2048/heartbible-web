@@ -20,7 +20,7 @@ export function VerseCardForProp({ verseString, indexString, imageSrc, particles
             <Particles id={particlesId} />
             <div className="absolute top-0 left-0 flex h-screen w-full h-full">
                 <div className={`m-auto max-w-sm rounded overflow-hidden`}>
-                    <div className="px-6 py-4">
+                    <div className="px-6 py-16">
                         <div className="text-xl mb-2 text-white">
                             {verseString}
                         </div>
