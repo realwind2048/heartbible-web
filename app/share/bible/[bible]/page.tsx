@@ -46,14 +46,38 @@ export default async function Page({
   
   // 구절들을 하나의 문자열로 합침
   const verseString = filteredVerses
-    .map(verse => verse.content)
+    .map(verse => `(${verse.verse}) ${verse.content}`)
     .join(' ');
 
   // 책 이름 가져오기
   const bookName = fetchBookNameFromId(book);
 
   // 참조 문자열 생성 (예: "창세기 1:1-3")
-  const verseNumbers = selectedVerses.join(',');
+  const verseNumbers = selectedVerses
+    .sort((a, b) => a - b) // 오름차순 정렬
+    .reduce((acc: string[], curr: number, i: number, arr: number[]) => {
+      if (i === 0) return [curr.toString()];
+      
+      const prev = arr[i-1];
+      const last = acc[acc.length-1];
+      
+      // 연속된 숫자인 경우
+      if (curr === prev + 1) {
+        // 이미 범위가 시작된 경우
+        if (last.includes('~')) {
+          acc[acc.length-1] = last.split('~')[0] + '~' + curr;
+        } else {
+          // 새로운 범위 시작
+          acc[acc.length-1] = prev + '~' + curr;
+        }
+      } else {
+        // 연속되지 않은 경우 새로운 숫자 추가
+        acc.push(curr.toString());
+      }
+      return acc;
+    }, [])
+    .join(',');
+
   const indexString = `${bookName} ${chapter}:${verseNumbers}`;
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
