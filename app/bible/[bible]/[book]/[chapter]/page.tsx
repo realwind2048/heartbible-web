@@ -6,7 +6,7 @@ import {
   getNextChapterLink
 } from '@/app/domain/usecase/FreeBibleUseCase'
 import { BibleChapterView } from './components/BibleChapterView';
-
+import { BASE_URL } from '@/libs/constants';
 interface Verse {
   id: number;
   book: number;
@@ -51,6 +51,7 @@ export async function generateMetadata({
 }) {
   const { book, chapter } = await params
   const bookName: string = await fetchBookNameFromId(book);
+  const imageUrl = `${BASE_URL}images/icon/ic_app_icon.png`;
   return {
     title: `${bookName} ${chapter}장`,
     description: `성경 ${bookName} ${chapter}장을 읽고 공유해보세요.`,
@@ -60,7 +61,7 @@ export async function generateMetadata({
       type: 'article',
       images: [
         {
-          url: '/images/icon/ic_app_icon.png',
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: 'HeartBible',
