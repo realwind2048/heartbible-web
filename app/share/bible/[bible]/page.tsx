@@ -1,7 +1,7 @@
 import { VerseCardForProp } from '@/app/components/VerseCardForProp'
 import { getRandomBackgroundId, getRandomBackgroundImageSrcFromBgId } from '@/app/lib/BackgroundUseCase'
 import { getVersesFromFreeBible, fetchBookNameFromId } from '@/app/domain/usecase/FreeBibleUseCase'
-
+import { OG_IMAGE_URL } from '@/libs/constants';
 interface VerseData {
   id: number;
   book: number;
@@ -94,4 +94,23 @@ export default async function Page({
       shareUrl={shareUrl}
     />
   );
+}
+
+
+export async function generateMetadata() {
+  return {
+    title: `말씀카드 - 성경`,
+    description: `말씀을 읽고 공유해보세요.`,
+    openGraph: {
+      type: 'article',
+      images: [
+        {
+          url: OG_IMAGE_URL,
+          width: 1200,
+          height: 630,
+          alt: 'HeartBible',
+        },
+      ],
+    },
+  }
 }

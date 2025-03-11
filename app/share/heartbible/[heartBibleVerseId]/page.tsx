@@ -1,6 +1,7 @@
 import { VerseCardForProp } from '@/app/components/VerseCardForProp'
 import { getRandomBackgroundId, getRandomBackgroundImageSrcFromBgId } from '@/app/lib/BackgroundUseCase'
 import { getHeartBibleVerse, getShareUrl } from '@/app/domain/usecase/HeartBibleVerseUseCase'
+import { OG_IMAGE_URL } from '@/libs/constants';
 /**
  * 정보를 받아서 VerseCard 컴포넌트를 렌더링하는 페이지
  */
@@ -41,4 +42,22 @@ export default async function Page({
         shareUrl={shareUrl}
       />
   )
+}
+
+export async function generateMetadata() {
+  return {
+    title: `말씀카드 - 마음말씀`,
+    description: `성경 말씀을 읽고 공유해보세요.`,
+    openGraph: {
+      type: 'article',
+      images: [
+        {
+          url: OG_IMAGE_URL,
+          width: 1200,
+          height: 630,
+          alt: 'HeartBible',
+        },
+      ],
+    },
+  }
 }
