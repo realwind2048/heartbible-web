@@ -2,11 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useChat } from 'ai/react';
-
-interface Message {
-  role: 'assistant' | 'user';
-  content: string;
-}
+import ReactMarkdown from 'react-markdown';
 
 export default function BibleChatPage() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -45,11 +41,15 @@ export default function BibleChatPage() {
             <div
               className={`rounded-lg px-4 py-2 max-w-[80%] ${
                 message.role === 'assistant'
-                  ? 'bg-white text-gray-800 shadow'
+                  ? 'bg-white text-gray-800 shadow prose prose-sm'
                   : 'bg-blue-500 text-white'
               }`}
             >
-              {message.content}
+              {message.role === 'assistant' ? (
+                <ReactMarkdown>{message.content}</ReactMarkdown>
+              ) : (
+                message.content
+              )}
             </div>
           </div>
         ))}
