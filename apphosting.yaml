@@ -23,7 +23,6 @@ runConfig:
   #   secret: mySecretRef
 env:
   - variable: OPENAI_API_KEY
-  - variable: HEARTBIBLE_WEP_OPENAI_API_KEY
     secret: HEARTBIBLE_WEP_OPENAI_API_KEY
     availability:
       - BUILD
