@@ -7,8 +7,8 @@ runConfig:
   # cpu: 1
   # memoryMiB: 512
 
-# Environment variables and secrets.
-# env:
+  # Environment variables and secrets.
+  # env:
   # Configure environment variables.
   # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
   # - variable: MESSAGE
@@ -23,7 +23,8 @@ runConfig:
   #   secret: mySecretRef
 env:
   - variable: OPENAI_API_KEY
-    secret: OPENAI_API_KEY
+  - variable: HEARTBIBLE_WEP_OPENAI_API_KEY
+    secret: HEARTBIBLE_WEP_OPENAI_API_KEY
     availability:
       - BUILD
       - RUNTIME
