@@ -57,22 +57,24 @@ export default function BibleChatPage() {
       </div>
 
       {/* 입력 영역 */}
-      <form onSubmit={handleSubmit} className="border-t bg-white p-4">
-        <div className="max-w-4xl mx-auto flex gap-4">
-          <input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="성경 말씀에 대해 물어보세요..."
-            className="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            전송
-          </button>
-        </div>
-      </form>
+      <div className="sticky bottom-0 border-t bg-white p-2 sm:p-4">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+          <div className="flex gap-2 sm:gap-4">
+            <input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="성경 말씀에 대해 물어보세요..."
+              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base whitespace-nowrap"
+            >
+              전송
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 } 
