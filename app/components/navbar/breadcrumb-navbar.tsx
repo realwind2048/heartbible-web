@@ -63,10 +63,10 @@ export function BreadcrumbNavbar() {
             />
           </Link>
           
-          <div className="flex items-center space-x-4 ml-6">
+          <div className="flex items-center space-x-1 ml-1">
             {items.map((item, index) => (
               <div key={index} className="flex items-center">
-                {index > 0 && <span className="text-gray-400 mx-4">{`>`}</span>}
+                {index >= 0 && <span className="text-gray-400 mx-2">{`>`}</span>}
                 {item.href ? (
                   <Link 
                     href={item.href} 
