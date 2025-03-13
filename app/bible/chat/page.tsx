@@ -132,12 +132,14 @@ export default function BibleChatPage() {
             <input
               value={input}
               onChange={handleInputChange}
-              placeholder="성경 말씀에 대해 물어보세요..."
-              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
+              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              disabled={isTyping}
             />
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base whitespace-nowrap"
+              className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed"
+              disabled={isTyping}
             >
               전송
             </button>
