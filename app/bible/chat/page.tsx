@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useChat } from 'ai/react';
 import ReactMarkdown from 'react-markdown';
+import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 
 export default function BibleChatPage() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -21,13 +22,7 @@ export default function BibleChatPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      {/* 헤더 */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-gray-900">말씀 도우미</h1>
-          <p className="mt-1 text-sm text-gray-500">성경 말씀에 대해 물어보세요</p>
-        </div>
-      </div>
+      <BreadcrumbNavbar />
 
       {/* 채팅 영역 */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">

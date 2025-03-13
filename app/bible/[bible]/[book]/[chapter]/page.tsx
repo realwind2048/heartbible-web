@@ -7,7 +7,7 @@ import {
 } from '@/app/domain/usecase/FreeBibleUseCase'
 import { BibleChapterView } from './components/BibleChapterView';
 import { OG_IMAGE_URL } from '@/libs/constants';
-
+import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 interface Verse {
   id: number;
   book: number;
@@ -24,13 +24,16 @@ export default async function Page({ params }: { params: Promise<{ book: number,
   const nextChapterLink = getNextChapterLink(book, chapter);
 
   return (
-    <BibleChapterView
-      bookName={bookName}
-      chapter={chapter}
-      verses={verses}
-      prevChapterLink={prevChapterLink}
-      nextChapterLink={nextChapterLink}
-    />
+    <>
+      <BreadcrumbNavbar />
+      <BibleChapterView
+        bookName={bookName}
+        chapter={chapter}
+        verses={verses}
+        prevChapterLink={prevChapterLink}
+        nextChapterLink={nextChapterLink}
+      />
+    </>
   );
 }
 
