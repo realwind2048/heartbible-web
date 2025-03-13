@@ -6,12 +6,15 @@ import ReactMarkdown from 'react-markdown';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 
 export default function BibleChatPage() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: '/api/bible/chat',
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showGuide, setShowGuide] = useState(false);
+  const [hasShownWelcome, setHasShownWelcome] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 도우미입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
     const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
@@ -19,7 +22,32 @@ export default function BibleChatPage() {
       setShowGuide(true);
       localStorage.setItem('hasSeenChatGuide', 'true');
     }
-  }, []);
+
+    // 웰컴 메시지 타이핑 효과
+    if (!hasShownWelcome && messages.length === 0) {
+      setHasShownWelcome(true);
+      setIsTyping(true);
+      let currentIndex = 0;
+      
+      const typeMessage = () => {
+        if (currentIndex < welcomeText.length) {
+          setMessages([
+            {
+              id: 'welcome-message',
+              role: 'assistant',
+              content: welcomeText.slice(0, currentIndex + 1)
+            }
+          ]);
+          currentIndex++;
+          setTimeout(typeMessage, 15);
+        } else {
+          setIsTyping(false);
+        }
+      };
+
+      typeMessage();
+    }
+  }, [messages.length, hasShownWelcome, setMessages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
