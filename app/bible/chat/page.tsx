@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react';
-import { useChat } from 'ai/react';
+import { useChat } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 
