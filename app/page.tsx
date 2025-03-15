@@ -21,7 +21,7 @@ export default function Page() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/bible/chat?q=${encodeURIComponent(query.trim())}`);
+      router.push(`/ai/chat?q=${encodeURIComponent(query.trim())}`);
     }
   };
 
