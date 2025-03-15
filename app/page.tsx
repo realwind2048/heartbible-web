@@ -22,6 +22,8 @@ export default function Page() {
     e.preventDefault();
     if (query.trim()) {
       router.push(`/ai/chat?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push(`/ai/chat`);
     }
   };
 
