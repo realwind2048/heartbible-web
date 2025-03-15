@@ -20,7 +20,7 @@ export default function BibleChatPage() {
   const [showGuide, setShowGuide] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
   const [isTyping, setIsTyping] = useState(false);
-  const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 도우미입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
+  const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
     if (initialQuery && !initialQuerySent.current) {
@@ -92,7 +92,7 @@ export default function BibleChatPage() {
             </button>
             <div className="flex flex-col space-y-4">
               <div className="text-blue-800">
-                <p className="font-medium text-lg">말씀 도우미란?</p>
+                <p className="font-medium text-lg">말씀 길잡이란?</p>
                 <p className="mt-2">성경 말씀에 대한 질문에 AI가 답변을 제공하는 도구입니다. 성경 구절의 의미, 배경, 적용 등을 이해하는 데 도움을 드립니다.</p>
               </div>
               <div className="text-red-800">

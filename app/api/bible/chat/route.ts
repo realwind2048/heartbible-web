@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai('gpt-4o-mini'),
-    system: `당신은 성경 말씀을 잘 아는 도우미입니다. 
+    system: `당신은 성경 말씀을 잘 아는 말씀 길잡이입니다. 
       사용자의 질문에 대해 성경 구절을 인용하며 답변해주세요.
       답변은 항상 친절하고 이해하기 쉽게 해주세요.
       성경 구절을 인용할 때는 반드시 출처(책, 장, 절)를 명시해주세요.

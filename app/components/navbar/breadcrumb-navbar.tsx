@@ -31,7 +31,7 @@ export function BreadcrumbNavbar() {
           label = '성경';
           break;
         case 'chat':
-          label = '말씀 도우미';
+          label = '말씀 길잡이';
           break;
         case 'share':
           label = '공유';
