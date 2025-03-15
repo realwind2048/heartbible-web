@@ -29,13 +29,10 @@ export default function BibleChatPage() {
       handleSubmit(fakeEvent as any);
     }
 
-    if (!initialQuery) {
-      const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
-      if (!hasSeenGuide) {
-        setShowGuide(true);
-        localStorage.setItem('hasSeenChatGuide', 'true');
-      }
-      handleSubmit();
+    const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
+    if (!hasSeenGuide) {
+      setShowGuide(true);
+      localStorage.setItem('hasSeenChatGuide', 'true');
     }
 
     if (!hasShownWelcome && messages.length === 0 && !initialQuery) {
