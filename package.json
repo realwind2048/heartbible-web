@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.2.3",
+    "@ai-sdk/react": "^1.1.23",
     "@next/third-parties": "^15.1.7",
     "@tsparticles/engine": "^3.8.1",
     "@tsparticles/react": "^3.0.0",
-    "ai": "^4.1.56",
     "better-sqlite3": "^11.8.1",
     "firebase": "^11.3.1",
     "next": "^15.1.7",
