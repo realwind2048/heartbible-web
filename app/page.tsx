@@ -77,7 +77,7 @@ export default function Page() {
           <EntryPointForBible />
         </div>
         <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
-          {/* <VerseFeed /> */}
+          <VerseFeed />
         </div>
       </div>
     </>
