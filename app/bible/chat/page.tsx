@@ -9,16 +9,11 @@ import { useSearchParams } from 'next/navigation';
 export default function BibleChatPage() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q');
+  const initialQuerySent = useRef(false);
   
   const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: '/api/bible/chat',
-    initialMessages: initialQuery ? [
-      {
-        id: 'initial-query',
-        role: 'user',
-        content: initialQuery
-      }
-    ] : [],
+    initialInput: initialQuery || ''
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -28,12 +23,19 @@ export default function BibleChatPage() {
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 도우미입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
+    if (initialQuery && !initialQuerySent.current) {
+      initialQuerySent.current = true;
+      const fakeEvent = new Event('submit');
+      handleSubmit(fakeEvent as any);
+    }
+
     if (!initialQuery) {
       const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
       if (!hasSeenGuide) {
         setShowGuide(true);
         localStorage.setItem('hasSeenChatGuide', 'true');
       }
+      handleSubmit();
     }
 
     if (!hasShownWelcome && messages.length === 0 && !initialQuery) {
@@ -68,6 +70,7 @@ export default function BibleChatPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  console.log("hi");
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
