@@ -28,7 +28,8 @@ const FREQUENT_QUESTIONS = [
   "일상의 시련을 어떻게 이겨낼 수 있나요?",
   "믿음이 약해질 때는 어떻게 해야 할까요?",
   "성령의 인도하심을 어떻게 받을 수 있나요?",
-  "영적 성장을 위한 구체적인 방법은 무엇인가요?"
+  "영적 성장을 위한 구체적인 방법은 무엇인가요?",
+  "창세기를 요약 정리해주세요"
 ];
 
 export default function Page() {
@@ -78,14 +79,14 @@ export default function Page() {
         </div>
         
         {/* 자주 묻는 질문 섹션 */}
-        <div className="mt-8">
-          <h2 className="text-lg font-semibold text-center mb-4 text-gray-700">자주 묻는 질문</h2>
+        <div className="mt-2">
+          <h2 className="text-lg font-semibold text-center mb-2 text-gray-700">자주 묻는 질문</h2>
           <div className="flex flex-wrap gap-2 justify-center">
             {randomQuestions.map((question, index) => (
               <button
                 key={index}
                 onClick={() => handleQuestionClick(question)}
-                className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors shadow-sm"
+                className="px-4 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors shadow-sm"
               >
                 {question}
               </button>
