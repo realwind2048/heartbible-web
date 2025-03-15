@@ -67,7 +67,6 @@ export default function BibleChatPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  console.log("hi");
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
