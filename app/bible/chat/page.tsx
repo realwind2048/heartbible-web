@@ -4,27 +4,39 @@ import { useEffect, useRef, useState } from 'react';
 import { useChat } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
+import { useSearchParams } from 'next/navigation';
 
 export default function BibleChatPage() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q');
+  
   const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: '/api/bible/chat',
+    initialMessages: initialQuery ? [
+      {
+        id: 'initial-query',
+        role: 'user',
+        content: initialQuery
+      }
+    ] : [],
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showGuide, setShowGuide] = useState(false);
-  const [hasShownWelcome, setHasShownWelcome] = useState(false);
+  const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
   const [isTyping, setIsTyping] = useState(false);
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 도우미입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
-    const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
-    if (!hasSeenGuide) {
-      setShowGuide(true);
-      localStorage.setItem('hasSeenChatGuide', 'true');
+    if (!initialQuery) {
+      const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
+      if (!hasSeenGuide) {
+        setShowGuide(true);
+        localStorage.setItem('hasSeenChatGuide', 'true');
+      }
     }
 
-    // 웰컴 메시지 타이핑 효과
-    if (!hasShownWelcome && messages.length === 0) {
+    if (!hasShownWelcome && messages.length === 0 && !initialQuery) {
       setHasShownWelcome(true);
       setIsTyping(true);
       let currentIndex = 0;
@@ -47,7 +59,7 @@ export default function BibleChatPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages]);
+  }, [messages.length, hasShownWelcome, setMessages, initialQuery]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
