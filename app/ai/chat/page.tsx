@@ -26,7 +26,7 @@ export default function BibleChatPage() {
     if (initialQuery && !initialQuerySent.current) {
       initialQuerySent.current = true;
       const fakeEvent = new Event('submit');
-      handleSubmit(fakeEvent as any);
+      handleSubmit(fakeEvent);
     }
 
     const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
@@ -58,7 +58,7 @@ export default function BibleChatPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, initialQuery]);
+  }, [messages.length, hasShownWelcome, setMessages, initialQuery, handleSubmit, welcomeText]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
