@@ -21,8 +21,6 @@ export default function RootLayout({
         {children}
       </body>
       <GoogleAnalytics gaId="G-N7BTSPTN3T" />
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1576539061828377" 
-        crossOrigin="anonymous"></script>
     </html>
   )
 }
