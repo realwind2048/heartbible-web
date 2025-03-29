@@ -18,7 +18,7 @@ export function BreadcrumbNavbar() {
     
     // 필요한 경로만 필터링
     const validPaths = paths.filter(path => 
-      ['bible', 'chat', 'share', 'settings'].includes(path)
+      ['bible', 'chat', 'share', 'settings', 'sermons'].includes(path)
     );
     
     return validPaths.map((path, index) => {
@@ -38,6 +38,9 @@ export function BreadcrumbNavbar() {
           break;
         case 'settings':
           label = '설정';
+          break;
+        case 'sermons':
+          label = '설교 말씀 요약';
           break;
         default:
           label = path;
