@@ -5,6 +5,10 @@ import { getRandomBackgroundImageSrc } from '@/app/lib/BackgroundUseCase';
 import { HeartBibleVerse } from '@/app/types/models';
 
 export function VerseFeedItem({ heartBibleVerse }: { heartBibleVerse: HeartBibleVerse}) {
+    if (!heartBibleVerse?.id) {
+        return null;
+    }
+
     const imageSrc2 = getRandomBackgroundImageSrc();
     console.log('VerseFeedItem imageSrc2:', imageSrc2);
 
