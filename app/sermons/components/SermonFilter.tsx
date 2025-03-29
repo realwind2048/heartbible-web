@@ -16,9 +16,8 @@ export function SermonFilter({
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">모든 교회</option>
+          <option value="여의도순복음교회">여의도순복음교회</option>
           <option value="사랑의교회">사랑의교회</option>
-          <option value="온누리교회">온누리교회</option>
-          <option value="지구촌교회">지구촌교회</option>
         </select>
       </div>
     </div>
