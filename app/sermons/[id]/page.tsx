@@ -6,6 +6,7 @@ import { SermonVideo } from '@/app/types/youtube';
 import { SermonService } from '@/app/services/SermonService';
 import Link from 'next/link';
 import { formatDate } from '@/app/lib/format';
+
 export default function SermonDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const [sermon, setSermon] = useState<SermonVideo | null>(null);
