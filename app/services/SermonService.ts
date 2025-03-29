@@ -17,7 +17,7 @@ export class SermonService {
 
   static async getSermonById(id: string): Promise<SermonVideo> {
     try {
-      const response = await fetch(`/api/sermon/get-sermon-summary-by-id?id=${id}`);
+      const response = await fetch(`/api/sermon/sermon-summary/${id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch sermon');
       }
