@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 import { SermonVideo } from '@/app/types/youtube';
 import { SermonService } from '@/app/services/SermonService';
 import Link from 'next/link';
 
-export default function SermonDetailPage({ params }: { params: { id: string } }) {
+export default function SermonDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const [sermon, setSermon] = useState<SermonVideo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,7 +16,7 @@ export default function SermonDetailPage({ params }: { params: { id: string } })
     const fetchSermon = async () => {
       try {
         setIsLoading(true);
-        const data = await SermonService.getSermonById(params.id);
+        const data = await SermonService.getSermonById(resolvedParams.id);
         setSermon(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : '설교 정보를 가져오는데 실패했습니다');
@@ -25,7 +26,7 @@ export default function SermonDetailPage({ params }: { params: { id: string } })
     };
 
     fetchSermon();
-  }, [params.id]);
+  }, [resolvedParams.id]);
 
   if (isLoading) {
     return (
