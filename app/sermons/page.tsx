@@ -5,10 +5,10 @@ import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 import { SermonCard } from './components/SermonCard';
 import { SermonFilter } from './components/SermonFilter';
 import { SermonVideo } from '../types/youtube';
+import { SermonService } from '@/app/services/SermonService';
 
 export default function SermonsPage() {
   const [selectedChurch, setSelectedChurch] = useState<string>('all');
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const [sermons, setSermons] = useState<SermonVideo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,18 +17,10 @@ export default function SermonsPage() {
     const fetchSermons = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/sermon/all-sermon-summary?size=10');
-        if (!response.ok) {
-          throw new Error('Failed to fetch sermons');
-        }
-        const data = await response.json();
-        console.log('API Response:', data);  // 응답 데이터 확인
-        
-        // content 배열이 있다면 그것을 사용, 아니면 전체 데이터를 사용
-        const sermonData = data.content || data;
-        setSermons(sermonData);
+        const data = await SermonService.getAllSermons(10);
+        setSermons(data);
       } catch (err) {
-        console.error('Fetch error:', err);  // 에러 로깅
+        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '설교 목록을 가져오는데 실패했습니다');
       } finally {
         setIsLoading(false);
@@ -39,10 +31,7 @@ export default function SermonsPage() {
   }, []);
 
   const filteredSermons = sermons.filter(sermon => {
-    const matchesChurch = selectedChurch === 'all' || sermon.churchName === selectedChurch;
-    const matchesSearch = sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         sermon.summary.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesChurch && matchesSearch;
+    return selectedChurch === 'all' || sermon.churchName === selectedChurch;
   });
 
   return (
@@ -57,8 +46,6 @@ export default function SermonsPage() {
         <SermonFilter
           selectedChurch={selectedChurch}
           onChurchChange={setSelectedChurch}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
         />
 
         {isLoading ? (
@@ -76,7 +63,9 @@ export default function SermonsPage() {
             ))}
             {filteredSermons.length === 0 && (
               <div className="col-span-full text-center text-gray-500 mt-8">
-                검색 결과가 없습니다.
+                {selectedChurch === 'all' 
+                  ? '설교 목록이 없습니다'
+                  : `${selectedChurch}의 설교 목록이 없습니다`}
               </div>
             )}
           </div>

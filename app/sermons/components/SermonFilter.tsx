@@ -1,28 +1,15 @@
 interface SermonFilterProps {
   selectedChurch: string;
   onChurchChange: (church: string) => void;
-  searchTerm: string;
-  onSearchChange: (term: string) => void;
 }
 
 export function SermonFilter({
   selectedChurch,
-  onChurchChange,
-  searchTerm,
-  onSearchChange
+  onChurchChange
 }: SermonFilterProps) {
   return (
     <div className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-lg shadow">
-      <div className="flex-1">
-        <input
-          type="text"
-          placeholder="말씀 제목이나 내용으로 검색..."
-          value={searchTerm}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <div className="w-full md:w-48">
+      <div className="w-full">
         <select
           value={selectedChurch}
           onChange={(e) => onChurchChange(e.target.value)}
