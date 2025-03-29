@@ -1,17 +1,2 @@
-# HeartBible 웹사이트 robots.txt
-
 User-agent: *
 Allow: /
-Allow: /bible/
-Allow: /share/
-
-# 사이트맵 인덱스
-Sitemap: https://heartbible.app/sitemap_index.xml
-
-# 크롤링 제한
-Disallow: /api/
-Disallow: /_next/
-Disallow: /static/
-
-# 크롤링 속도 제한
-Crawl-delay: 10
