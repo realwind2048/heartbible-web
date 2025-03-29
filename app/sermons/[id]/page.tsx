@@ -5,7 +5,7 @@ import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 import { SermonVideo } from '@/app/types/youtube';
 import { SermonService } from '@/app/services/SermonService';
 import Link from 'next/link';
-
+import { formatDate } from '@/app/lib/format';
 export default function SermonDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const [sermon, setSermon] = useState<SermonVideo | null>(null);
@@ -75,7 +75,7 @@ export default function SermonDetailPage({ params }: { params: Promise<{ id: str
 
             <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
               <span>{sermon.pastor}</span>
-              <span>{sermon.date}</span>
+              <span>{formatDate(sermon.date)}</span>
             </div>
 
             {sermon.bibleVerses && (
@@ -104,7 +104,7 @@ export default function SermonDetailPage({ params }: { params: Promise<{ id: str
                   href={sermon.videoUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                  className="text-[#FF0000] hover:text-[#CC0000] text-sm flex items-center"
                 >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
