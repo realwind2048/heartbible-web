@@ -22,8 +22,13 @@ export default function SermonsPage() {
           throw new Error('Failed to fetch sermons');
         }
         const data = await response.json();
-        setSermons(data);
+        console.log('API Response:', data);  // 응답 데이터 확인
+        
+        // content 배열이 있다면 그것을 사용, 아니면 전체 데이터를 사용
+        const sermonData = data.content || data;
+        setSermons(sermonData);
       } catch (err) {
+        console.error('Fetch error:', err);  // 에러 로깅
         setError(err instanceof Error ? err.message : '설교 목록을 가져오는데 실패했습니다');
       } finally {
         setIsLoading(false);
