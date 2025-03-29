@@ -86,7 +86,8 @@ export default function Page() {
         </div>
       </div>
 
-      <section className="py-12 bg-gray-50">
+      {/* 설교 말씀 요약 */}
+      <section className="py-6 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             <Link 
@@ -112,12 +113,18 @@ export default function Page() {
           </div>
         </div>
       </section>
+          
+      {/* 성경 */}
+      <section className="py-6 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <EntryPointForBible />
+        </div>
+      </section>
 
       <div className="flex flex-col gap-4 justify-center gap-4 py-3 px-5 md:px-10"> 
         <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
           <EntryPointForVerseCard />
           <EntryPointForMakeVerseCard />
-          <EntryPointForBible />
         </div>
         <div className="grid grid grid-cols-1 md:grid-cols-2 justify-center gap-4 mb-4">
           <VerseFeed />
