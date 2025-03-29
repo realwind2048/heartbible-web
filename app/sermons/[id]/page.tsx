@@ -6,6 +6,7 @@ import { SermonVideo } from '@/app/types/youtube';
 import { SermonService } from '@/app/services/SermonService';
 import Link from 'next/link';
 import { formatDate } from '@/app/lib/format';
+import ReactMarkdown from 'react-markdown';
 
 export default function SermonDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -94,9 +95,11 @@ export default function SermonDetailPage({ params }: { params: Promise<{ id: str
 
             <div className="prose prose-blue max-w-none">
               <h2 className="text-xl font-semibold mb-4">설교 요약</h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                {sermon.summary}
-              </p>
+              <div className="prose prose-sm max-w-none">
+                <ReactMarkdown>
+                  {sermon.summary}
+                </ReactMarkdown>
+              </div>
             </div>
 
             {sermon.videoUrl && (
