@@ -6,6 +6,7 @@ import { SermonCard } from './components/SermonCard';
 import { SermonFilter } from './components/SermonFilter';
 import { SermonVideo } from '../types/youtube';
 import { SermonService } from '@/app/services/SermonService';
+import { ShareButton } from '@/app/components/ShareButton';
 
 export default function SermonsPage() {
   const [selectedChurch, setSelectedChurch] = useState<string>('all');
@@ -39,9 +40,12 @@ export default function SermonsPage() {
       <BreadcrumbNavbar />
       
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          설교 말씀 요약
-        </h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-xl font-bold text-gray-900">
+            설교 말씀 요약
+          </h1>
+          <ShareButton />
+        </div>
 
         <SermonFilter
           selectedChurch={selectedChurch}
