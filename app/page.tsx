@@ -18,17 +18,19 @@ export default function Page() {
     setRandomQuestions(getRandomFrequentlyAskedQuestions(1));
   }, []);
 
+  const navigateToChat = (text?: string) => {
+    const queryParam = text?.trim() ? `?q=${encodeURIComponent(text.trim())}` : '';
+    router.push(`/ai/chat${queryParam}`);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      router.push(`/ai/chat?q=${encodeURIComponent(query.trim())}`);
-    } else {
-      router.push(`/ai/chat`);
-    }
+    navigateToChat(query);
   };
 
   const handleQuestionClick = (question: string) => {
     setQuery(question);
+    navigateToChat(question);
   };
 
   return (
