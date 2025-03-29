@@ -17,8 +17,7 @@ export default function SermonsPage() {
     const fetchSermons = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://localhost:8080/api/sermon/all-sermon-summary?size=10');
-        console.log(response);
+        const response = await fetch('/api/sermon/all-sermon-summary?size=10');
         if (!response.ok) {
           throw new Error('Failed to fetch sermons');
         }
