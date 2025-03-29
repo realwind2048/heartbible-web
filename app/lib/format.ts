@@ -5,6 +5,7 @@ export function formatDate(date: string | Date, formatString: string = 'yyyy년 
   try {
     return format(new Date(date), formatString, { locale: ko });
   } catch (error) {
+    console.error('formatDate error', error);
     return '';
   }
 } 

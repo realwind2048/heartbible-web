@@ -25,7 +25,6 @@ export default function Page() {
   }, []);
 
   const fetchSermons = async () => {
-    const service = new SermonService();
     const sermons = await SermonService.getAllSermons(6);
     setSermons(sermons);
   };
