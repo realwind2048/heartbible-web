@@ -8,7 +8,8 @@ const nextConfig: NextConfig = {
   rewrites: async () => [
     {
       source: '/api/sermon/:path*',
-      destination: 'http://localhost:8080/api/sermon/:path*'
+      destination: 'http://localhost:8080/api/sermon/:path*' // 로컬서버
+      // destination: 'https://heartbible.klutche.com/api/sermon/:path*' // 실서버
     },
   ],
 };
