@@ -1,32 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 import { SermonCard } from './components/SermonCard';
 import { SermonFilter } from './components/SermonFilter';
 import { SermonVideo } from '../types/youtube';
 
-// 임시 데이터 (나중에 API로 대체)
-const DUMMY_SERMONS: SermonVideo[] = [
-  {
-    id: '1',
-    title: '요한복음 강해: 생명의 빛',
-    churchName: '사랑의교회',
-    thumbnailUrl: 'https://i.ytimg.com/vi/example1/maxresdefault.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=example1',
-    summary: '요한복음 1장의 말씀을 통해 예수님이 어떻게 생명의 빛으로 오셨는지 설명합니다. 이 말씀은 우리의 영적 생활에 깊은 통찰을 제공합니다.',
-    pastor: '오정현 목사',
-    date: '2024-03-15',
-    bibleVerses: ['요한복음 1:1-14']
-  },
-  // 추가 더미 데이터...
-];
-
 export default function SermonsPage() {
   const [selectedChurch, setSelectedChurch] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [sermons, setSermons] = useState<SermonVideo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredSermons = DUMMY_SERMONS.filter(sermon => {
+  useEffect(() => {
+    const fetchSermons = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('http://localhost:8080/api/sermon/all-sermon-summary?size=10');
+        console.log(response);
+        if (!response.ok) {
+          throw new Error('Failed to fetch sermons');
+        }
+        const data = await response.json();
+        setSermons(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : '설교 목록을 가져오는데 실패했습니다');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSermons();
+  }, []);
+
+  const filteredSermons = sermons.filter(sermon => {
     const matchesChurch = selectedChurch === 'all' || sermon.churchName === selectedChurch;
     const matchesSearch = sermon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          sermon.summary.toLowerCase().includes(searchTerm.toLowerCase());
@@ -49,11 +57,26 @@ export default function SermonsPage() {
           onSearchChange={setSearchTerm}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {filteredSermons.map(sermon => (
-            <SermonCard key={sermon.id} sermon={sermon} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-600 mt-8">
+            {error}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {filteredSermons.map(sermon => (
+              <SermonCard key={sermon.id} sermon={sermon} />
+            ))}
+            {filteredSermons.length === 0 && (
+              <div className="col-span-full text-center text-gray-500 mt-8">
+                검색 결과가 없습니다.
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
