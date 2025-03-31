@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { SermonService } from '@/app/services/SermonService';
 import { SermonCard } from './SermonCard';
 import { ShareButton } from '@/app/components/ShareButton';
+import { SermonVideo } from '@/app/types/youtube';
 
 export default function SermonList() {
-  const [sermons, setSermons] = useState<any[]>([]);
+  const [sermons, setSermons] = useState<SermonVideo[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
