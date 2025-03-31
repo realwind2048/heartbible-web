@@ -18,6 +18,7 @@ export function SermonFilter({
           <option value="all">모든 교회</option>
           <option value="여의도순복음교회">여의도순복음교회</option>
           <option value="사랑의교회">사랑의교회</option>
+          <option value="오륜교회">오륜교회</option>
         </select>
       </div>
     </div>
