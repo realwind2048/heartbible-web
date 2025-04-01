@@ -1,15 +1,16 @@
 import { SermonVideo } from '@/app/types/youtube';
+import { KLUTCHE_BASE_URL } from '@/app/lib/constants';
 
 export class SermonService {
   static async getAllSermons(size: number = 10): Promise<SermonVideo[]> {
     try {
       console.log('Fetching sermons with size:', size);
-      const response = await fetch(`/api/sermon/all-sermon-summary?size=${size}`);
+      const response = await fetch(`${KLUTCHE_BASE_URL}api/sermon/all-sermon-summary?size=${size}`);
       if (!response.ok) {
         console.error('API Error:', response.status, response.statusText);
         const errorText = await response.text();
         console.error('Error response:', errorText);
-        throw new Error(`Failed to fetch sermons: ${response.status}`);
+        throw new Error('Failed to fetch sermons');
       }
       const data = await response.json();
       console.log('API Response:', data);
@@ -27,17 +28,24 @@ export class SermonService {
 
   static async getSermonById(id: string): Promise<SermonVideo> {
     try {
-      const response = await fetch(`/api/sermon/sermon-summary/${id}`);
+      const apiUrl = `${KLUTCHE_BASE_URL}api/sermon/sermon-summary/${id}`;
+      console.log('Fetching sermon with URL:', apiUrl);
+      
+      const response = await fetch(apiUrl);
+      
       if (!response.ok) {
         console.error('API Error:', response.status, response.statusText);
         const errorText = await response.text();
         console.error('Error response:', errorText);
-        throw new Error(`Failed to fetch sermon: ${response.status}`);
+        throw new Error('Failed to fetch sermon');
       }
-      return response.json();
+      
+      const data = await response.json();
+      console.log('Sermon data received:', data);
+      return data;
     } catch (error) {
       console.error('Sermon fetch error:', error);
-      throw error;
+      throw new Error('설교 정보를 가져오는데 실패했습니다');
     }
   }
 } 

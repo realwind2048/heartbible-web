@@ -1,6 +1,4 @@
-'use client';
-
-import { useEffect, useState, use } from 'react';
+import { Metadata } from 'next';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 import { SermonVideo } from '@/app/types/youtube';
 import { SermonService } from '@/app/services/SermonService';
@@ -9,45 +7,69 @@ import { formatDate } from '@/app/lib/format';
 import ReactMarkdown from 'react-markdown';
 import { ShareButton } from '@/app/components/ShareButton';
 
-export default function SermonDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
-  const [sermon, setSermon] = useState<SermonVideo | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchSermon = async () => {
-      try {
-        setIsLoading(true);
-        const data = await SermonService.getSermonById(resolvedParams.id);
-        setSermon(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : '설교 정보를 가져오는데 실패했습니다');
-      } finally {
-        setIsLoading(false);
-      }
+// 동적 메타데이터 생성
+export async function generateMetadata(
+  { params }: { params: Promise<{ id: string }> | { id: string } }
+): Promise<Metadata> {
+  // params가 Promise인 경우 await
+  const resolvedParams = ('then' in params) ? await params : params;
+  
+  try {
+    const sermon = await SermonService.getSermonById(resolvedParams.id);
+    
+    return {
+      title: `${sermon.title} - ${sermon.churchName}`,
+      description: sermon.summary.substring(0, 200) + '...',
+      openGraph: {
+        title: `${sermon.title} - ${sermon.churchName}`,
+        description: sermon.summary.substring(0, 200) + '...',
+        type: 'article',
+        publishedTime: sermon.date,
+        authors: [sermon.pastor],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${sermon.title} - ${sermon.churchName}`,
+        description: sermon.summary.substring(0, 200) + '...',
+      },
     };
+  } catch (error) {
+    return {
+      title: '설교 상세 - 마음말씀',
+      description: '설교 상세 페이지입니다.',
+    };
+  }
+}
 
-    fetchSermon();
-  }, [resolvedParams.id]);
+export default async function SermonDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
+  // params가 Promise인 경우 await
+  const resolvedParams = ('then' in params) ? await params : params;
+  let sermon: SermonVideo | null = null;
+  let error: string | null = null;
 
-  if (isLoading) {
+  try {
+    sermon = await SermonService.getSermonById(resolvedParams.id);
+  } catch (err) {
+    error = err instanceof Error ? err.message : '설교 정보를 가져오는데 실패했습니다';
+  }
+
+  if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
         <BreadcrumbNavbar />
-        <div className="flex justify-center items-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="text-center text-red-600 mt-8">
+          {error}
         </div>
       </div>
     );
   }
 
-  if (error || !sermon) {
+  if (!sermon) {
     return (
       <div className="min-h-screen bg-gray-50">
         <BreadcrumbNavbar />
         <div className="text-center text-red-600 mt-8">
-          {error || '설교를 찾을 수 없습니다'}
+          설교를 찾을 수 없습니다
         </div>
       </div>
     );
