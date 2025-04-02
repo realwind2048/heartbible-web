@@ -1,102 +1,99 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { PlayerRankService } from '@/app/services/PlayerRankService';
+import { PlayerRanks } from '@/app/types/player';
 
-interface RankItem {
-  rank: number;
-  name: string;
-  value: number;
-  unit: string;
-}
-
-// 더미 데이터
-const dummyData = {
-  totalPlayTime: [
-    { rank: 1, name: "김성도", value: 120, unit: "시간" },
-    { rank: 2, name: "이영희", value: 98, unit: "시간" },
-    { rank: 3, name: "박지성", value: 85, unit: "시간" },
-    // ... 나머지 데이터
-  ],
-  totalVersePlay: [
-    { rank: 1, name: "김성도", value: 1500, unit: "절" },
-    { rank: 2, name: "이영희", value: 1200, unit: "절" },
-    { rank: 3, name: "박지성", value: 1000, unit: "절" },
-    // ... 나머지 데이터
-  ],
-  singlePlayTime: [
-    { rank: 1, name: "김성도", value: 5, unit: "시간" },
-    { rank: 2, name: "이영희", value: 4, unit: "시간" },
-    { rank: 3, name: "박지성", value: 3, unit: "시간" },
-    // ... 나머지 데이터
-  ],
-  singleVersePlay: [
-    { rank: 1, name: "김성도", value: 100, unit: "절" },
-    { rank: 2, name: "이영희", value: 80, unit: "절" },
-    { rank: 3, name: "박지성", value: 70, unit: "절" },
-    // ... 나머지 데이터
-  ],
-  totalPlayCount: [
-    { rank: 1, name: "김성도", value: 500, unit: "회" },
-    { rank: 2, name: "이영희", value: 450, unit: "회" },
-    { rank: 3, name: "박지성", value: 400, unit: "회" },
-    // ... 나머지 데이터
-  ],
+const rankTitles = {
+  totalPlayTime: '총 재생 시간',
+  totalVersePlay: '총 말씀 재생',
+  singlePlayTime: '단일 재생 시간',
+  singleVersePlay: '단일 말씀 재생',
+  totalPlayCount: '총 재생 횟수'
 };
 
-function RankCard({ title, data }: { title: string; data: RankItem[] }) {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-bold text-gray-800 mb-4">{title}</h2>
-      <div className="space-y-3">
-        {data.map((item) => (
-          <div key={item.rank} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded">
-            <div className="flex items-center gap-3">
-              <span className={`w-6 h-6 flex items-center justify-center rounded-full text-sm font-semibold
-                ${item.rank === 1 ? 'bg-yellow-400 text-white' :
-                  item.rank === 2 ? 'bg-gray-300 text-white' :
-                  item.rank === 3 ? 'bg-amber-700 text-white' :
-                  'bg-gray-100 text-gray-600'}`}>
-                {item.rank}
-              </span>
-              <span className="font-medium text-gray-700">{item.name}</span>
-            </div>
-            <span className="text-gray-600">
-              {item.value.toLocaleString()} {item.unit}
+const RankCard = ({ title, items }: { title: string; items: any[] }) => (
+  <div className="bg-white rounded-lg shadow-md p-6">
+    <h2 className="text-xl font-bold mb-4 text-gray-800">{title}</h2>
+    <div className="space-y-3">
+      {items.map((item) => (
+        <div
+          key={item.rank}
+          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          <div className="flex items-center space-x-3">
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-sm font-semibold
+              ${item.rank === 1 ? 'bg-yellow-400' : 
+                item.rank === 2 ? 'bg-gray-400' : 
+                item.rank === 3 ? 'bg-amber-600' : 
+                'bg-gray-300'}`}>
+              {item.rank}
             </span>
+            <span className="font-medium text-gray-700">{item.name}</span>
           </div>
-        ))}
-      </div>
+          <span className="text-gray-600">
+            {item.value.toLocaleString()} {item.unit}
+          </span>
+        </div>
+      ))}
     </div>
-  );
-}
+  </div>
+);
 
 export default function Page() {
+  const [ranks, setRanks] = useState<PlayerRanks | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRanks = async () => {
+      try {
+        // TODO: 실제 토큰으로 교체 필요
+        const token = 'your-bearer-token';
+        const data = await PlayerRankService.getRanks(token);
+        setRanks(data);
+      } catch (err) {
+        setError('순위 데이터를 불러오는데 실패했습니다.');
+        console.error('Error fetching ranks:', err);
+      }
+    };
+
+    fetchRanks();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 p-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!ranks) {
+    return (
+      <div className="min-h-screen bg-gray-100 p-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">플레이어 미션 순위</h1>
-        
+    <div className="min-h-screen bg-gray-100 p-4">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-2xl font-bold mb-8 text-gray-800">플레이어 미션 순위</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <RankCard 
-            title="가장 오랜 시간 플레이 TOP 10" 
-            data={dummyData.totalPlayTime} 
-          />
-          <RankCard 
-            title="가장 많은 절 플레이 TOP 10" 
-            data={dummyData.totalVersePlay} 
-          />
-          <RankCard 
-            title="한 번에 가장 오랜 시간 플레이 TOP 10" 
-            data={dummyData.singlePlayTime} 
-          />
-          <RankCard 
-            title="한 번에 가장 많은 절 플레이 TOP 10" 
-            data={dummyData.singleVersePlay} 
-          />
-          <RankCard 
-            title="전체 플레이 횟수 TOP 10" 
-            data={dummyData.totalPlayCount} 
-          />
+          <RankCard title={rankTitles.totalPlayTime} items={ranks.totalPlayTime} />
+          <RankCard title={rankTitles.totalVersePlay} items={ranks.totalVersePlay} />
+          <RankCard title={rankTitles.singlePlayTime} items={ranks.singlePlayTime} />
+          <RankCard title={rankTitles.singleVersePlay} items={ranks.singleVersePlay} />
+          <RankCard title={rankTitles.totalPlayCount} items={ranks.totalPlayCount} />
         </div>
       </div>
     </div>
