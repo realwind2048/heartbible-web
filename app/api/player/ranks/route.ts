@@ -2,11 +2,19 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
   try {
-    const response = await fetch('https://heartbible.klutche.com/api/player/get-ranks', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+    const authHeader = request.headers.get('Authorization');
+    
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+
+    const response = await fetch('http://localhost:8080/api/player/get-ranks', {
+      headers,
     });
 
     if (!response.ok) {

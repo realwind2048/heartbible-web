@@ -3,12 +3,11 @@ import { PlayerRanks } from '@/app/types/player';
 export class PlayerRankService {
   private static readonly API_URL = '/api/player/ranks';
 
-  static async getRanks(bearerToken: string): Promise<PlayerRanks> {
+  static async getRanks(): Promise<PlayerRanks> {
     try {
       const response = await fetch(this.API_URL, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${bearerToken}`,
           'Content-Type': 'application/json',
         },
       });

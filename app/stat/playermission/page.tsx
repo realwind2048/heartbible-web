@@ -47,9 +47,7 @@ export default function Page() {
   useEffect(() => {
     const fetchRanks = async () => {
       try {
-        // TODO: 실제 토큰으로 교체 필요
-        const token = 'your-bearer-token';
-        const data = await PlayerRankService.getRanks(token);
+        const data = await PlayerRankService.getRanks();
         setRanks(data);
       } catch (err) {
         setError('순위 데이터를 불러오는데 실패했습니다.');
