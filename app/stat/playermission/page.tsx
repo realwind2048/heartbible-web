@@ -4,12 +4,22 @@ import { useEffect, useState } from 'react';
 import { PlayerRankService } from '@/app/services/PlayerRankService';
 import { PlayerRanks, PlayerRank } from '@/app/types/player';
 
-const rankTitles = {
-  rankByTotalPlayTime: '총 재생 시간',
-  rankByTotalPlayVerseCount: '총 말씀 재생',
-  rankByMaxPlayTimeAtOnce: '단일 재생 시간',
-  rankByMaxPlayVerseCountAtOnce: '단일 말씀 재생',
-  rankByTotalPlayCount: '총 재생 횟수'
+type RankType = 'totalPlayTime' | 'totalPlayVerseCount' | 'maxPlayTimeAtOnce' | 'maxPlayVerseCountAtOnce' | 'totalPlayCount';
+
+const RANK_TYPES = {
+  totalPlayTime: 'totalPlayTime',
+  totalPlayVerseCount: 'totalPlayVerseCount',
+  maxPlayTimeAtOnce: 'maxPlayTimeAtOnce',
+  maxPlayVerseCountAtOnce: 'maxPlayVerseCountAtOnce',
+  totalPlayCount: 'totalPlayCount',
+} as const;
+
+const rankTitles: Record<RankType, string> = {
+  totalPlayTime: '총 재생 시간',
+  totalPlayVerseCount: '총 말씀 재생',
+  maxPlayTimeAtOnce: '단일 재생 시간',
+  maxPlayVerseCountAtOnce: '단일 말씀 재생',
+  totalPlayCount: '총 재생 횟수'
 };
 
 const formatTime = (milliseconds: number): string => {
@@ -26,9 +36,26 @@ const formatTime = (milliseconds: number): string => {
   }
 };
 
-const RankCard = ({ title, items }: { title: string; items: PlayerRank[] }) => (
+const getRankValue = (item: PlayerRank, type: RankType): string => {
+  switch (type) {
+    case RANK_TYPES.totalPlayTime:
+      return formatTime(item.totalPlayTime);
+    case RANK_TYPES.totalPlayVerseCount:
+      return `${item.totalPlayVerseCount.toLocaleString()}절`;
+    case RANK_TYPES.maxPlayTimeAtOnce:
+      return formatTime(item.maxPlayTimeAtOnce);
+    case RANK_TYPES.maxPlayVerseCountAtOnce:
+      return `${item.maxPlayVerseCountAtOnce.toLocaleString()}절`;
+    case RANK_TYPES.totalPlayCount:
+      return `${item.totalPlayCount.toLocaleString()}회`;
+    default:
+      return '';
+  }
+};
+
+const RankCard = ({ type, items }: { type: RankType; items: PlayerRank[] }) => (
   <div className="bg-white rounded-lg shadow-md p-6">
-    <h2 className="text-xl font-bold mb-4 text-gray-800">{title}</h2>
+    <h2 className="text-xl font-bold mb-4 text-gray-800">{rankTitles[type]}</h2>
     <div className="space-y-3">
       {items.map((item, index) => (
         <div
@@ -48,11 +75,7 @@ const RankCard = ({ title, items }: { title: string; items: PlayerRank[] }) => (
             <span className="font-medium text-gray-700">{item.name}</span>
           </div>
           <span className="text-gray-600">
-            {title.includes('단일 재생 시간') ? formatTime(item.maxPlayTimeAtOnce) :
-             title.includes('단일 말씀 재생') ? `${item.maxPlayVerseCountAtOnce.toLocaleString()}절` :
-             title.includes('총 재생 시간') ? formatTime(item.totalPlayTime) :
-             title.includes('총 말씀 재생') ? `${item.totalPlayVerseCount.toLocaleString()}절` :
-             `${item.totalPlayCount.toLocaleString()}회`}
+            {getRankValue(item, type)}
           </span>
         </div>
       ))}
@@ -107,11 +130,11 @@ export default function Page() {
       <div className="max-w-7xl mx-auto">
         <h1 className="text-2xl font-bold mb-8 text-gray-800">플레이어 미션 순위</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <RankCard title={rankTitles.rankByTotalPlayTime} items={ranks.rankByTotalPlayTime} />
-          <RankCard title={rankTitles.rankByTotalPlayVerseCount} items={ranks.rankByTotalPlayVerseCount} />
-          <RankCard title={rankTitles.rankByMaxPlayTimeAtOnce} items={ranks.rankByMaxPlayTimeAtOnce} />
-          <RankCard title={rankTitles.rankByMaxPlayVerseCountAtOnce} items={ranks.rankByMaxPlayVerseCountAtOnce} />
-          <RankCard title={rankTitles.rankByTotalPlayCount} items={ranks.rankByTotalPlayCount} />
+          <RankCard type={RANK_TYPES.totalPlayTime} items={ranks.rankByTotalPlayTime} />
+          <RankCard type={RANK_TYPES.totalPlayVerseCount} items={ranks.rankByTotalPlayVerseCount} />
+          <RankCard type={RANK_TYPES.maxPlayTimeAtOnce} items={ranks.rankByMaxPlayTimeAtOnce} />
+          <RankCard type={RANK_TYPES.maxPlayVerseCountAtOnce} items={ranks.rankByMaxPlayVerseCountAtOnce} />
+          <RankCard type={RANK_TYPES.totalPlayCount} items={ranks.rankByTotalPlayCount} />
         </div>
       </div>
     </div>
