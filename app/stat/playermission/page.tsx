@@ -48,8 +48,10 @@ const RankCard = ({ title, items }: { title: string; items: PlayerRank[] }) => (
             <span className="font-medium text-gray-700">{item.name}</span>
           </div>
           <span className="text-gray-600">
-            {title.includes('시간') ? formatTime(item.totalPlayTime) :
-             title.includes('말씀') ? `${item.totalPlayVerseCount.toLocaleString()}절` :
+            {title.includes('단일 재생 시간') ? formatTime(item.maxPlayTimeAtOnce) :
+             title.includes('단일 말씀 재생') ? `${item.maxPlayVerseCountAtOnce.toLocaleString()}절` :
+             title.includes('총 재생 시간') ? formatTime(item.totalPlayTime) :
+             title.includes('총 말씀 재생') ? `${item.totalPlayVerseCount.toLocaleString()}절` :
              `${item.totalPlayCount.toLocaleString()}회`}
           </span>
         </div>
