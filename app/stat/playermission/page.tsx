@@ -2,37 +2,47 @@
 
 import { useEffect, useState } from 'react';
 import { PlayerRankService } from '@/app/services/PlayerRankService';
-import { PlayerRanks } from '@/app/types/player';
+import { PlayerRanks, PlayerRank } from '@/app/types/player';
 
 const rankTitles = {
-  totalPlayTime: '총 재생 시간',
-  totalVersePlay: '총 말씀 재생',
-  singlePlayTime: '단일 재생 시간',
-  singleVersePlay: '단일 말씀 재생',
-  totalPlayCount: '총 재생 횟수'
+  rankByTotalPlayTime: '총 재생 시간',
+  rankByTotalPlayVerseCount: '총 말씀 재생',
+  rankByMaxPlayTimeAtOnce: '단일 재생 시간',
+  rankByMaxPlayVerseCountAtOnce: '단일 말씀 재생',
+  rankByTotalPlayCount: '총 재생 횟수'
 };
 
-const RankCard = ({ title, items }: { title: string; items: any[] }) => (
+const formatTime = (milliseconds: number): string => {
+  const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+  const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  return `${hours}시간 ${minutes}분`;
+};
+
+const RankCard = ({ title, items }: { title: string; items: PlayerRank[] }) => (
   <div className="bg-white rounded-lg shadow-md p-6">
     <h2 className="text-xl font-bold mb-4 text-gray-800">{title}</h2>
     <div className="space-y-3">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div
-          key={item.rank}
-          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          key={item.id}
+          className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
+            item.isMyRank ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
+          }`}
         >
           <div className="flex items-center space-x-3">
             <span className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-sm font-semibold
-              ${item.rank === 1 ? 'bg-yellow-400' : 
-                item.rank === 2 ? 'bg-gray-400' : 
-                item.rank === 3 ? 'bg-amber-600' : 
+              ${index === 0 ? 'bg-yellow-400' : 
+                index === 1 ? 'bg-gray-400' : 
+                index === 2 ? 'bg-amber-600' : 
                 'bg-gray-300'}`}>
-              {item.rank}
+              {index + 1}
             </span>
             <span className="font-medium text-gray-700">{item.name}</span>
           </div>
           <span className="text-gray-600">
-            {item.value.toLocaleString()} {item.unit}
+            {title.includes('시간') ? formatTime(item.totalPlayTime) :
+             title.includes('말씀') ? `${item.totalPlayVerseCount.toLocaleString()}절` :
+             `${item.totalPlayCount.toLocaleString()}회`}
           </span>
         </div>
       ))}
@@ -87,11 +97,11 @@ export default function Page() {
       <div className="max-w-7xl mx-auto">
         <h1 className="text-2xl font-bold mb-8 text-gray-800">플레이어 미션 순위</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <RankCard title={rankTitles.totalPlayTime} items={ranks.totalPlayTime} />
-          <RankCard title={rankTitles.totalVersePlay} items={ranks.totalVersePlay} />
-          <RankCard title={rankTitles.singlePlayTime} items={ranks.singlePlayTime} />
-          <RankCard title={rankTitles.singleVersePlay} items={ranks.singleVersePlay} />
-          <RankCard title={rankTitles.totalPlayCount} items={ranks.totalPlayCount} />
+          <RankCard title={rankTitles.rankByTotalPlayTime} items={ranks.rankByTotalPlayTime} />
+          <RankCard title={rankTitles.rankByTotalPlayVerseCount} items={ranks.rankByTotalPlayVerseCount} />
+          <RankCard title={rankTitles.rankByMaxPlayTimeAtOnce} items={ranks.rankByMaxPlayTimeAtOnce} />
+          <RankCard title={rankTitles.rankByMaxPlayVerseCountAtOnce} items={ranks.rankByMaxPlayVerseCountAtOnce} />
+          <RankCard title={rankTitles.rankByTotalPlayCount} items={ranks.rankByTotalPlayCount} />
         </div>
       </div>
     </div>

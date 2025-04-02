@@ -1,14 +1,28 @@
-export interface RankItem {
-  rank: number;
+interface Timestamp {
+  _seconds: number;
+  _nanoseconds: number;
+}
+
+export interface PlayerRank {
+  id: string;
   name: string;
-  value: number;
-  unit: string;
+  totalPlayTime: number;
+  totalPlayVerseCount: number;
+  maxPlayTimeAtOnce: number;
+  maxPlayVerseCountAtOnce: number;
+  totalPlayCount: number;
+  totalCompleteCount: number;
+  totalStartCount: number;
+  currentPlayerMissionId: string;
+  createdAt: Timestamp;
+  modifiedAt: Timestamp;
+  isMyRank: boolean;
 }
 
 export interface PlayerRanks {
-  totalPlayTime: RankItem[];
-  totalVersePlay: RankItem[];
-  singlePlayTime: RankItem[];
-  singleVersePlay: RankItem[];
-  totalPlayCount: RankItem[];
+  rankByTotalPlayTime: PlayerRank[];
+  rankByTotalPlayVerseCount: PlayerRank[];
+  rankByMaxPlayTimeAtOnce: PlayerRank[];
+  rankByMaxPlayVerseCountAtOnce: PlayerRank[];
+  rankByTotalPlayCount: PlayerRank[];
 } 
