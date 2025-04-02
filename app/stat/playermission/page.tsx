@@ -13,9 +13,17 @@ const rankTitles = {
 };
 
 const formatTime = (milliseconds: number): string => {
-  const hours = Math.floor(milliseconds / (1000 * 60 * 60));
-  const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
-  return `${hours}시간 ${minutes}분`;
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const days = Math.floor(totalSeconds / (24 * 60 * 60));
+  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (days > 0) {
+    return `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
+  } else {
+    return `${hours}시간 ${minutes}분 ${seconds}초`;
+  }
 };
 
 const RankCard = ({ title, items }: { title: string; items: PlayerRank[] }) => (
