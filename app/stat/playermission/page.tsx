@@ -126,7 +126,8 @@ export default function Page() {
         }
 
         if (!token) {
-          throw new Error('토큰이 없습니다.');
+          console.log('토큰이 없습니다.');
+          // 토큰이 없어도 사용할 수 있음
         }
 
         const data = await PlayerRankService.getRanks(token);
