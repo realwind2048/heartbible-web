@@ -73,6 +73,11 @@ const RankCard = ({ type, items }: { type: RankType; items: PlayerRank[] }) => (
               {index + 1}
             </span>
             <span className="font-medium text-gray-700">{item.name}</span>
+            {item.isMyRank && (
+              <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
+                나의 순위
+              </span>
+            )}
           </div>
           <span className="text-gray-600">
             {getRankValue(item, type)}
@@ -88,9 +93,43 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const getTokenFromApp = (): Promise<string | null> => {
+      // Android
+      if (window.AndroidInterface) {
+        return Promise.resolve(window.AndroidInterface.getToken());
+      }
+      // iOS
+      if (window.webkit?.messageHandlers?.getToken) {
+        return new Promise((resolve) => {
+          window.webkit!.messageHandlers.getToken.postMessage({
+            callback: (token: string) => resolve(token)
+          });
+        });
+      }
+      return Promise.resolve(null);
+    };
+
     const fetchRanks = async () => {
       try {
-        const data = await PlayerRankService.getRanks();
+        // 1. URL 파라미터에서 토큰 확인
+        const urlParams = new URLSearchParams(window.location.search);
+        let token = urlParams.get('token');
+
+        // 2. URL에 없다면 앱에서 토큰 가져오기 시도
+        if (!token) {
+          token = await getTokenFromApp();
+        }
+
+        // 3. 둘 다 없다면 localStorage 확인
+        if (!token) {
+          token = localStorage.getItem('token');
+        }
+
+        if (!token) {
+          throw new Error('토큰이 없습니다.');
+        }
+
+        const data = await PlayerRankService.getRanks(token);
         setRanks(data);
       } catch (err) {
         setError('순위 데이터를 불러오는데 실패했습니다.');
