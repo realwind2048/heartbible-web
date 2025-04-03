@@ -112,7 +112,7 @@ export default function Page() {
     const fetchRanks = async () => {
       try {
         // 2. URL에 앱에서 토큰 가져오기 시도
-        let token = await getTokenFromApp();
+        const token = await getTokenFromApp();
 
         if (!token) {
             console.log('토큰이 없습니다.');
