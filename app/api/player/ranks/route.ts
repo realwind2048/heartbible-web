@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       headers['Authorization'] = authHeader;
     }
 
-    const response = await fetch('http://localhost:8080/api/player/get-ranks', {
+    const response = await fetch('https://heartbible.klutche.com/api/player/get-ranks', {
       headers,
     });
 
