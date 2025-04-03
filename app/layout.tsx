@@ -18,9 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fontPretendard.className}>
+        {/* 프로덕션 환경에서만 구글 애널리틱스 추가 */}
+        {process.env.NODE_ENV === 'production' && (
+          <GoogleAnalytics gaId="G-N7BTSPTN3T" />
+        )}
         {children}
       </body>
-      <GoogleAnalytics gaId="G-N7BTSPTN3T" />
     </html>
   )
 }
