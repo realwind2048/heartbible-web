@@ -54,32 +54,32 @@ const getRankValue = (item: PlayerRank, type: RankType): string => {
 };
 
 const RankCard = ({ type, items }: { type: RankType; items: PlayerRank[] }) => (
-  <div className="bg-white rounded-lg shadow-md p-6">
-    <h2 className="text-xl font-bold mb-4 text-gray-800">{rankTitles[type]}</h2>
-    <div className="space-y-3">
+  <div className="bg-white rounded-lg shadow-md p-4">
+    <h2 className="text-lg font-bold mb-3 text-gray-800">{rankTitles[type]}</h2>
+    <div className="space-y-2">
       {items.map((item, index) => (
         <div
           key={item.id}
-          className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
+          className={`flex items-center justify-between p-2 rounded-lg transition-colors ${
             item.isMyRank ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
           }`}
         >
-          <div className="flex items-center space-x-3">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-sm font-semibold
+          <div className="flex items-center space-x-2">
+            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-semibold
               ${index === 0 ? 'bg-yellow-400' : 
                 index === 1 ? 'bg-gray-400' : 
                 index === 2 ? 'bg-amber-600' : 
                 'bg-gray-300'}`}>
               {index + 1}
             </span>
-            <span className="font-medium text-gray-700">{item.name}</span>
+            <span className="font-medium text-gray-700 text-sm">{item.name}</span>
             {item.isMyRank && (
               <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
                 내 순위
               </span>
             )}
           </div>
-          <span className="text-gray-600">
+          <span className="text-gray-600 text-sm">
             {getRankValue(item, type)}
           </span>
         </div>
@@ -157,10 +157,10 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen bg-gray-100 p-3">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-8 text-gray-800">플레이어 미션 순위</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h1 className="text-xl font-bold mb-4 text-gray-800">플레이어 미션 순위</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <RankCard type={RANK_TYPES.totalPlayTime} items={ranks.rankByTotalPlayTime} />
           <RankCard type={RANK_TYPES.totalPlayVerseCount} items={ranks.rankByTotalPlayVerseCount} />
           <RankCard type={RANK_TYPES.maxPlayTimeAtOnce} items={ranks.rankByMaxPlayTimeAtOnce} />
