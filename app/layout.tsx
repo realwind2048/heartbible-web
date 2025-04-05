@@ -4,7 +4,7 @@ import './globals.css'
 import { GoogleAnalytics } from '@next/third-parties/google'
 export const metadata: Metadata = {
   title: '마음말씀',
-  description: '마음말씀 사이트입니다.',
+  description: '마음말씀은 성경을 쉽고 재미있게 읽을 수 있도록 돕는 서비스입니다. 성경 도우미 AI, 말씀 카드 공유하기, 설교 요약 등 다양한 기능을 제공합니다.',
 }
 
 // Font files can be colocated inside of `pages`
