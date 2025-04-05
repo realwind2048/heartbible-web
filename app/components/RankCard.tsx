@@ -1,6 +1,13 @@
 import { PlayerRank } from '@/app/types/player';
+import { PointRank } from '@/app/types/point';
 
-export type RankType = 'totalPlayTime' | 'totalPlayVerseCount' | 'maxPlayTimeAtOnce' | 'maxPlayVerseCountAtOnce' | 'totalPlayCount';
+export type RankType = 
+  | 'totalPlayTime' 
+  | 'totalPlayVerseCount' 
+  | 'maxPlayTimeAtOnce' 
+  | 'maxPlayVerseCountAtOnce' 
+  | 'totalPlayCount'
+  | 'totalPoint';
 
 export const RANK_TYPES = {
   totalPlayTime: 'totalPlayTime',
@@ -8,6 +15,7 @@ export const RANK_TYPES = {
   maxPlayTimeAtOnce: 'maxPlayTimeAtOnce',
   maxPlayVerseCountAtOnce: 'maxPlayVerseCountAtOnce',
   totalPlayCount: 'totalPlayCount',
+  totalPoint: 'totalPoint',
 } as const;
 
 export const rankTitles: Record<RankType, string> = {
@@ -15,7 +23,8 @@ export const rankTitles: Record<RankType, string> = {
   totalPlayVerseCount: '총 말씀 재생',
   maxPlayTimeAtOnce: '단일 재생 시간',
   maxPlayVerseCountAtOnce: '단일 말씀 재생',
-  totalPlayCount: '총 재생 횟수'
+  totalPlayCount: '총 재생 횟수',
+  totalPoint: '총 포인트'
 };
 
 const formatTime = (milliseconds: number): string => {
@@ -32,18 +41,20 @@ const formatTime = (milliseconds: number): string => {
   }
 };
 
-const getRankValue = (item: PlayerRank, type: RankType): string => {
+const getRankValue = (item: PlayerRank | PointRank, type: RankType): string => {
   switch (type) {
     case RANK_TYPES.totalPlayTime:
-      return formatTime(item.totalPlayTime);
+      return formatTime((item as PlayerRank).totalPlayTime);
     case RANK_TYPES.totalPlayVerseCount:
-      return `${item.totalPlayVerseCount.toLocaleString()}절`;
+      return `${(item as PlayerRank).totalPlayVerseCount.toLocaleString()}절`;
     case RANK_TYPES.maxPlayTimeAtOnce:
-      return formatTime(item.maxPlayTimeAtOnce);
+      return formatTime((item as PlayerRank).maxPlayTimeAtOnce);
     case RANK_TYPES.maxPlayVerseCountAtOnce:
-      return `${item.maxPlayVerseCountAtOnce.toLocaleString()}절`;
+      return `${(item as PlayerRank).maxPlayVerseCountAtOnce.toLocaleString()}절`;
     case RANK_TYPES.totalPlayCount:
-      return `${item.totalPlayCount.toLocaleString()}회`;
+      return `${(item as PlayerRank).totalPlayCount.toLocaleString()}회`;
+    case RANK_TYPES.totalPoint:
+      return `${(item as PointRank).totalPoint.toLocaleString()}P`;
     default:
       return '';
   }
@@ -51,7 +62,7 @@ const getRankValue = (item: PlayerRank, type: RankType): string => {
 
 interface RankCardProps {
   type: RankType;
-  items: PlayerRank[];
+  items: (PlayerRank | PointRank)[];
 }
 
 export const RankCard = ({ type, items }: RankCardProps) => (
