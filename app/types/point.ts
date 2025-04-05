@@ -1,7 +1,7 @@
 export interface PointRank {
   id: string;
   name: string;
-  totalPoint: number;
+  totalEarnPoint: number;
   isMyRank: boolean;
 }
 

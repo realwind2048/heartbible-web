@@ -12,8 +12,8 @@ export default function PointPage() {
   useEffect(() => {
     const getTokenFromApp = (): Promise<string | null> => {
       // Android
-      if (window.JSBridge) {
-        return Promise.resolve(window.JSBridge.getToken());
+      if (window.AndroidInterface) {
+        return Promise.resolve(window.AndroidInterface.getToken());
       }
       // iOS
       if (window.webkit?.messageHandlers?.getToken) {
@@ -32,8 +32,6 @@ export default function PointPage() {
 
         if (!token) {
           console.log('토큰이 없습니다.');
-        } else {
-          console.log(token);
         }
 
         const data = await PointRankService.getRanks(token);
