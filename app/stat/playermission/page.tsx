@@ -74,7 +74,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-gray-100 p-3">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold mb-4 text-gray-800">플레이어 미션 순위</h1>
+        <h1 className="text-xl font-bold mb-4 text-gray-800">도전 성경일독 순위</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <RankCard type={RANK_TYPES.totalPlayTime} items={ranks.rankByTotalPlayTime} />
           <RankCard type={RANK_TYPES.totalPlayVerseCount} items={ranks.rankByTotalPlayVerseCount} />
@@ -86,4 +86,3 @@ export default function Page() {
     </div>
   );
 }
-
