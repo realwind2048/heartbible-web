@@ -2,8 +2,8 @@ import SermonList from '@/app/sermons/components/SermonList';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '마음말씀 - 설교 말씀 요약',
-  description: '성경 말씀을 쉽게 이해하고 적용하세요',
+  title: '설교 말씀 요약',
+  description: '여러 교회 목사님들의 설교 말씀을 요약한 내용을 원본 링크와 함께 제공합니다.',
   openGraph: {
     type: 'article',
     images: [
