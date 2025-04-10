@@ -1,5 +1,6 @@
 import SermonList from '@/app/sermons/components/SermonList';
 import { Metadata } from 'next';
+import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 
 export const metadata: Metadata = {
   title: '설교 말씀 요약 목록',
@@ -19,8 +20,11 @@ export const metadata: Metadata = {
 
 export default function SermonsPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <SermonList />
+    <div className="min-h-screen bg-gray-100">
+      <BreadcrumbNavbar />
+      <div className="container mx-auto px-4 py-8">
+        <SermonList />
+      </div>
     </div>
   );
 }
