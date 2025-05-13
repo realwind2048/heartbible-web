@@ -8,7 +8,7 @@ const aiFeatures = [
     title: 'AI 채팅',
     description: 'AI와 자유롭게 대화하며 성경에 대해 물어보세요',
     icon: MessageSquare,
-    href: '/ai/chat',
+    href: '/mobileapp/ai/chat',
     color: 'bg-blue-500',
   },
   // {
