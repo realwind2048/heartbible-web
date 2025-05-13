@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI 도우미',
+  title: '말씀 길잡이',
   description: 'AI와 함께하는 성경 공부, 기도, 설교 작성',
   openGraph: {
     type: 'website',
