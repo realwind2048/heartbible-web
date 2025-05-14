@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { MessageSquare } from 'lucide-react';
+import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 
 const aiFeatures = [
   {
@@ -58,9 +59,9 @@ const aiFeatures = [
 export default function AIPage() {
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">말씀 길잡이</h1>
-        <div className="grid grid-cols-1 gap-4">
+      <MobileDefaultNavbar />
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 gap-4 mt-6">
           {aiFeatures.map((feature) => (
             <Link
               key={feature.title}

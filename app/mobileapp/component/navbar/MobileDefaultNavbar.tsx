@@ -22,6 +22,9 @@ export function MobileDefaultNavbar() {
       case 'bible':
         label = '성경';
         break;
+      case 'ai':
+        label = '말씀 길잡이';
+        break;
       case 'chat':
         label = '말씀 길잡이 AI 채팅';
         break;
