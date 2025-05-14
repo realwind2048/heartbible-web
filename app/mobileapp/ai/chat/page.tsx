@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useChat } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown';
-import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
+import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
 
 export default function BibleChatPage() {
@@ -70,6 +70,8 @@ export default function BibleChatPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
+      <MobileDefaultNavbar />
+
       {/* 도움말 버튼 */}
       <button
         onClick={() => setShowGuide(!showGuide)}
