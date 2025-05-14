@@ -57,9 +57,22 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
+  const handleNavbarBackEvent = () => {
+    console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
+    
+    if (typeof window !== 'undefined') {
+      if (window.JSBridge && typeof window.JSBridge.closeActivity === 'function') {
+        console.log('Attempting to close activity from AIPage');
+        window.JSBridge.closeActivity();
+      } else {
+        console.log('Not closing activity from AIPage. Standard router.back() will proceed.');
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
-      <MobileDefaultNavbar />
+      <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-4 mt-6">
           {aiFeatures.map((feature) => (
