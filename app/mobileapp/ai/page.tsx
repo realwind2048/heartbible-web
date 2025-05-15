@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { MessageSquare } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
-import { getTokenFromApp } from '@/app/utils/appBridge';
+import { getUserInfoFromApp } from '@/app/utils/appBridge';
 import { useEffect, useState } from 'react';
 
 const aiFeatures = [
@@ -59,14 +59,14 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const [token, setToken] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<string | null>(null);
 
   useEffect(() => {
-    const getToken = async () => {
-      const token = await getTokenFromApp();
-      setToken(token);
+    const getUserInfo = async () => {
+      const userInfo = await getUserInfoFromApp();
+      setUserInfo(userInfo);
     };
-    getToken();
+    getUserInfo();
   }, []);
   // useEffect(() => {
   //   const getTokenFromApp = (): Promise<string | null> => {
@@ -106,7 +106,7 @@ export default function AIPage() {
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="p-4">
         <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded">
-          <p>토큰: {token}</p>
+          <p>유저 정보: {userInfo}</p>
         </div>
       </div>
       <div className="container mx-auto px-4">
