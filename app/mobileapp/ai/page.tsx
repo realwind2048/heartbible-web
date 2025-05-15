@@ -104,11 +104,6 @@ export default function AIPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
-      <div className="p-4">
-        <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded">
-          <p>유저 정보: {userInfo}</p>
-        </div>
-      </div>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-4 mt-6">
           {aiFeatures.map((feature) => (
