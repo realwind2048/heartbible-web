@@ -79,7 +79,11 @@ export default function BibleChatPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <MobileDefaultNavbar />
-
+      <div className="p-4">
+        <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded">
+          <p>유저 정보: {userInfo}</p>
+        </div>
+      </div>
       {/* 도움말 버튼 */}
       <button
         onClick={() => setShowGuide(!showGuide)}
