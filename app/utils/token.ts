@@ -1,13 +1,8 @@
 export const getTokenFromApp = (): Promise<string | null> => {
-  if (typeof window === 'undefined') {
-    return Promise.resolve(null);
-  }
-
   // Android
-  if (window.JSBridge && typeof window.JSBridge.getToken === 'function') {
+  if (window.JSBridge) {
     return Promise.resolve(window.JSBridge.getToken());
   }
-
   // iOS
   if (window.webkit?.messageHandlers?.getToken) {
     return new Promise((resolve) => {
@@ -16,6 +11,5 @@ export const getTokenFromApp = (): Promise<string | null> => {
       });
     });
   }
-
   return Promise.resolve(null);
 }; 
