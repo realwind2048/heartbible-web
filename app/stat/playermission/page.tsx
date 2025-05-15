@@ -5,28 +5,13 @@ import { PlayerRankService } from '@/app/services/PlayerRankService';
 import { PlayerRanks } from '@/app/types/player';
 import { RankCard, RANK_TYPES } from '@/app/components/RankCard';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
+import { getTokenFromApp } from '@/app/utils/token';
 
 export default function Page() {
   const [ranks, setRanks] = useState<PlayerRanks | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getTokenFromApp = (): Promise<string | null> => {
-      // Android
-      if (window.JSBridge) {
-        return Promise.resolve(window.JSBridge.getToken());
-      }
-      // iOS
-      if (window.webkit?.messageHandlers?.getToken) {
-        return new Promise((resolve) => {
-          window.webkit!.messageHandlers.getToken.postMessage({
-            callback: (token: string) => resolve(token)
-          });
-        });
-      }
-      return Promise.resolve(null);
-    };
-
     const fetchRanks = async () => {
       try {
         const token = await getTokenFromApp();
