@@ -5,7 +5,7 @@ import { PlayerRankService } from '@/app/services/PlayerRankService';
 import { PlayerRanks } from '@/app/types/player';
 import { RankCard, RANK_TYPES } from '@/app/components/RankCard';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
-import { getTokenFromApp } from '@/app/utils/token';
+import { getTokenFromApp } from '@/app/utils/appBridge';
 
 export default function Page() {
   const [ranks, setRanks] = useState<PlayerRanks | null>(null);

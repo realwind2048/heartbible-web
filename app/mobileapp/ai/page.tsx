@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { MessageSquare } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
-import { getTokenFromApp } from '@/app/utils/token';
+import { getTokenFromApp } from '@/app/utils/appBridge';
 import { useEffect, useState } from 'react';
 
 const aiFeatures = [
