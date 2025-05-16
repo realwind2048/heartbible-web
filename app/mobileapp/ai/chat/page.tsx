@@ -5,7 +5,8 @@ import { useChat } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
-import { getUserInfoFromApp } from '@/app/utils/appBridge';
+import { getTokenFromApp } from '@/app/utils/appBridge';
+import { get } from 'http';
 
 export default function BibleChatPage() {
   const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ export default function BibleChatPage() {
     initialInput: initialQuery || ''
   });
 
-  const [userInfo, setUserInfo] = useState<string | null>(null);
+  const [userInfo, setToken] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showGuide, setShowGuide] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
@@ -25,11 +26,11 @@ export default function BibleChatPage() {
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      const userInfo = await getUserInfoFromApp();
-      setUserInfo(userInfo);
+    const getToken = async () => {
+      const token = await getTokenFromApp();
+      setToken(token);
     };
-    getUserInfo();
+    getToken();
 
     if (initialQuery && !initialQuerySent.current) {
       initialQuerySent.current = true;

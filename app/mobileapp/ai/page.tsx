@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { MessageSquare } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
-import { getUserInfoFromApp } from '@/app/utils/appBridge';
+import { getTokenFromApp } from '@/app/utils/appBridge';
 import { useEffect, useState } from 'react';
 
 const aiFeatures = [
@@ -59,14 +59,14 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const [userInfo, setUserInfo] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      const userInfo = await getUserInfoFromApp();
-      setUserInfo(userInfo);
+    const getToken = async () => {
+      const token = await getTokenFromApp();
+      setToken(token);
     };
-    getUserInfo();
+    getToken();
   }, []);
   // useEffect(() => {
   //   const getTokenFromApp = (): Promise<string | null> => {

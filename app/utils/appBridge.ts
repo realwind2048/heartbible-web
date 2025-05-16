@@ -13,19 +13,3 @@ export const getTokenFromApp = (): Promise<string | null> => {
   }
   return Promise.resolve(null);
 }; 
-
-export const getUserInfoFromApp = (): Promise<string | null> => {
-  // Android
-  if (window.JSBridge) {
-    return Promise.resolve(window.JSBridge.getUserInfo());
-  }
-  // iOS
-  if (window.webkit?.messageHandlers?.getUserInfo) {
-    return new Promise((resolve) => {
-      window.webkit!.messageHandlers.getUserInfo.postMessage({
-        callback: (userInfo: string) => resolve(userInfo)
-      });
-    });
-  }
-  return Promise.resolve(null);
-}; 
