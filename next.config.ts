@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
       // destination: 'http://localhost:8080/api/sermon/:path*' // 로컬서버
       destination: 'https://heartbible.klutche.com/api/sermon/:path*' // 실서버
     },
+    {
+      source: '/api/ai-chat/:path*',
+      destination: 'http://localhost:8080/api/ai-chat/:path*' // 로컬서버
+      // destination: 'https://heartbible.klutche.com/api/ai-chat/:path*' // 실서버
+    },
   ],
 };
 

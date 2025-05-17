@@ -4,47 +4,79 @@ import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 
 interface QnAHistory {
-  id: string;
-  question: string;
-  answer: string;
+  message: string;
+  aiMessage: string;
   timestamp: string;
 }
 
 export default function QnAHistoryPage() {
   const [history, setHistory] = useState<QnAHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { token: webviewToken } = useWebviewParams();
+  const [token, setToken] = useState<string | null>(webviewToken);
 
   useEffect(() => {
-    // TODO: 실제 API 연동 시 이 부분을 수정해야 합니다
+    if (webviewToken) {
+      setToken(webviewToken);
+    }
+  }, [webviewToken]);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
     const fetchHistory = async () => {
       try {
-        // 임시 데이터
-        const mockData: QnAHistory[] = [
-          {
-            id: '1',
-            question: '예수님의 탄생에 대해 알려주세요',
-            answer: '예수님은 베들레헴에서 마리아와 요셉 사이에서 태어나셨습니다...',
-            timestamp: new Date().toISOString(),
+        const response = await fetch(`/api/ai-chat/ai-my-chat-v1-history`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
-          {
-            id: '2',
-            question: '십계명이 무엇인가요?',
-            answer: '십계명은 하나님께서 모세를 통해 이스라엘 백성에게 주신 열 가지 계명입니다...',
-            timestamp: new Date(Date.now() - 86400000).toISOString(),
-          },
-        ];
-        setHistory(mockData);
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error('Q&A 내역을 불러오는데 실패했습니다');
+        }
+
+        const text = await response.text();
+        if (!text) {
+          throw new Error('서버 응답이 비어있습니다');
+        }
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error('JSON 파싱 에러:', text);
+          throw new Error('서버 응답을 처리하는데 실패했습니다');
+        }
+
+        if (!Array.isArray(data)) {
+          console.error('예상치 못한 응답 형식:', data);
+          throw new Error('응답 데이터 형식이 올바르지 않습니다');
+        }
+
+        setHistory(data);
+        setError(null);
       } catch (error) {
         console.error('Q&A 내역을 불러오는데 실패했습니다:', error);
+        setError(error instanceof Error ? error.message : 'Q&A 내역을 불러오는데 실패했습니다');
+        setHistory([]);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchHistory();
-  }, []);
+  }, [token]);
 
   const handleNavbarBackEvent = () => {
     if (typeof window !== 'undefined') {
@@ -56,9 +88,15 @@ export default function QnAHistoryPage() {
     <div className="min-h-screen bg-gray-100">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="container mx-auto px-4 py-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Q&A 내역</h1>
+        
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-800"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-10">
+            <p className="text-red-600">{error}</p>
           </div>
         ) : history.length === 0 ? (
           <div className="text-center py-10">
@@ -66,18 +104,18 @@ export default function QnAHistoryPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {history.map((item) => (
+            {history.map((item, index) => (
               <div
-                key={item.id}
+                key={`${item.message}-${item.timestamp}-${index}`}
                 className="bg-white rounded-lg shadow-sm p-4 space-y-3"
               >
                 <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-gray-800">{item.question}</h3>
-                  <span className="text-xs text-gray-500">
+                  <h3 className="font-semibold text-gray-800">{item.message}</h3>
+                  {/* <span className="text-xs text-gray-500">
                     {format(new Date(item.timestamp), 'yyyy년 MM월 dd일 HH:mm', { locale: ko })}
-                  </span>
+                  </span> */}
                 </div>
-                <p className="text-gray-600 text-sm">{item.answer}</p>
+                <p className="text-gray-600 text-sm">{item.aiMessage}</p>
               </div>
             ))}
           </div>
