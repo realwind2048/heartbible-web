@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
-import { FiBookmark } from 'react-icons/fi';
 
 const dummyQnA = [
   {
@@ -28,15 +27,7 @@ const dummyQnA = [
   },
 ];
 
-const filterTabs = [
-  { label: '전체', value: 'all' },
-  { label: '인기', value: 'popular' },
-  { label: '최신', value: 'latest' },
-  { label: '미답변', value: 'unanswered' },
-];
-
 export default function AIQnAPage() {
-  const [selectedTab, setSelectedTab] = useState('all');
   const [search, setSearch] = useState('');
 
   return (
@@ -53,22 +44,6 @@ export default function AIQnAPage() {
           placeholder="질문을 입력하세요"
           className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        {/* 필터 탭 */}
-        <div className="flex gap-2 mt-3">
-          {filterTabs.map(tab => (
-            <button
-              key={tab.value}
-              onClick={() => setSelectedTab(tab.value)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                selectedTab === tab.value
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'bg-gray-100 text-gray-500'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
       </div>
       {/* Q&A 리스트 */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -77,10 +52,6 @@ export default function AIQnAPage() {
             key={idx}
             className="bg-white rounded-xl shadow p-4 flex flex-col relative"
           >
-            {/* 북마크 아이콘 */}
-            <button className="absolute top-4 right-4 text-blue-500 hover:text-blue-700">
-              <FiBookmark size={22} />
-            </button>
             <div className="font-semibold text-base mb-1">{qna.title}</div>
             <div className="text-gray-600 text-sm mb-3 line-clamp-2">{qna.summary}</div>
             <div className="flex items-center gap-4 text-xs text-gray-400">
