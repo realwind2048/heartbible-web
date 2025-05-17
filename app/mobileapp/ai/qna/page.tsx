@@ -28,7 +28,7 @@ export default function AIQnAPage() {
   useEffect(() => {
     if (webviewToken) {
       setToken(webviewToken);
-      console.log(webviewToken, adid, lang, chattype, versioncode);
+      console.log(token, webviewToken, adid, lang, chattype, versioncode);
     }
 
     if (initialQuery && !initialQuerySent.current) {
