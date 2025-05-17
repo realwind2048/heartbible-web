@@ -29,7 +29,7 @@ export default function AIQnAPage() {
       <MobileDefaultNavbar />
       {/* 상단 타이틀 */}
       <div className="px-4 pt-4 pb-2 bg-white shadow-sm sticky top-0 z-10">
-        <div className="text-xl font-semibold mb-2 text-gray-900">AI Q&A</div>
+        <div className="text-xl font-semibold mb-2">AI Q&A</div>
         {/* 검색창 */}
         <input
           type="text"
@@ -46,7 +46,7 @@ export default function AIQnAPage() {
             key={idx}
             className="bg-white rounded-xl shadow p-4 flex flex-col relative"
           >
-            <div className="font-semibold text-base mb-1 text-gray-900">{qna.title}</div>
+            <div className="font-semibold text-base mb-1">{qna.title}</div>
             <div className="text-gray-600 text-sm mb-1 line-clamp-2">{qna.summary}</div>
             <div className="text-xs text-gray-400 mt-1">{qna.time}</div>
           </div>
