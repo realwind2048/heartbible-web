@@ -18,7 +18,7 @@ export default function AIQnAPage() {
     initialInput: initialQuery || ''
   });
 
-  const [token, setToken] = useState<string | null>(webviewToken);
+  // const [token, setToken] = useState<string | null>(webviewToken);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showGuide, setShowGuide] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
@@ -26,10 +26,9 @@ export default function AIQnAPage() {
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
-    if (webviewToken) {
-      setToken(webviewToken);
-      console.log(token, webviewToken, adid, lang, chattype, versioncode);
-    }
+    // if (webviewToken) {
+    //   setToken(webviewToken);
+    // }
 
     if (initialQuery && !initialQuerySent.current) {
       initialQuerySent.current = true;
