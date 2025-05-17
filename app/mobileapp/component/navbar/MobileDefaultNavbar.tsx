@@ -24,7 +24,7 @@ export function MobileDefaultNavbar({ onBackClick }: MobileDefaultNavbarProps) {
     // 경로에 따른 한글 레이블 매핑
     switch (lastSegment) {
       case 'qna':
-        label = '말씀 길잡이 Q&A';
+        label = 'Q&A';
         break;
       case 'ai':
         label = '말씀 길잡이';
@@ -32,8 +32,8 @@ export function MobileDefaultNavbar({ onBackClick }: MobileDefaultNavbarProps) {
       case 'chat':
         label = '말씀 길잡이 AI 채팅';
         break;
-      case 'share':
-        label = '공유';
+      case 'history':
+        label = 'Q&A 내역';
         break;
       case 'settings':
         label = '설정';
