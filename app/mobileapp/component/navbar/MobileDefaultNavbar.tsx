@@ -23,8 +23,8 @@ export function MobileDefaultNavbar({ onBackClick }: MobileDefaultNavbarProps) {
     
     // 경로에 따른 한글 레이블 매핑
     switch (lastSegment) {
-      case 'bible':
-        label = '성경';
+      case 'qna':
+        label = '말씀 길잡이 Q&A';
         break;
       case 'ai':
         label = '말씀 길잡이';

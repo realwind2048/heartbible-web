@@ -13,7 +13,7 @@ const aiFeatures = [
     color: 'bg-blue-500',
   },
   {
-    title: 'AI QnA',
+    title: '말씀 길잡이 Q&A',
     description: '성경에 대한 질문에 AI가 답변해드립니다',
     icon: HelpCircle,
     href: '/mobileapp/ai/qna',
