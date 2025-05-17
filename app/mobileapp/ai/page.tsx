@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { HelpCircle, MessageSquare } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
-import { useEffect, useState } from 'react';
+import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 
 const aiFeatures = [
   {
@@ -58,17 +58,7 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getToken = () => {
-      const webviewToken = (window as any).token;
-      if (webviewToken) {
-        setToken(webviewToken);
-      }
-    };
-    getToken();
-  }, []);
+  const { token, adid, lang, chattype, versioncode } = useWebviewParams();
 
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
