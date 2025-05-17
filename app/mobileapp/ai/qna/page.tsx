@@ -1,95 +1,167 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useChat } from '@ai-sdk/react'
+import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
-import { FiBookmark } from 'react-icons/fi';
-
-const dummyQnA = [
-  {
-    title: 'AI가 인간의 일자리를 대체할까요?',
-    summary: 'AI 기술이 발전하면서 일자리 시장에 미치는 영향에 대해 궁금합니다. 어떤 직종이 가장 영향받을까요?',
-    likes: 128,
-    comments: 32,
-    time: '2시간 전',
-  },
-  {
-    title: '딥러닝과 머신러닝의 차이점은?',
-    summary: 'AI를 공부하면서 가장 기본적인 개념인데 아직도 헷갈립니다. 쉽게 설명해주실 수 있나요?',
-    likes: 96,
-    comments: 24,
-    time: '3시간 전',
-  },
-  {
-    title: 'ChatGPT API 사용 방법',
-    summary: 'ChatGPT API를 이용해서 서비스를 만들고 싶은데 어떻게 시작해야 할까요? 기본적인 설명 부탁드립니다.',
-    likes: 82,
-    comments: 18,
-    time: '4시간 전',
-  },
-];
-
-const filterTabs = [
-  { label: '전체', value: 'all' },
-  { label: '인기', value: 'popular' },
-  { label: '최신', value: 'latest' },
-  { label: '미답변', value: 'unanswered' },
-];
+import { useSearchParams } from 'next/navigation';
+import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 
 export default function AIQnAPage() {
-  const [selectedTab, setSelectedTab] = useState('all');
-  const [search, setSearch] = useState('');
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q');
+  const initialQuerySent = useRef(false);
+  const { token: webviewToken } = useWebviewParams();
+  
+  const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
+    api: '/api/bible/chat',
+    initialInput: initialQuery || ''
+  });
+
+  // const [token, setToken] = useState<string | null>(webviewToken);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showGuide, setShowGuide] = useState(false);
+  const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
+  const [isTyping, setIsTyping] = useState(false);
+  const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
+
+  useEffect(() => {
+    // if (webviewToken) {
+    //   setToken(webviewToken);
+    // }
+
+    if (initialQuery && !initialQuerySent.current) {
+      initialQuerySent.current = true;
+      const fakeEvent = new Event('submit');
+      handleSubmit(fakeEvent);
+    }
+
+    const hasSeenGuide = localStorage.getItem('hasSeenChatGuide');
+    if (!hasSeenGuide) {
+      setShowGuide(true);
+      localStorage.setItem('hasSeenChatGuide', 'true');
+    }
+
+    if (!hasShownWelcome && messages.length === 0 && !initialQuery) {
+      setHasShownWelcome(true);
+      setIsTyping(true);
+      let currentIndex = 0;
+      
+      const typeMessage = () => {
+        if (currentIndex < welcomeText.length) {
+          setMessages([
+            {
+              id: 'welcome-message',
+              role: 'assistant',
+              content: welcomeText.slice(0, currentIndex + 1)
+            }
+          ]);
+          currentIndex++;
+          setTimeout(typeMessage, 15);
+        } else {
+          setIsTyping(false);
+        }
+      };
+
+      typeMessage();
+    }
+  }, [messages.length, hasShownWelcome, setMessages, initialQuery, handleSubmit, welcomeText, webviewToken]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <MobileDefaultNavbar />
-      {/* 상단 타이틀 */}
-      <div className="px-4 pt-4 pb-2 bg-white shadow-sm sticky top-0 z-10">
-        <div className="text-xl font-semibold mb-2">AI Q&A</div>
-        {/* 검색창 */}
-        <input
-          type="text"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="질문을 입력하세요"
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {/* 필터 탭 */}
-        <div className="flex gap-2 mt-3">
-          {filterTabs.map(tab => (
+      {/* 도움말 버튼 */}
+      <button
+        onClick={() => setShowGuide(!showGuide)}
+        className="fixed top-4 right-4 z-10 w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center hover:bg-gray-400 transition-colors shadow-md"
+        aria-label="도움말"
+      >
+        ?
+      </button>
+
+      {showGuide && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-20 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full p-6 relative">
             <button
-              key={tab.value}
-              onClick={() => setSelectedTab(tab.value)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                selectedTab === tab.value
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'bg-gray-100 text-gray-500'
+              onClick={() => setShowGuide(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+            <div className="flex flex-col space-y-4">
+              <div className="text-blue-800">
+                <p className="font-medium text-lg">말씀 길잡이란?</p>
+                <p className="mt-2">성경 말씀에 대한 질문에 AI가 답변을 제공하는 도구입니다. 성경 구절의 의미, 배경, 적용 등을 이해하는 데 도움을 드립니다.</p>
+              </div>
+              <div className="text-red-800">
+                <p className="font-medium text-lg">주의사항</p>
+                <ul className="list-disc list-inside mt-2 space-y-2">
+                  <li>AI의 답변은 참고용이며, 신앙의 기준이 될 수 없습니다.</li>
+                  <li>교리나 신학적 해석에 대해서는 반드시 목회자나 신학자와 상담하시기 바랍니다.</li>
+                  <li>AI는 완벽하지 않으며, 오류가 있을 수 있습니다.</li>
+                  <li>성경 말씀은 직접 읽고 묵상하는 것이 가장 중요합니다.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 채팅 영역 */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message, i) => (
+          <div
+            key={i}
+            className={`flex ${
+              message.role === 'assistant' ? 'justify-start' : 'justify-end'
+            }`}
+          >
+            <div
+              className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                message.role === 'assistant'
+                  ? 'bg-white text-gray-800 shadow prose prose-sm'
+                  : 'bg-blue-500 text-white'
               }`}
             >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-      {/* Q&A 리스트 */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {dummyQnA.map((qna, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-xl shadow p-4 flex flex-col relative"
-          >
-            {/* 북마크 아이콘 */}
-            <button className="absolute top-4 right-4 text-blue-500 hover:text-blue-700">
-              <FiBookmark size={22} />
-            </button>
-            <div className="font-semibold text-base mb-1">{qna.title}</div>
-            <div className="text-gray-600 text-sm mb-3 line-clamp-2">{qna.summary}</div>
-            <div className="flex items-center gap-4 text-xs text-gray-400">
-              <span>👍 {qna.likes}</span>
-              <span>💬 {qna.comments}</span>
-              <span>{qna.time}</span>
+              {message.role === 'assistant' ? (
+                <ReactMarkdown>{message.content}</ReactMarkdown>
+              ) : (
+                message.content
+              )}
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* 입력 영역 */}
+      <div className="sticky bottom-0 border-t bg-white p-2 sm:p-4">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+          <div className="flex gap-2 sm:gap-4">
+            <input
+              value={input}
+              onChange={handleInputChange}
+              placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
+              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              disabled={isTyping}
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed"
+              disabled={isTyping}
+            >
+              전송
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
