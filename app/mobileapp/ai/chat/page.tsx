@@ -25,7 +25,7 @@ export default function BibleChatPage() {
 
   useEffect(() => {
     const getToken = () => {
-      const webviewToken = (window as any).token;
+      const webviewToken = window.token;
       if (webviewToken) {
         setToken(webviewToken);
       }

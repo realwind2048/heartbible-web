@@ -19,7 +19,7 @@ export const useWebviewParams = () => {
 
   useEffect(() => {
     const getWebviewParams = () => {
-      const webviewParams = (window as any);
+      const webviewParams = window;
       setParams({
         token: webviewParams.token || null,
         adid: webviewParams.adid || null,
