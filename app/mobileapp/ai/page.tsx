@@ -1,26 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageSquare } from 'lucide-react';
+import { HelpCircle, MessageSquare } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 import { getTokenFromApp } from '@/app/utils/appBridge';
 import { useEffect, useState } from 'react';
 
 const aiFeatures = [
-  {
-    title: 'AI 채팅',
-    description: 'AI와 자유롭게 대화하며 성경에 대해 물어보세요',
-    icon: MessageSquare,
-    href: '/mobileapp/ai/chat',
-    color: 'bg-blue-500',
-  },
   // {
-  //   title: 'AI QnA',
-  //   description: '성경에 대한 질문에 AI가 답변해드립니다',
-  //   icon: HelpCircle,
-  //   href: '/bible/qna',
-  //   color: 'bg-green-500',
+  //   title: 'AI 채팅',
+  //   description: 'AI와 자유롭게 대화하며 성경에 대해 물어보세요',
+  //   icon: MessageSquare,
+  //   href: '/mobileapp/ai/chat',
+  //   color: 'bg-blue-500',
   // },
+  {
+    title: 'AI QnA',
+    description: '성경에 대한 질문에 AI가 답변해드립니다',
+    icon: HelpCircle,
+    href: '/mobileapp/ai/qna',
+    color: 'bg-green-500',
+  },
   // {
   //   title: 'AI와 전화',
   //   description: '음성으로 AI와 대화하며 성경을 공부하세요',
