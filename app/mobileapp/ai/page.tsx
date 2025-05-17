@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { HelpCircle, MessageSquare } from 'lucide-react';
+import { HelpCircle, MessageSquare, History } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 
 const aiFeatures = [
@@ -18,6 +18,13 @@ const aiFeatures = [
     icon: HelpCircle,
     href: '/mobileapp/ai/qna',
     color: 'bg-green-500',
+  },
+  {
+    title: 'Q&A 내역',
+    description: '이전에 나눈 Q&A 대화를 확인해보세요',
+    icon: History,
+    href: '/mobileapp/ai/qna/history',
+    color: 'bg-orange-500',
   },
   // {
   //   title: 'AI와 전화',
