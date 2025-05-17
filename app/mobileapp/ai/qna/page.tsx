@@ -11,7 +11,7 @@ export default function AIQnAPage() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q');
   const initialQuerySent = useRef(false);
-  const { token: webviewToken, adid, lang, chattype, versioncode } = useWebviewParams();
+  const { token: webviewToken } = useWebviewParams();
   
   const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: '/api/bible/chat',
