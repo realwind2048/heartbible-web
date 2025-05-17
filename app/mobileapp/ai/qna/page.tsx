@@ -65,7 +65,7 @@ export default function AIQnAPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, initialQuery, handleSubmit, welcomeText]);
+  }, [messages.length, hasShownWelcome, setMessages, initialQuery, handleSubmit, welcomeText, webviewToken]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

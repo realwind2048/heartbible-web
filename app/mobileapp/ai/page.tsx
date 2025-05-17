@@ -58,8 +58,6 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const { token, adid, lang, chattype, versioncode } = useWebviewParams();
-
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
     
