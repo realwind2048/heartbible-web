@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
-import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 
 interface QnAHistory {
