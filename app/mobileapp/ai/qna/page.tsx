@@ -5,7 +5,6 @@ import { useChat } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
-import { getTokenFromApp } from '@/app/utils/appBridge';
 
 export default function AIQnAPage() {
   const searchParams = useSearchParams();
@@ -25,9 +24,11 @@ export default function AIQnAPage() {
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
-    const getToken = async () => {
-      const token = await getTokenFromApp();
-      setToken(token);
+    const getToken = () => {
+      const webviewToken = (window as any).token;
+      if (webviewToken) {
+        setToken(webviewToken);
+      }
     };
     getToken();
 

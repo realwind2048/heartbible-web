@@ -3,17 +3,16 @@
 import Link from 'next/link';
 import { HelpCircle, MessageSquare } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
-import { getTokenFromApp } from '@/app/utils/appBridge';
 import { useEffect, useState } from 'react';
 
 const aiFeatures = [
-  // {
-  //   title: 'AI 채팅',
-  //   description: 'AI와 자유롭게 대화하며 성경에 대해 물어보세요',
-  //   icon: MessageSquare,
-  //   href: '/mobileapp/ai/chat',
-  //   color: 'bg-blue-500',
-  // },
+  {
+    title: 'AI 채팅',
+    description: 'AI와 자유롭게 대화하며 성경에 대해 물어보세요',
+    icon: MessageSquare,
+    href: '/mobileapp/ai/chat',
+    color: 'bg-blue-500',
+  },
   {
     title: 'AI QnA',
     description: '성경에 대한 질문에 AI가 답변해드립니다',
@@ -62,32 +61,15 @@ export default function AIPage() {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const getToken = async () => {
-      const token = await getTokenFromApp();
-      setToken(token);
+    const getToken = () => {
+      const webviewToken = (window as any).token;
+      if (webviewToken) {
+        setToken(webviewToken);
+      }
     };
     getToken();
   }, []);
-  // useEffect(() => {
-  //   const getTokenFromApp = (): Promise<string | null> => {
-  //     // Android
-  //     if (window.JSBridge) {
-  //       return Promise.resolve(window.JSBridge.getToken());
-  //     }
-  //     // iOS
-  //     if (window.webkit?.messageHandlers?.getToken) {
-  //       return new Promise((resolve) => {
-  //         window.webkit!.messageHandlers.getToken.postMessage({
-  //           callback: (token: string) => resolve(token)
-  //         });
-  //       });
-  //     }
-  //     return Promise.resolve(null);
-  //   };
 
-
-  // }, []);
-  
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
     
