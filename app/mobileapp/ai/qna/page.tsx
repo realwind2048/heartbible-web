@@ -21,13 +21,18 @@ export default function AIQnAPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState(initialQuery || '');
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
+  const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   // 한 글자씩 타이핑 효과로 assistant 메시지를 표시하는 함수
-  const typeAssistantMessage = (fullText: string) => {
+  const typeAssistantMessage = useCallback((fullText: string) => {
     setIsTyping(true);
     let currentIndex = 0;
 
@@ -57,7 +62,7 @@ export default function AIQnAPage() {
     };
 
     typeMessage();
-  };
+  }, [setMessages, setIsTyping]);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,11 +111,6 @@ export default function AIQnAPage() {
   }, [input, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setInput, setIsLoading]);
 
   // const [token, setToken] = useState<string | null>(webviewToken);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [showGuide, setShowGuide] = useState(false);
-  const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
-  const [isTyping, setIsTyping] = useState(false);
-  const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
     // if (webviewToken) {
