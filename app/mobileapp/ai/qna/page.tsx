@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
@@ -59,7 +59,7 @@ export default function AIQnAPage() {
     typeMessage();
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
@@ -91,7 +91,6 @@ export default function AIQnAPage() {
       if (!response.ok) throw new Error('API 요청 실패');
 
       const data = await response.json();
-      // 기존 setMessages 대신 타이핑 함수 사용
       typeAssistantMessage(data.message.content);
 
     } catch (error) {
@@ -104,7 +103,7 @@ export default function AIQnAPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [input, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setInput, setIsLoading]);
 
   // const [token, setToken] = useState<string | null>(webviewToken);
   const messagesEndRef = useRef<HTMLDivElement>(null);

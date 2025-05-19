@@ -54,7 +54,7 @@ export default function QnAHistoryPage() {
           data = JSON.parse(text);
         } catch (e) {
           console.error('JSON 파싱 에러:', text);
-          throw new Error('서버 응답을 처리하는데 실패했습니다');
+          throw new Error('서버 응답을 처리하는데 실패했습니다. e:' + e);
         }
 
         if (!Array.isArray(data)) {
