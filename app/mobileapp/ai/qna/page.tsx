@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
+
 interface Message {
   id: string;
   role: 'user' | 'assistant';
@@ -49,7 +50,7 @@ export default function AIQnAPage() {
           token: webviewToken,
           adid: adid || '',
           lang: lang || 'ko',
-          appversioncode: versioncode || '',
+          appVersionCode: versioncode || '',
           message: input,
         }),
       });

@@ -4,7 +4,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const response = await fetch('https://heartbible.klutche.com/api/openai/completions', {
+    // const response = await fetch('https://heartbible.klutche.com/api/openai/completions', {
+      const response = await fetch('http://localhost:8080/api/openai/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
