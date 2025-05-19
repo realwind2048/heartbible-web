@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
-
 interface Message {
   id: string;
   role: 'user' | 'assistant';
@@ -16,7 +15,7 @@ export default function AIQnAPage() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q');
   const initialQuerySent = useRef(false);
-  const { token: webviewToken } = useWebviewParams();
+  const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
   
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState(initialQuery || '');
@@ -47,7 +46,11 @@ export default function AIQnAPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: [...messages, userMessage],
+          token: webviewToken,
+          adid: adid || '',
+          lang: lang || 'ko',
+          appversioncode: versioncode || '',
+          message: input,
         }),
       });
 
