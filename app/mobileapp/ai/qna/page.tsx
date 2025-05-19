@@ -61,7 +61,7 @@ export default function AIQnAPage() {
       const assistantMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
-        content: data.content
+        content: data.message.content
       };
 
       setMessages(prev => [...prev, assistantMessage]);
