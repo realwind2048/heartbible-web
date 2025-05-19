@@ -26,6 +26,39 @@ export default function AIQnAPage() {
     setInput(e.target.value);
   };
 
+  // 한 글자씩 타이핑 효과로 assistant 메시지를 표시하는 함수
+  const typeAssistantMessage = (fullText: string) => {
+    setIsTyping(true);
+    let currentIndex = 0;
+
+    const typeMessage = () => {
+      if (currentIndex < fullText.length) {
+        setMessages(prev => [
+          ...prev.filter(msg => msg.id !== 'typing-message'),
+          {
+            id: 'typing-message',
+            role: 'assistant',
+            content: fullText.slice(0, currentIndex + 1)
+          }
+        ]);
+        currentIndex++;
+        setTimeout(typeMessage, 15);
+      } else {
+        setIsTyping(false);
+        setMessages(prev => [
+          ...prev.filter(msg => msg.id !== 'typing-message'),
+          {
+            id: Date.now().toString(),
+            role: 'assistant',
+            content: fullText
+          }
+        ]);
+      }
+    };
+
+    typeMessage();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -58,16 +91,11 @@ export default function AIQnAPage() {
       if (!response.ok) throw new Error('API 요청 실패');
 
       const data = await response.json();
-      const assistantMessage: Message = {
-        id: Date.now().toString(),
-        role: 'assistant',
-        content: data.message.content
-      };
+      // 기존 setMessages 대신 타이핑 함수 사용
+      typeAssistantMessage(data.message.content);
 
-      setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Error:', error);
-      // 에러 메시지 추가
       setMessages(prev => [...prev, {
         id: Date.now().toString(),
         role: 'assistant',
@@ -102,6 +130,7 @@ export default function AIQnAPage() {
       localStorage.setItem('hasSeenChatGuide', 'true');
     }
 
+    // 환영 메시지가 아직 표시되지 않았고, 메시지가 없으며, 초기 쿼리도 없는 경우에만 실행
     if (!hasShownWelcome && messages.length === 0 && !initialQuery) {
       setHasShownWelcome(true);
       setIsTyping(true);
