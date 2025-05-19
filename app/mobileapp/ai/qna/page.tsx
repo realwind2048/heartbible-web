@@ -1,11 +1,16 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react';
-import { useChat } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown';
 import { MobileDefaultNavbar } from '@/app/mobileapp/component/navbar/MobileDefaultNavbar';
 import { useSearchParams } from 'next/navigation';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
+
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+}
 
 export default function AIQnAPage() {
   const searchParams = useSearchParams();
@@ -13,10 +18,61 @@ export default function AIQnAPage() {
   const initialQuerySent = useRef(false);
   const { token: webviewToken } = useWebviewParams();
   
-  const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
-    api: '/api/bible/chat',
-    initialInput: initialQuery || ''
-  });
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState(initialQuery || '');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: input
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/ai/qna', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [...messages, userMessage],
+        }),
+      });
+
+      if (!response.ok) throw new Error('API 요청 실패');
+
+      const data = await response.json();
+      const assistantMessage: Message = {
+        id: Date.now().toString(),
+        role: 'assistant',
+        content: data.content
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error:', error);
+      // 에러 메시지 추가
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        role: 'assistant',
+        content: '죄송합니다. 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // const [token, setToken] = useState<string | null>(webviewToken);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -32,7 +88,7 @@ export default function AIQnAPage() {
 
     if (initialQuery && !initialQuerySent.current) {
       initialQuerySent.current = true;
-      const fakeEvent = new Event('submit');
+      const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent);
     }
 
