@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { HelpCircle, History } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 import { useEffect, useState } from 'react';
-
+import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 const aiFeatures = [
   // {
   //   title: 'AI 채팅',
@@ -66,12 +66,11 @@ const aiFeatures = [
 
 export default function AIPage() {
   const [hasToken, setHasToken] = useState(false);
-
+  const { token: webviewToken } = useWebviewParams();
   useEffect(() => {
     // 토큰 체크
-    const token = localStorage.getItem('token');
-    setHasToken(!!token);
-  }, []);
+    setHasToken(!!webviewToken);
+  }, [webviewToken]);
 
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
