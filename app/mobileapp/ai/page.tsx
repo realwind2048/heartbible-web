@@ -68,6 +68,7 @@ export default function AIPage() {
   const { token: webviewToken } = useWebviewParams();
   const [hasToken, setHasToken] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
     // 토큰 체크 및 로딩 상태 관리
@@ -95,6 +96,14 @@ export default function AIPage() {
     } else {
       console.log('JSBridge.requestLogin is not available');
     }
+    setShowLoginModal(false);
+  };
+
+  const handleFeatureClick = (e: React.MouseEvent) => {
+    if (!hasToken) {
+      e.preventDefault();
+      setShowLoginModal(true);
+    }
   };
 
   if (isLoading) {
@@ -112,8 +121,8 @@ export default function AIPage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="flex-1 p-4">
-        {!hasToken ? (
-          <div className="mt-6 p-4 bg-white rounded-lg shadow-sm">
+        {!hasToken && (
+          <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
             <p className="text-center text-gray-700 mb-4">로그인이 필요한 기능이에요.</p>
             <button
               onClick={handleLogin}
@@ -122,28 +131,51 @@ export default function AIPage() {
               로그인하기
             </button>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 mt-6">
-            {aiFeatures.map((feature) => (
-              <Link
-                key={feature.title}
-                href={feature.href}
-                className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="p-4 flex items-center space-x-4">
-                  <div className={`${feature.color} p-3 rounded-lg`}>
-                    <feature.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
-                    <p className="text-sm text-gray-600">{feature.description}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
         )}
+        <div className="grid grid-cols-1 gap-4 mt-6">
+          {aiFeatures.map((feature) => (
+            <Link
+              key={feature.title}
+              href={feature.href}
+              onClick={handleFeatureClick}
+              className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+            >
+              <div className="p-4 flex items-center space-x-4">
+                <div className={`${feature.color} p-3 rounded-lg`}>
+                  <feature.icon className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                  <p className="text-sm text-gray-600">{feature.description}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
+
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">로그인이 필요해요</h3>
+            <p className="text-gray-600 mb-4">이 기능을 사용하려면 로그인이 필요합니다.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLoginModal(false)}
+                className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleLogin}
+                className="flex-1 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
+              >
+                로그인하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
