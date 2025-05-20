@@ -65,11 +65,14 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const [hasToken, setHasToken] = useState(false);
   const { token: webviewToken } = useWebviewParams();
+  const [hasToken, setHasToken] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    // 토큰 체크
+    // 토큰 체크 및 로딩 상태 관리
     setHasToken(!!webviewToken);
+    setIsLoading(false);
   }, [webviewToken]);
 
   const handleNavbarBackEvent = () => {
@@ -94,10 +97,21 @@ export default function AIPage() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex flex-col min-h-screen bg-gray-50">
+        <MobileDefaultNavbar />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
-      <div className="container mx-auto px-4">
+      <div className="flex-1 p-4">
         {!hasToken ? (
           <div className="mt-6 p-4 bg-white rounded-lg shadow-sm">
             <p className="text-center text-gray-700 mb-4">로그인이 필요한 기능이에요.</p>
