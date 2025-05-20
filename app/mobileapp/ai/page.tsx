@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { HelpCircle, History } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
+import { useEffect, useState } from 'react';
 
 const aiFeatures = [
   // {
@@ -64,6 +65,14 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    // 토큰 체크
+    const token = localStorage.getItem('token');
+    setHasToken(!!token);
+  }, []);
+
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
     
@@ -77,29 +86,50 @@ export default function AIPage() {
     }
   };
 
+  const handleLogin = () => {
+    if (typeof window !== 'undefined' && window.JSBridge && typeof window.JSBridge.requestLogin === 'function') {
+      console.log('Attempting to login through JSBridge');
+      window.JSBridge.requestLogin();
+    } else {
+      console.log('JSBridge.requestLogin is not available');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-4 mt-6">
-          {aiFeatures.map((feature) => (
-            <Link
-              key={feature.title}
-              href={feature.href}
-              className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+        {!hasToken ? (
+          <div className="mt-6 p-4 bg-white rounded-lg shadow-sm">
+            <p className="text-center text-gray-700 mb-4">로그인이 필요한 기능이에요.</p>
+            <button
+              onClick={handleLogin}
+              className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
             >
-              <div className="p-4 flex items-center space-x-4">
-                <div className={`${feature.color} p-3 rounded-lg`}>
-                  <feature.icon className="w-6 h-6 text-white" />
+              로그인하기
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 mt-6">
+            {aiFeatures.map((feature) => (
+              <Link
+                key={feature.title}
+                href={feature.href}
+                className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="p-4 flex items-center space-x-4">
+                  <div className={`${feature.color} p-3 rounded-lg`}>
+                    <feature.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                    <p className="text-sm text-gray-600">{feature.description}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
-                  <p className="text-sm text-gray-600">{feature.description}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
