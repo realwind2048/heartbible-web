@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { HelpCircle, History } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 import { useEffect, useState } from 'react';
-import { useWebviewParams } from '@/app/hooks/useWebviewParams';
+
 const aiFeatures = [
   // {
   //   title: 'AI 채팅',
@@ -65,16 +65,53 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const { token: webviewToken } = useWebviewParams();
+  const [token, setToken] = useState<string | null>(null);
+  const [adid, setAdid] = useState<string | null>(null);
+  const [lang, setLang] = useState<string | null>(null);
+  const [chattype, setChattype] = useState<string | null>(null);
+  const [versioncode, setVersioncode] = useState<string | null>(null);
   const [hasToken, setHasToken] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
-    // 토큰 체크 및 로딩 상태 관리
-    setHasToken(!!webviewToken);
-    setIsLoading(false);
-  }, [webviewToken]);
+    if (typeof window !== 'undefined') {
+      window.clientReady = () => {
+        console.log('Client is ready, checking params');
+        const webviewToken = window.token;
+        const webviewAdid = window.adid;
+        const webviewLang = window.lang;
+        const webviewChattype = window.chattype;
+        const webviewVersioncode = window.versioncode;  
+        setToken(webviewToken)
+        setAdid(webviewAdid)
+        setLang(webviewLang)
+        setChattype(webviewChattype)
+        setVersioncode(webviewVersioncode)
+        setHasToken(!!webviewToken);
+        setIsLoading(false);
+      };
+    }
+
+    const requestParams = () => {
+      if (typeof window !== 'undefined' && window.JSBridge && typeof window.JSBridge.requestParams === 'function') {
+        console.log('Requesting params through JSBridge');
+        window.JSBridge.requestParams();
+      } else {
+        console.log('JSBridge.requestParams is not available, using webviewToken');
+        setHasToken(false);
+        setIsLoading(false);
+      }
+    };
+
+    requestParams();
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        delete window.clientReady;
+      }
+    };
+  }, [token]);
 
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
