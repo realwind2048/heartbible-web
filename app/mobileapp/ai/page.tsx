@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { HelpCircle, History } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 
 const aiFeatures = [
