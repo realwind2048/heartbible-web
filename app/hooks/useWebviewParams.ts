@@ -6,6 +6,7 @@ interface WebviewParams {
   lang: string | null;
   chattype: string | null;
   versioncode: string | null;
+  selectedbibleverses: string | null;
   hasToken: boolean | null;
   isLoading: boolean;
 }
@@ -16,8 +17,10 @@ export function useWebviewParams(): WebviewParams {
   const [lang, setLang] = useState<string | null>(null);
   const [chattype, setChattype] = useState<string | null>(null);
   const [versioncode, setVersioncode] = useState<string | null>(null);
+  const [selectedbibleverses, setSelectedbibleverses] = useState<string | null>(null);
   const [hasToken, setHasToken] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -28,12 +31,14 @@ export function useWebviewParams(): WebviewParams {
         const webviewLang = window.lang;
         const webviewChattype = window.chattype;
         const webviewVersioncode = window.versioncode;
+        const webviewSelectedbibleverses = window.selectedbibleverses;
         
         setToken(webviewToken);
         setAdid(webviewAdid);
         setLang(webviewLang);
         setChattype(webviewChattype);
         setVersioncode(webviewVersioncode);
+        setSelectedbibleverses(webviewSelectedbibleverses);
         setHasToken(!!webviewToken);
         setIsLoading(false);
       };
@@ -65,6 +70,7 @@ export function useWebviewParams(): WebviewParams {
     lang,
     chattype,
     versioncode,
+    selectedbibleverses,
     hasToken,
     isLoading
   };

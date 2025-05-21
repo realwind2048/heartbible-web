@@ -66,7 +66,7 @@ const aiFeatures = [
 ];
 
 export default function AIPage() {
-  const { hasToken, isLoading } = useWebviewParams();
+  const { hasToken, isLoading, selectedbibleverses } = useWebviewParams();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleNavbarBackEvent = () => {
@@ -113,6 +113,13 @@ export default function AIPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
+
+      {selectedbibleverses && (
+        <div className="flex-1 p-4">
+          <p className="text-gray-700 mb-4">선택된 성경 버전: {selectedbibleverses}</p>
+        </div>
+      )}
+
       <div className="flex-1 p-4">
         {!hasToken && (
           <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
