@@ -232,18 +232,18 @@ export default function AIQnAPage() {
 
       {/* 입력 영역 */}
       <div className="sticky bottom-0 border-t bg-white p-2 sm:p-4">
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
-          <div className="flex gap-2 sm:gap-4">
+        <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto">
+          <div className="flex gap-2 sm:gap-4 items-center">
             <input
               value={input}
               onChange={handleInputChange}
               placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
-              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
+              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
               disabled={isTyping}
             />
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="bg-blue-500 text-white px-3 sm:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed flex-shrink-0"
               disabled={isTyping}
             >
               전송
