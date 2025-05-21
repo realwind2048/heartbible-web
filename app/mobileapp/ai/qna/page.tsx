@@ -14,21 +14,27 @@ interface Message {
 
 export default function AIQnAPage() {
   const searchParams = useSearchParams();
-  const initialQuery = searchParams.get('q');
+  const verse = searchParams.get('verse');
+  const [query, setQuery] = useState(verse ? `${verse}에 대해 설명해주세요.` : '');
   const initialQuerySent = useRef(false);
   const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
   
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState(initialQuery || '');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-  const [hasShownWelcome, setHasShownWelcome] = useState(!!initialQuery);
+  const [hasShownWelcome, setHasShownWelcome] = useState(!!verse);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
+  useEffect(() => {
+    if (verse) {
+      setQuery(`${verse}에 대해 설명해주세요.`);
+    }
+  }, [verse]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+    setQuery(e.target.value);
   };
 
   // 한 글자씩 타이핑 효과로 assistant 메시지를 표시하는 함수
@@ -66,16 +72,16 @@ export default function AIQnAPage() {
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    if (!query.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: input
+      content: query
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    setQuery('');
     setIsLoading(true);
 
     try {
@@ -89,7 +95,7 @@ export default function AIQnAPage() {
           adid: adid || '',
           lang: lang || 'ko',
           appVersionCode: versioncode || '',
-          message: input,
+          message: query,
         }),
       });
 
@@ -108,16 +114,10 @@ export default function AIQnAPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [input, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setInput, setIsLoading]);
-
-  // const [token, setToken] = useState<string | null>(webviewToken);
+  }, [query, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setQuery, setIsLoading]);
 
   useEffect(() => {
-    // if (webviewToken) {
-    //   setToken(webviewToken);
-    // }
-
-    if (initialQuery && !initialQuerySent.current) {
+    if (verse && !initialQuerySent.current) {
       initialQuerySent.current = true;
       const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent);
@@ -130,7 +130,7 @@ export default function AIQnAPage() {
     }
 
     // 환영 메시지가 아직 표시되지 않았고, 메시지가 없으며, 초기 쿼리도 없는 경우에만 실행
-    if (!hasShownWelcome && messages.length === 0 && !initialQuery) {
+    if (!hasShownWelcome && messages.length === 0 && !verse) {
       setHasShownWelcome(true);
       setIsTyping(true);
       let currentIndex = 0;
@@ -153,7 +153,7 @@ export default function AIQnAPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, initialQuery, handleSubmit, welcomeText, webviewToken]);
+  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -227,6 +227,11 @@ export default function AIQnAPage() {
             </div>
           </div>
         ))}
+        {isLoading && (
+          <div className="text-center text-gray-500">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-blue-600"></div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -235,7 +240,7 @@ export default function AIQnAPage() {
         <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto">
           <div className="flex gap-2 sm:gap-4 items-center">
             <input
-              value={input}
+              value={query}
               onChange={handleInputChange}
               placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
               className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"

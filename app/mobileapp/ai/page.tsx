@@ -5,6 +5,7 @@ import { HelpCircle, History } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 import { useState } from 'react';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
+import { useRouter } from 'next/navigation';
 
 const aiFeatures = [
   // {
@@ -68,6 +69,7 @@ const aiFeatures = [
 export default function AIPage() {
   const { hasToken, isLoading, selectedbibleverses } = useWebviewParams();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const router = useRouter();
 
   const handleNavbarBackEvent = () => {
     console.log('MobileDefaultNavbar의 뒤로 가기 버튼이 AIPage에서 감지되었습니다.');
@@ -115,8 +117,22 @@ export default function AIPage() {
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
 
       {selectedbibleverses && (
-        <div className="flex-1 p-4">
-          <p className="text-gray-700 mb-4">선택된 성경 버전: {selectedbibleverses}</p>
+        <div className="px-4 py-2">
+          <div className="bg-white rounded-lg shadow-sm p-3">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-800">선택된 성경 구절</h3>
+              <button
+                onClick={() => router.push(`/mobileapp/ai/qna?verse=${encodeURIComponent(selectedbibleverses || '')}`)}
+                className="text-sm bg-blue-600 text-white py-1.5 px-3 rounded-md hover:bg-blue-700 transition-colors flex items-center gap-1"
+              >
+                <span>질문하기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-sm text-gray-700 line-clamp-2">{selectedbibleverses}</p>
+          </div>
         </div>
       )}
 
@@ -132,7 +148,7 @@ export default function AIPage() {
             </button>
           </div>
         )}
-        <div className="grid grid-cols-1 gap-4 mt-6">
+        <div className="grid grid-cols-1 gap-4">
           {aiFeatures.map((feature) => (
             <Link
               key={feature.title}
