@@ -79,7 +79,7 @@ export default function BibleChatPage() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-[100dvh] bg-gray-50 overflow-hidden">
       <MobileDefaultNavbar />
       {/* 도움말 버튼 */}
       <button
