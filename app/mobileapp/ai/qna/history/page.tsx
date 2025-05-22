@@ -3,14 +3,16 @@
 import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
+import { useRouter } from 'next/navigation';
 
 interface QnAHistory {
   message: string;
   aiMessage: string;
-  timestamp: string;
+  createdAt: string;
 }
 
 export default function QnAHistoryPage() {
+  const router = useRouter();
   const [history, setHistory] = useState<QnAHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +84,10 @@ export default function QnAHistoryPage() {
     }
   };
 
+  const handleItemClick = (item: QnAHistory) => {
+    router.push(`/mobileapp/ai/qna/history/${encodeURIComponent(item.timestamp)}`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
@@ -105,15 +111,24 @@ export default function QnAHistoryPage() {
             {history.map((item, index) => (
               <div
                 key={`${item.message}-${item.timestamp}-${index}`}
-                className="bg-white rounded-lg shadow-sm p-4 space-y-3"
+                className="bg-white rounded-lg shadow-sm p-4 space-y-3 cursor-pointer hover:bg-gray-50 transition-colors duration-200 h-[120px] flex flex-col justify-between"
+                onClick={() => handleItemClick(item)}
               >
                 <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-gray-800">{item.message}</h3>
-                  {/* <span className="text-xs text-gray-500">
-                    {format(new Date(item.timestamp), 'yyyy년 MM월 dd일 HH:mm', { locale: ko })}
-                  </span> */}
+                  <h3 className="font-semibold text-gray-800 line-clamp-2">{item.message}</h3>
                 </div>
-                <p className="text-gray-600 text-sm">{item.aiMessage}</p>
+                <div className="flex flex-col">
+                  <p className="text-gray-600 text-sm line-clamp-2">{item.aiMessage}</p>
+                  <span className="text-xs text-gray-400 mt-2">
+                    {new Date(item.timestamp).toLocaleDateString('ko-KR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
