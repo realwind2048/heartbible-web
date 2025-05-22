@@ -5,10 +5,17 @@ import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavb
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter } from 'next/navigation';
 
+interface FirebaseTimestamp {
+  _seconds: number;
+  _nanoseconds: number;
+}
+
 interface QnAHistory {
+  id: string;
   message: string;
   aiMessage: string;
-  createdAt: string;
+  createdAt: FirebaseTimestamp;
+  userId: string;
 }
 
 export default function QnAHistoryPage() {
@@ -85,7 +92,18 @@ export default function QnAHistoryPage() {
   };
 
   const handleItemClick = (item: QnAHistory) => {
-    router.push(`/mobileapp/ai/qna/history/${encodeURIComponent(item.timestamp)}`);
+    router.push(`/mobileapp/ai/qna/history/${item.id}`);
+  };
+
+  const formatTimestamp = (timestamp: FirebaseTimestamp) => {
+    const date = new Date(timestamp._seconds * 1000);
+    return date.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   return (
@@ -110,7 +128,7 @@ export default function QnAHistoryPage() {
           <div className="space-y-4">
             {history.map((item, index) => (
               <div
-                key={`${item.message}-${item.timestamp}-${index}`}
+                key={`${item.id}-${index}`}
                 className="bg-white rounded-lg shadow-sm p-4 space-y-3 cursor-pointer hover:bg-gray-50 transition-colors duration-200 h-[120px] flex flex-col justify-between"
                 onClick={() => handleItemClick(item)}
               >
@@ -120,13 +138,7 @@ export default function QnAHistoryPage() {
                 <div className="flex flex-col">
                   <p className="text-gray-600 text-sm line-clamp-2">{item.aiMessage}</p>
                   <span className="text-xs text-gray-400 mt-2">
-                    {new Date(item.timestamp).toLocaleDateString('ko-KR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
+                    {formatTimestamp(item.createdAt)}
                   </span>
                 </div>
               </div>
