@@ -1,12 +1,14 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
 
 interface MobileDefaultNavbarProps {
   onBackClick?: () => void; // 뒤로가기 버튼 클릭 시 호출될 콜백 함수
+  rightContent?: ReactNode; // 우측 컨텐츠
 }
 
-export function MobileDefaultNavbar({ onBackClick }: MobileDefaultNavbarProps) {
+export function MobileDefaultNavbar({ onBackClick, rightContent }: MobileDefaultNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   
@@ -82,8 +84,10 @@ export function MobileDefaultNavbar({ onBackClick }: MobileDefaultNavbarProps) {
             </span>
           </div>
           
-          {/* Placeholder for potential right-side icons/buttons, ensures title is centered */}
-          <div className="w-6 h-6"></div> {/* Adjust width to match back button icon for balance */}
+          {/* Right content area */}
+          <div className="w-6 h-6">
+            {rightContent}
+          </div>
         </div>
       </div>
     </nav>

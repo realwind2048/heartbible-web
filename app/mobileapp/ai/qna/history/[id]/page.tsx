@@ -3,12 +3,15 @@
 import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { QnAHistory } from '@/app/types/firebase';
 import { DateUtil } from '@/app/utils/date';
 
 export default function QnADetailPage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+  
   const [qna, setQna] = useState<QnAHistory | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +26,7 @@ export default function QnADetailPage() {
   }, [webviewToken]);
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !id) {
       return;
     }
 
@@ -55,10 +58,10 @@ export default function QnADetailPage() {
     };
 
     fetchQnADetail();
-  }, [token]);
+  }, [token, id]);
 
   const handleDelete = async () => {
-    if (!token || !window.confirm('정말로 이 Q&A를 삭제하시겠습니까?')) {
+    if (!token || !id || !window.confirm('정말로 이 Q&A를 삭제하시겠습니까?')) {
       return;
     }
 
