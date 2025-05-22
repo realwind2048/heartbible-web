@@ -4,19 +4,8 @@ import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter } from 'next/navigation';
-
-interface FirebaseTimestamp {
-  _seconds: number;
-  _nanoseconds: number;
-}
-
-interface QnAHistory {
-  id: string;
-  message: string;
-  aiMessage: string;
-  createdAt: FirebaseTimestamp;
-  userId: string;
-}
+import { QnAHistory } from '@/app/types/firebase';
+import { DateUtil } from '@/app/utils/date';
 
 export default function QnAHistoryPage() {
   const router = useRouter();
@@ -95,17 +84,6 @@ export default function QnAHistoryPage() {
     router.push(`/mobileapp/ai/qna/history/${item.id}`);
   };
 
-  const formatTimestamp = (timestamp: FirebaseTimestamp) => {
-    const date = new Date(timestamp._seconds * 1000);
-    return date.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
   return (
     <div className="min-h-screen bg-gray-100">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
@@ -138,7 +116,7 @@ export default function QnAHistoryPage() {
                 <div className="flex flex-col">
                   <p className="text-gray-600 text-sm line-clamp-2">{item.aiMessage}</p>
                   <span className="text-xs text-gray-400 mt-2">
-                    {formatTimestamp(item.createdAt)}
+                    {DateUtil.formatFirebaseTimestamp(item.createdAt)}
                   </span>
                 </div>
               </div>
