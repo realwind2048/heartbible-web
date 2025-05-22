@@ -85,10 +85,10 @@ export default function QnAHistoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="container mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Q&A 내역</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-8">Q&A 내역</h1>
         
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
@@ -107,17 +107,22 @@ export default function QnAHistoryPage() {
             {history.map((item, index) => (
               <div
                 key={`${item.id}-${index}`}
-                className="bg-white rounded-lg shadow-sm p-4 space-y-3 cursor-pointer hover:bg-gray-50 transition-colors duration-200 h-[120px] flex flex-col justify-between"
+                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer overflow-hidden"
                 onClick={() => handleItemClick(item)}
               >
-                <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-gray-800 line-clamp-2">{item.message}</h3>
-                </div>
-                <div className="flex flex-col">
-                  <p className="text-gray-600 text-sm line-clamp-2">{item.aiMessage}</p>
-                  <span className="text-xs text-gray-400 mt-2">
-                    {DateUtil.formatFirebaseTimestamp(item.createdAt)}
-                  </span>
+                <div className="p-5">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800 line-clamp-2 mb-3 text-lg">{item.message}</h3>
+                    <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed">{item.aiMessage}</p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-gray-100 flex items-center">
+                    <span className="text-xs text-gray-400 flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {DateUtil.getRelativeTimeString(item.createdAt)}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
