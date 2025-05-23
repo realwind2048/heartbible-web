@@ -285,8 +285,8 @@ export default function QnADetailPage() {
             {/* AdSense 배너 */}
             <div className="mt-8">
               <Adsense
-                client="ca-pub-1576539061828377" // 실제 클라이언트 ID로 교체 필요
-                slot="8537003555" // 실제 슬롯 ID로 교체 필요
+                client="ca-pub-1576539061828377"
+                slot="8537003555"
                 format="auto"
                 responsive={true}
                 className="w-full"

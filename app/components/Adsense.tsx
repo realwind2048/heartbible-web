@@ -20,6 +20,8 @@ export default function Adsense({
   className = '',
 }: AdsenseProps) {
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
+
     try {
       // @ts-ignore
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -27,6 +29,10 @@ export default function Adsense({
       console.error('Adsense 에러:', err);
     }
   }, []);
+
+  if (process.env.NODE_ENV !== 'production') {
+    return null;
+  }
 
   return (
     <div className={`adsense-container ${className}`}>
