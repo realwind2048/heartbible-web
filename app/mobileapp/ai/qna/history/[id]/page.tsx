@@ -32,7 +32,7 @@ export default function QnADetailPage() {
 
     const fetchQnADetail = async () => {
       try {
-        const response = await fetch(`/api/ai-chat/ai-my-chat-v1-history/${id}`, {
+        const response = await fetch(`/api/ai-chat/ai-my-chat-v1-detail/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
