@@ -254,7 +254,7 @@ export default function QnADetailPage() {
                   </button>
                   <button
                     onClick={handleShare}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-500 hover:text-gray-700 hidden"
                     disabled={isLoading}
                     aria-label="공유하기"
                   >
