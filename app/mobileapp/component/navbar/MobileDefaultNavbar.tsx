@@ -1,7 +1,6 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation';
-import { ReactNode } from 'react';
 
 interface MobileDefaultNavbarProps {
   onBackClick?: () => void; // 뒤로가기 버튼 클릭 시 호출될 콜백 함수

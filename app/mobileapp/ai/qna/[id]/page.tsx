@@ -129,10 +129,6 @@ export default function QnADetailPage() {
     }
   };
 
-  const handleNavbarBackEvent = () => {
-    router.back();
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <MobileDefaultNavbar
