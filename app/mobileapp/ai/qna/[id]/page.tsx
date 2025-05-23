@@ -86,7 +86,7 @@ export default function QnADetailPage() {
     setShowDeleteDialog(false);
     
     try {
-      const response = await fetch(`/api/ai-chat/ai-my-chat-v1-history/${id}`, {
+      const response = await fetch(`/api/ai-chat/ai-my-chat-v1-detail/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
