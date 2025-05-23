@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { MobileDefaultNavbar } from '../../../../component/navbar/MobileDefaultNavbar';
+import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter, useParams } from 'next/navigation';
 import { QnAHistory } from '@/app/types/firebase';
