@@ -18,10 +18,14 @@ export default function QnADetailPage() {
   const { token: webviewToken } = useWebviewParams();
   const [token, setToken] = useState<string | null>(webviewToken);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   useEffect(() => {
     if (webviewToken) {
+      console.log('Setting token from webview:', webviewToken);
       setToken(webviewToken);
+    } else {
+      console.log('No webview token available');
     }
   }, [webviewToken]);
 
@@ -60,12 +64,27 @@ export default function QnADetailPage() {
     fetchQnADetail();
   }, [token, id]);
 
-  const handleDelete = async () => {
-    if (!token || !id || !window.confirm('정말로 이 Q&A를 삭제하시겠습니까?')) {
+  const handleDeleteClick = () => {
+    setShowDeleteDialog(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteDialog(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    
+    if (!id) {
       return;
     }
 
     setIsDeleting(true);
+    setShowDeleteDialog(false);
+    
     try {
       const response = await fetch(`/api/ai-chat/ai-my-chat-v1-history/${id}`, {
         method: 'DELETE',
@@ -120,7 +139,43 @@ export default function QnADetailPage() {
         title="Q&A 내용"
       />
       
+      {/* 삭제 확인 다이얼로그 */}
+      {showDeleteDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-sm">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">삭제 확인</h3>
+            <p className="text-gray-600 mb-6">정말로 이 Q&A를 삭제하시겠습니까?</p>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={handleDeleteCancel}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                disabled={isDeleting}
+              >
+                취소
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                disabled={isDeleting}
+              >
+                {isDeleting ? '삭제 중...' : '삭제'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4 py-6">
+        {/* 디버깅 정보 표시 */}
+        <div className="bg-yellow-50 p-4 mb-4 rounded-lg">
+          <p className="text-sm text-gray-600">디버깅 정보:</p>
+          <p className="text-sm text-gray-600">Token 존재 여부: {token ? '있음' : '없음'}</p>
+          <p className="text-sm text-gray-600">Webview Token 존재 여부: {webviewToken ? '있음' : '없음'}</p>
+          <p className="text-sm text-gray-600">ID: {id}</p>
+          <p className="text-sm text-gray-600">isLoading: {isLoading ? 'true' : 'false'}</p>
+          <p className="text-sm text-gray-600">isDeleting: {isDeleting ? 'true' : 'false'}</p>
+        </div>
+
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-800"></div>
@@ -140,7 +195,7 @@ export default function QnADetailPage() {
                 <h2 className="text-xl font-semibold text-gray-800">질문</h2>
                 <div className="flex space-x-2">
                   <button
-                    onClick={handleDelete}
+                    onClick={handleDeleteClick}
                     className="text-gray-500 hover:text-red-600"
                     disabled={isLoading || isDeleting}
                     aria-label="삭제하기"
