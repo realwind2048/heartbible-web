@@ -6,6 +6,7 @@ import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter, useParams } from 'next/navigation';
 import { QnAHistory } from '@/app/types/firebase';
 import { DateUtil } from '@/app/utils/date';
+import Adsense from '@/app/components/Adsense';
 
 export default function QnADetailPage() {
   const router = useRouter();
@@ -279,6 +280,17 @@ export default function QnADetailPage() {
                 </svg>
                 {DateUtil.formatFirebaseTimestamp(qna.createdAt)}
               </span>
+            </div>
+
+            {/* AdSense 배너 */}
+            <div className="mt-8">
+              <Adsense
+                client="ca-pub-1576539061828377" // 실제 클라이언트 ID로 교체 필요
+                slot="8537003555" // 실제 슬롯 ID로 교체 필요
+                format="auto"
+                responsive={true}
+                className="w-full"
+              />
             </div>
           </div>
         )}
