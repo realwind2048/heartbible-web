@@ -6,14 +6,20 @@ import { ReactNode } from 'react';
 interface MobileDefaultNavbarProps {
   onBackClick?: () => void; // 뒤로가기 버튼 클릭 시 호출될 콜백 함수
   rightContent?: ReactNode; // 우측 컨텐츠
+  title?: string; // 페이지 제목
 }
 
-export function MobileDefaultNavbar({ onBackClick, rightContent }: MobileDefaultNavbarProps) {
+export function MobileDefaultNavbar({ onBackClick, rightContent, title }: MobileDefaultNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   
   // 경로에 따른 현재 페이지 제목 생성
   const getCurrentPageTitle = (): string => {
+    // title prop이 있으면 우선 사용
+    if (title) {
+      return title;
+    }
+
     const segments = pathname.split('/').filter(Boolean);
     
     if (segments.length === 0) {

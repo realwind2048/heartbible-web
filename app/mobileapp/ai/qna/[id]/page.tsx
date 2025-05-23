@@ -140,6 +140,7 @@ export default function QnADetailPage() {
             </button>
           </div>
         }
+        title="Q&A 내용"
       />
       
       <div className="container mx-auto px-4 py-6">
