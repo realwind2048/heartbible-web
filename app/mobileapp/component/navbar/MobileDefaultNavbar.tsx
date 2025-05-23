@@ -5,11 +5,13 @@ import { ReactNode } from 'react';
 
 interface MobileDefaultNavbarProps {
   onBackClick?: () => void; // 뒤로가기 버튼 클릭 시 호출될 콜백 함수
-  rightContent?: ReactNode; // 우측 컨텐츠
   title?: string; // 페이지 제목
 }
 
-export function MobileDefaultNavbar({ onBackClick, rightContent, title }: MobileDefaultNavbarProps) {
+export function MobileDefaultNavbar({ 
+  onBackClick, 
+  title
+}: MobileDefaultNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   
@@ -95,10 +97,8 @@ export function MobileDefaultNavbar({ onBackClick, rightContent, title }: Mobile
             </span>
           </div>
           
-          {/* Right content area */}
-          <div className="w-6 h-6">
-            {rightContent}
-          </div>
+          {/* 우측 영역 */}
+          <div className="w-6 h-6" />
         </div>
       </div>
     </nav>
