@@ -88,8 +88,6 @@ export default function QnAHistoryPage() {
     <div className="min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="container mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-8">Q&A 내역</h1>
-        
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-800"></div>
