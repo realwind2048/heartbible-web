@@ -238,52 +238,9 @@ export default function QnADetailPage() {
             <p className="text-gray-600">Q&A를 찾을 수 없습니다.</p>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-semibold text-gray-800">질문</h2>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={handleDeleteClick}
-                    className="text-gray-500 hover:text-red-600"
-                    disabled={isLoading || isDeleting}
-                    aria-label="삭제하기"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={handleShare}
-                    className="text-gray-500 hover:text-gray-700 hidden"
-                    disabled={isLoading}
-                    aria-label="공유하기"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <p className="text-gray-700 whitespace-pre-wrap">{qna.message}</p>
-            </div>
-            
-            <div className="border-t border-gray-100 pt-6">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">답변</h2>
-              <p className="text-gray-700 whitespace-pre-wrap">{qna.aiMessage}</p>
-            </div>
-
-            <div className="border-t border-gray-100 pt-4">
-              <span className="text-sm text-gray-400 flex items-center">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {DateUtil.formatFirebaseTimestamp(qna.createdAt)}
-              </span>
-            </div>
-
+          <>
             {/* AdSense 배너 */}
-            <div className="mt-8">
+            <div className="mb-6">
               <Adsense
                 client="ca-pub-1576539061828377"
                 slot="8537003555"
@@ -292,7 +249,52 @@ export default function QnADetailPage() {
                 className="w-full"
               />
             </div>
-          </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-xl font-semibold text-gray-800">질문</h2>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={handleDeleteClick}
+                      className="text-gray-500 hover:text-red-600"
+                      disabled={isLoading || isDeleting}
+                      aria-label="삭제하기"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={handleShare}
+                      className="text-gray-500 hover:text-gray-700 hidden"
+                      disabled={isLoading}
+                      aria-label="공유하기"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-700 whitespace-pre-wrap">{qna.message}</p>
+              </div>
+              
+              <div className="border-t border-gray-100 pt-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">답변</h2>
+                <p className="text-gray-700 whitespace-pre-wrap">{qna.aiMessage}</p>
+              </div>
+
+              <div className="border-t border-gray-100 pt-4">
+                <span className="text-sm text-gray-400 flex items-center">
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {DateUtil.formatFirebaseTimestamp(qna.createdAt)}
+                </span>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>
