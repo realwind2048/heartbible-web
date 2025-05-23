@@ -86,6 +86,8 @@ export default function QnADetailPage() {
     setShowDeleteDialog(false);
     
     try {
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
       const response = await fetch(`/api/ai-chat/ai-my-chat-v1-detail/${id}`, {
         method: 'DELETE',
         headers: {
@@ -99,6 +101,7 @@ export default function QnADetailPage() {
         throw new Error('Q&A 삭제에 실패했습니다');
       }
 
+      alert('Q&A가 성공적으로 삭제되었습니다.');
       router.push('/mobileapp/ai/qna/history');
     } catch (error) {
       console.error('Q&A 삭제에 실패했습니다:', error);
@@ -157,6 +160,16 @@ export default function QnADetailPage() {
                 {isDeleting ? '삭제 중...' : '삭제'}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 삭제 중 로딩 오버레이 */}
+      {isDeleting && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 flex flex-col items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800 mb-4"></div>
+            <p className="text-gray-800 font-medium">Q&A를 삭제하는 중입니다...</p>
           </div>
         </div>
       )}
