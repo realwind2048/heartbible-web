@@ -224,16 +224,6 @@ export default function QnADetailPage() {
       )}
 
       <div className="container mx-auto px-4 py-6">
-        {/* 디버깅 정보 표시 */}
-        <div className="bg-yellow-50 p-4 mb-4 rounded-lg">
-          <p className="text-sm text-gray-600">디버깅 정보:</p>
-          <p className="text-sm text-gray-600">Token 존재 여부: {token ? '있음' : '없음'}</p>
-          <p className="text-sm text-gray-600">Webview Token 존재 여부: {webviewToken ? '있음' : '없음'}</p>
-          <p className="text-sm text-gray-600">ID: {id}</p>
-          <p className="text-sm text-gray-600">isLoading: {isLoading ? 'true' : 'false'}</p>
-          <p className="text-sm text-gray-600">isDeleting: {isDeleting ? 'true' : 'false'}</p>
-        </div>
-
         {isLoading ? (
           <div className="flex justify-center items-center h-40">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-800"></div>
