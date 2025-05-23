@@ -23,7 +23,6 @@ export default function Adsense({
     if (process.env.NODE_ENV !== 'production') return;
 
     try {
-      // @ts-ignore
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (err) {
       console.error('Adsense 에러:', err);
