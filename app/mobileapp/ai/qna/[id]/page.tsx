@@ -19,6 +19,9 @@ export default function QnADetailPage() {
   const [token, setToken] = useState<string | null>(webviewToken);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showResultDialog, setShowResultDialog] = useState(false);
+  const [resultMessage, setResultMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     if (webviewToken) {
@@ -74,7 +77,9 @@ export default function QnADetailPage() {
 
   const handleDeleteConfirm = async () => {
     if (!token) {
-      alert('로그인이 필요합니다.');
+      setResultMessage('로그인이 필요합니다.');
+      setIsSuccess(false);
+      setShowResultDialog(true);
       return;
     }
     
@@ -101,13 +106,23 @@ export default function QnADetailPage() {
         throw new Error('Q&A 삭제에 실패했습니다');
       }
 
-      alert('Q&A가 성공적으로 삭제되었습니다.');
-      router.push('/mobileapp/ai/qna/history');
+      setResultMessage('Q&A가 성공적으로 삭제되었습니다.');
+      setIsSuccess(true);
+      setShowResultDialog(true);
     } catch (error) {
       console.error('Q&A 삭제에 실패했습니다:', error);
-      alert('Q&A 삭제에 실패했습니다');
+      setResultMessage('Q&A 삭제에 실패했습니다');
+      setIsSuccess(false);
+      setShowResultDialog(true);
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  const handleResultDialogClose = () => {
+    setShowResultDialog(false);
+    if (isSuccess) {
+      router.back();
     }
   };
 
@@ -158,6 +173,40 @@ export default function QnADetailPage() {
                 disabled={isDeleting}
               >
                 {isDeleting ? '삭제 중...' : '삭제'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 결과 안내 다이얼로그 */}
+      {showResultDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-sm">
+            <div className="flex flex-col items-center mb-4">
+              {isSuccess ? (
+                <svg className="w-12 h-12 text-green-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="w-12 h-12 text-red-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+              <p className={`text-lg font-medium ${isSuccess ? 'text-green-600' : 'text-red-600'}`}>
+                {resultMessage}
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                onClick={handleResultDialogClose}
+                className={`px-6 py-2 rounded-lg ${
+                  isSuccess 
+                    ? 'bg-green-600 hover:bg-green-700' 
+                    : 'bg-red-600 hover:bg-red-700'
+                } text-white`}
+              >
+                확인
               </button>
             </div>
           </div>
