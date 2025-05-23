@@ -81,7 +81,7 @@ export default function QnAHistoryPage() {
   };
 
   const handleItemClick = (item: QnAHistory) => {
-    router.push(`/mobileapp/ai/qna/detail/${item.id}`);
+    router.push(`/mobileapp/ai/qna/${item.id}`);
   };
 
   return (

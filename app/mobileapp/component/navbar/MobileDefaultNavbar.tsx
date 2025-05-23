@@ -20,6 +20,11 @@ export function MobileDefaultNavbar({ onBackClick, rightContent }: MobileDefault
       return '홈'; // 기본 페이지 제목 (예: 루트 경로)
     }
     
+    // qna/[id] 경로 처리
+    if (segments[0] === 'qna') {
+      return 'Q&A 내용';
+    }
+    
     const lastSegment = segments[segments.length - 1];
     let label = lastSegment;
     
