@@ -16,7 +16,7 @@ export default function QnADetailPage() {
   const [qna, setQna] = useState<QnAHistory | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { token: webviewToken } = useWebviewParams();
+  const { token: webviewToken, adid } = useWebviewParams();
   const [token, setToken] = useState<string | null>(webviewToken);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -247,6 +247,7 @@ export default function QnADetailPage() {
                 format="auto"
                 responsive={true}
                 className="w-full"
+                adid={adid || undefined}
               />
             </div>
 
