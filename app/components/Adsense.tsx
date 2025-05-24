@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 // 테스트 기기 ID 목록
 const TEST_DEVICE_IDS = [
   'da44ec65-95ce-4df5-8e32-1e8905ca288f', // 애뮬레이터 (memium phone api 34, pc)
+  '2a4d5e23-18db-4eb4-8da1-43e78dfced5d', // 실제 기기 s24 ultra
+  '4ddb03ac-a02c-44cd-9b26-63b46484c4f9', // 실제 기기 a53
   // 실제 테스트 기기 ID를 여기에 추가
 ];
 
