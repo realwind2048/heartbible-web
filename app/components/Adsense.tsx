@@ -18,6 +18,7 @@ interface AdsenseProps {
   responsive?: boolean;
   className?: string;
   adid?: string;   // 테스트 기기 ID
+  shouldShowAd?: boolean;
 }
 
 export default function Adsense({
@@ -28,9 +29,11 @@ export default function Adsense({
   responsive = true,
   className = '',
   adid,
+  shouldShowAd = false
 }: AdsenseProps) {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
+    if (!shouldShowAd) return;
 
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -42,6 +45,7 @@ export default function Adsense({
   if (process.env.NODE_ENV !== 'production') {
     return null;
   }
+  if (!shouldShowAd) return null;
 
   // 테스트 기기인 경우 placeholder 표시
   if (adid && TEST_DEVICE_IDS.includes(adid)) {

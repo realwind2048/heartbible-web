@@ -9,6 +9,7 @@ interface WebviewParams {
   selectedbibleverses: string | null;
   hasToken: boolean | null;
   isLoading: boolean;
+  shouldShowAd: boolean;
 }
 
 export function useWebviewParams(): WebviewParams {
@@ -20,7 +21,7 @@ export function useWebviewParams(): WebviewParams {
   const [selectedbibleverses, setSelectedbibleverses] = useState<string | null>(null);
   const [hasToken, setHasToken] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [shouldShowAd, setShouldShowAd] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -32,6 +33,7 @@ export function useWebviewParams(): WebviewParams {
         const webviewChattype = window.chattype;
         const webviewVersioncode = window.versioncode;
         const webviewSelectedbibleverses = window.selectedbibleverses;
+        const webviewShouldShowAd = window.shouldShowAd;
         
         setToken(webviewToken);
         setAdid(webviewAdid);
@@ -41,6 +43,7 @@ export function useWebviewParams(): WebviewParams {
         setSelectedbibleverses(webviewSelectedbibleverses);
         setHasToken(!!webviewToken);
         setIsLoading(false);
+        setShouldShowAd(webviewShouldShowAd);
       };
     }
 
@@ -72,6 +75,7 @@ export function useWebviewParams(): WebviewParams {
     versioncode,
     selectedbibleverses,
     hasToken,
-    isLoading
+    isLoading,
+    shouldShowAd,
   };
 } 
