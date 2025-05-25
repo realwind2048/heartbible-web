@@ -32,15 +32,14 @@ export default function Adsense({
   shouldShowAd = false
 }: AdsenseProps) {
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') return;
-    if (!shouldShowAd) return;
-
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error('Adsense 에러:', err);
+    if (typeof window !== 'undefined' && window.adsbygoogle) {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (err) {
+        console.error('AdSense 에러:', err);
+      }
     }
-  }, []);
+  }, [client, slot, format, responsive, className, adid, shouldShowAd]);
 
   if (process.env.NODE_ENV !== 'production') {
     return null;
