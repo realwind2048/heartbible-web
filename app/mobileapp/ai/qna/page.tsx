@@ -117,7 +117,7 @@ export default function AIQnAPage() {
   }, [query, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setQuery, setIsLoading]);
 
   useEffect(() => {
-    if (verse && !initialQuerySent.current) {
+    if (verse && !initialQuerySent.current && webviewToken) {
       initialQuerySent.current = true;
       const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent);
@@ -153,7 +153,7 @@ export default function AIQnAPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse]);
+  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
