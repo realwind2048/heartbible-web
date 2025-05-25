@@ -29,7 +29,7 @@ export default function Adsense({
   responsive = true,
   className = '',
   adid,
-  shouldShowAd = false
+  shouldShowAd = true
 }: AdsenseProps) {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.adsbygoogle) {
