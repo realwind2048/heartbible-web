@@ -23,6 +23,7 @@ export default function QnADetailPage() {
   const [showResultDialog, setShowResultDialog] = useState(false);
   const [resultMessage, setResultMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showCopyToast, setShowCopyToast] = useState(false);
 
   useEffect(() => {
     if (webviewToken) {
@@ -148,12 +149,46 @@ export default function QnADetailPage() {
     }
   };
 
+  const handleCopy = async () => {
+    if (!qna) return;
+
+    const textToCopy = `질문: ${qna.message}\n\n답변: ${qna.aiMessage}`;
+    
+    try {
+      // 임시 textarea 엘리먼트 생성
+      const textarea = document.createElement('textarea');
+      textarea.value = textToCopy;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      
+      // 텍스트 선택 및 복사
+      textarea.select();
+      document.execCommand('copy');
+      
+      // 임시 엘리먼트 제거
+      document.body.removeChild(textarea);
+      
+      setShowCopyToast(true);
+      setTimeout(() => setShowCopyToast(false), 2000);
+    } catch (error) {
+      console.error('복사하기 실패:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <MobileDefaultNavbar
         title="Q&A 내용"
       />
       
+      {/* 복사 완료 토스트 메시지 */}
+      {showCopyToast && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg z-50">
+          복사되었습니다
+        </div>
+      )}
+
       {/* 삭제 확인 다이얼로그 */}
       {showDeleteDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
@@ -267,13 +302,13 @@ export default function QnADetailPage() {
                       </svg>
                     </button>
                     <button
-                      onClick={handleShare}
-                      className="text-gray-500 hover:text-gray-700 hidden"
+                      onClick={handleCopy}
+                      className="text-gray-500 hover:text-gray-700"
                       disabled={isLoading}
-                      aria-label="공유하기"
+                      aria-label="복사하기"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                       </svg>
                     </button>
                   </div>
