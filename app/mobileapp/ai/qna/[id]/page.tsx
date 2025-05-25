@@ -32,7 +32,7 @@ export default function QnADetailPage() {
     } else {
       console.log('No webview token available');
     }
-  }, [webviewToken]);
+  }, [webviewToken, shouldShowAd]);
 
   useEffect(() => {
     if (!token || !id) {
