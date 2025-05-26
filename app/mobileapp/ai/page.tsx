@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { HelpCircle, History } from 'lucide-react';
+import { HelpCircle, History, PenTool } from 'lucide-react';
 import { MobileDefaultNavbar } from '../component/navbar/MobileDefaultNavbar';
 import { useState } from 'react';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
@@ -29,6 +29,13 @@ const aiFeatures = [
     href: '/mobileapp/ai/qna/history',
     color: 'bg-orange-500',
   },
+  {
+    title: '기도 작성',
+    description: 'AI와 함께 기도문을 작성해보세요',
+    icon: PenTool,
+    href: '/mobileapp/ai/prayer',
+    color: 'bg-indigo-500',
+  },
   // {
   //   title: 'AI와 전화',
   //   description: '음성으로 AI와 대화하며 성경을 공부하세요',
@@ -49,13 +56,6 @@ const aiFeatures = [
   //   icon: BookOpen,
   //   href: '/prayer/topics',
   //   color: 'bg-red-500',
-  // },
-  // {
-  //   title: 'AI 기도 작성',
-  //   description: 'AI와 함께 기도문을 작성해보세요',
-  //   icon: PenTool,
-  //   href: '/prayer/write',
-  //   color: 'bg-indigo-500',
   // },
   // {
   //   title: 'AI 설교 작성',
