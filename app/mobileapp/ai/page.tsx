@@ -30,8 +30,8 @@ const aiFeatures = [
     color: 'bg-orange-500',
   },
   {
-    title: '기도 작성',
-    description: 'AI와 함께 기도문을 작성해보세요',
+    title: '기도문 작성',
+    description: 'AI가 도와주는 기도문 작성',
     icon: PenTool,
     href: '/mobileapp/ai/prayer',
     color: 'bg-indigo-500',
