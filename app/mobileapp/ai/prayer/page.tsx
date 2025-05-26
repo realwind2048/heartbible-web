@@ -70,7 +70,7 @@ export default function AIPrayerPage() {
               value={prayerContent}
               onChange={(e) => setPrayerContent(e.target.value)}
               placeholder="예시) 직장에서 어려움을 겪고 있습니다. 지혜롭게 대처할 수 있도록 기도해주세요."
-              className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-black placeholder:text-gray-500"
               disabled={isLoading}
             />
             <div className="mt-4 flex justify-end">
