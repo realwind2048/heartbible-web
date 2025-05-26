@@ -10,7 +10,7 @@ export default function AIPrayerPage() {
   const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
   const [token, setToken] = useState<string | null>(webviewToken);
   const [prayerContent, setPrayerContent] = useState('');
-  const [aiResponse, setAiResponse] = useState('');
+  const [aiPrayer, setAiPrayer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,7 +61,7 @@ export default function AIPrayerPage() {
       }
 
       const data = await response.json();
-      setAiResponse(data.aiMessage);
+      setAiPrayer(data.data.aiPrayer);
     } catch (error) {
       console.error('기도문 생성 실패:', error);
       setError(error instanceof Error ? error.message : '기도문 생성에 실패했습니다');
@@ -110,17 +110,17 @@ export default function AIPrayerPage() {
             </div>
           )}
 
-          {aiResponse && (
+          {aiPrayer && (
             <div className="border-t border-gray-100 pt-6">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">AI 기도문</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700 whitespace-pre-wrap">{aiResponse}</p>
+                <p className="text-gray-700 whitespace-pre-wrap">{aiPrayer}</p>
               </div>
               <div className="mt-4 flex justify-end">
                 <button
                   onClick={() => {
                     const textarea = document.createElement('textarea');
-                    textarea.value = aiResponse;
+                    textarea.value = aiPrayer;
                     document.body.appendChild(textarea);
                     textarea.select();
                     document.execCommand('copy');
