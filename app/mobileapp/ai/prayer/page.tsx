@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter } from 'next/navigation';
@@ -14,14 +14,27 @@ export default function AIPrayerPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (webviewToken) {
+      console.log('Setting token from webview:', webviewToken);
+      setToken(webviewToken);
+    } else {
+      console.log('No webview token available');
+    }
+  }, [webviewToken]);
+
+
   const handleSubmit = async () => {
+    console.log('handleSubmit');
     if (!token) {
       alert('로그인이 필요합니다.');
+      console.log('token 없음');
       return;
     }
 
     if (!prayerContent.trim()) {
       alert('기도 내용을 입력해주세요.');
+      console.log('기도 내용 없음');
       return;
     }
 
