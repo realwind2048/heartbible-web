@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AIPrayerPage() {
   const router = useRouter();
-  const { token: webviewToken } = useWebviewParams();
+  const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
   const [token, setToken] = useState<string | null>(webviewToken);
   const [prayerContent, setPrayerContent] = useState('');
   const [aiResponse, setAiResponse] = useState('');
@@ -49,7 +49,10 @@ export default function AIPrayerPage() {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          message: prayerContent
+          content: prayerContent,
+          adid: adid,
+          lang: lang,
+          versioncode: versioncode,
         }),
       });
 
