@@ -29,7 +29,7 @@ export default function AIPrayerPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/ai-chat/ai-prayer', {
+      const response = await fetch('/api/ai/prayer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
