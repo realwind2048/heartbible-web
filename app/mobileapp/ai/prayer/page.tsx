@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
-import { useRouter } from 'next/navigation';
 
 export default function AIPrayerPage() {
-  const router = useRouter();
   const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
   const [token, setToken] = useState<string | null>(webviewToken);
   const [prayerContent, setPrayerContent] = useState('');
