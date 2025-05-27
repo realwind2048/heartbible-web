@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter } from 'next/navigation';
+import { DateUtil } from '@/app/utils/date';
 
 interface PrayerHistory {
   id: string;
@@ -55,17 +56,6 @@ export default function PrayerHistoryPage() {
     fetchHistories();
   }, [token]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(date);
-  };
-
   const hasHistories = Array.isArray(histories) && histories.length > 0;
 
   return (
@@ -100,7 +90,7 @@ export default function PrayerHistoryPage() {
               >
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <p className="text-sm text-gray-500">{formatDate(history.createdAt)}</p>
+                    <p className="text-sm text-gray-500">{ DateUtil.getRelativeTimeString(history.createdAt) }</p>
                     <div className="mt-2">
                       <h3 className="font-semibold text-gray-800 mb-2">나의 기도</h3>
                       <p className="text-gray-700">{history.content}</p>
