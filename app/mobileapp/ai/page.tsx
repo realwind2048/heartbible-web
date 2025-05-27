@@ -36,6 +36,13 @@ const aiFeatures = [
     href: '/mobileapp/ai/prayer',
     color: 'bg-indigo-500',
   },
+  {
+    title: '기도문 작성 내역',
+    description: '이전에 작성한 기도문을 확인해보세요',
+    icon: History,
+    href: '/mobileapp/ai/prayer/history',
+    color: 'bg-purple-500',
+  },
   // {
   //   title: 'AI와 전화',
   //   description: '음성으로 AI와 대화하며 성경을 공부하세요',
