@@ -5,12 +5,13 @@ import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavb
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter } from 'next/navigation';
 import { DateUtil } from '@/app/utils/date';
+import { FirebaseTimestamp } from '@/app/types/firebase';
 
 interface PrayerHistory {
   id: string;
   content: string;
   aiPrayer: string;
-  createdAt: string;
+  createdAt: FirebaseTimestamp;
 }
 
 export default function PrayerHistoryPage() {
