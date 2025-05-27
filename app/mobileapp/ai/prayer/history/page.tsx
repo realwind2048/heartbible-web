@@ -38,14 +38,15 @@ export default function PrayerHistoryPage() {
         });
 
         if (!response.ok) {
-          throw new Error('기도문 작성 내역을 불러오는데 실패했습니다');
+          throw new Error('AI 기도문 작성 내역을 불러오는데 실패했습니다');
         }
 
         const data = await response.json();
-        setHistories(data.data);
+        setHistories(data.data || []);
       } catch (error) {
-        console.error('기도문 작성 내역 로딩 실패:', error);
-        setError(error instanceof Error ? error.message : '기도문 작성 내역을 불러오는데 실패했습니다');
+        console.error('AI 기도문 작성 내역 로딩 실패:', error);
+        setError(error instanceof Error ? error.message : 'AI 기도문 작성 내역을 불러오는데 실패했습니다');
+        setHistories([]);
       } finally {
         setIsLoading(false);
       }
@@ -65,9 +66,11 @@ export default function PrayerHistoryPage() {
     }).format(date);
   };
 
+  const hasHistories = Array.isArray(histories) && histories.length > 0;
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <MobileDefaultNavbar title="기도문 작성 내역" />
+      <MobileDefaultNavbar title="AI 기도문 작성 내역" />
       
       <div className="container mx-auto px-4 py-6">
         {isLoading ? (
@@ -78,9 +81,9 @@ export default function PrayerHistoryPage() {
           <div className="text-center py-10">
             <p className="text-red-600">{error}</p>
           </div>
-        ) : histories.length === 0 ? (
+        ) : !hasHistories ? (
           <div className="text-center py-10">
-            <p className="text-gray-600">아직 작성된 기도문이 없습니다.</p>
+            <p className="text-gray-600">아직 작성된 AI 기도문이 없습니다.</p>
             <button
               onClick={() => router.push('/mobileapp/ai/prayer')}
               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
