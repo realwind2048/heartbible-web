@@ -44,7 +44,7 @@ export default function PrayerDetailPage() {
 
     const fetchPrayerDetail = async () => {
       try {
-        const response = await fetch(`/api/ai/prayer/history/${id}`, {
+        const response = await fetch(`/api/ai/prayer/detail/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export default function PrayerDetailPage() {
     setShowDeleteDialog(false);
     
     try {
-      const response = await fetch(`/api/ai/prayer/history/${id}`, {
+      const response = await fetch(`/api/ai/prayer/detail/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
