@@ -93,11 +93,11 @@ export default function PrayerHistoryPage() {
                   <div className="flex-1">
                     <p className="text-sm text-gray-500">{ DateUtil.getRelativeTimeString(history.createdAt) }</p>
                     <div className="mt-2">
-                      <h3 className="font-semibold text-gray-800 mb-2">나의 기도</h3>
+                      <h3 className="font-semibold text-gray-800 mb-2">요청 내용</h3>
                       <p className="text-gray-700">{history.content}</p>
                     </div>
                     <div className="mt-4">
-                      <h3 className="font-semibold text-gray-800 mb-2">AI 기도문</h3>
+                      <h3 className="font-semibold text-gray-800 mb-2">기도문</h3>
                       <p className="text-gray-700 whitespace-pre-wrap">{history.aiPrayer}</p>
                     </div>
                   </div>
