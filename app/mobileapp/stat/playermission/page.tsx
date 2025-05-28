@@ -5,24 +5,22 @@ import { PlayerRankService } from '@/app/services/PlayerRankService';
 import { PlayerRanks } from '@/app/types/player';
 import { RankCard, RANK_TYPES } from '@/app/components/RankCard';
 import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
-import { getTokenFromApp } from '@/app/utils/appBridge';
+import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 
 export default function Page() {
   const [ranks, setRanks] = useState<PlayerRanks | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { token: webviewToken } = useWebviewParams();
 
   useEffect(() => {
     const fetchRanks = async () => {
       try {
-        const token = await getTokenFromApp();
-
-        if (!token) {
+        if (!webviewToken) {
           console.log('토큰이 없습니다.');
-        } else {
-          console.log(token);
+          return;
         }
 
-        const data = await PlayerRankService.getRanks(token);
+        const data = await PlayerRankService.getRanks(webviewToken);
         setRanks(data);
       } catch (err) {
         setError('순위 데이터를 불러오는데 실패했습니다.');
@@ -31,7 +29,7 @@ export default function Page() {
     };
 
     fetchRanks();
-  }, []);
+  }, [webviewToken]);
 
   if (error) {
     return (
