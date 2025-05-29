@@ -1,17 +1,29 @@
 import { PlayerRanks } from '@/app/types/player';
 
+interface GetRanksParams {
+  period?: 'month' | 'all';
+  month?: string;
+}
+
 export class PlayerRankService {
-  static async getRanks(token: string | null): Promise<PlayerRanks> {
+  static async getRanks(token: string | null, params?: GetRanksParams): Promise<PlayerRanks> {
     try {
+      let url = '/api/player/ranks';
+      if (params?.period === 'month' && params?.month) {
+        url += `?period=${params.period}&month=${params.month}`;
+      } else if (params?.period === 'all') {
+        url += `?period=${params.period}`;
+      }
+
       let response;
       if (token) {
-        response = await fetch('/api/player/ranks', {
+        response = await fetch(url, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });        
       } else {
-        response = await fetch('/api/player/ranks');
+        response = await fetch(url);
       }
 
       if (!response.ok) {
