@@ -15,12 +15,7 @@ export default function Page() {
   useEffect(() => {
     const fetchRanks = async () => {
       try {
-        if (!webviewToken) {
-          console.log('토큰이 없습니다.');
-          return;
-        }
-
-        const data = await PlayerRankService.getRanks(webviewToken);
+        const data = await PlayerRankService.getRanks(webviewToken || '');
         setRanks(data);
       } catch (err) {
         setError('순위 데이터를 불러오는데 실패했습니다.');
