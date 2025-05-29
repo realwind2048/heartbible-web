@@ -1,12 +1,12 @@
 import { PlayerRanks } from '@/app/types/player';
 
-interface GetRanksParams {
+interface RankParams {
   period?: 'month' | 'all';
   month?: string;
 }
 
 export class PlayerRankService {
-  static async getRanks(token: string | null, params?: GetRanksParams): Promise<PlayerRanks> {
+  static async getRanks(token: string | null, params?: RankParams): Promise<PlayerRanks> {
     try {
       let url = '/api/player/ranks';
       if (params?.period === 'month' && params?.month) {

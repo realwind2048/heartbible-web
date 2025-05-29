@@ -3,7 +3,17 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   try {
     const authHeader = request.headers.get('Authorization');
+    const url = new URL(request.url);
+    const period = url.searchParams.get('period');
+    const month = url.searchParams.get('month');
     
+    let apiUrl = 'https://heartbible.klutche.com/api/player/get-ranks';
+    if (period === 'month' && month) {
+      apiUrl += `?period=${period}&month=${month}`;
+    } else if (period === 'all') {
+      apiUrl += `?period=${period}`;
+    }
+
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -13,7 +23,7 @@ export async function GET(request: Request) {
       headers['Authorization'] = authHeader;
     }
 
-    const response = await fetch('https://heartbible.klutche.com/api/player/get-ranks', {
+    const response = await fetch(apiUrl, {
       headers,
     });
 
