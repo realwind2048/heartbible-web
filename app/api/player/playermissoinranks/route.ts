@@ -8,7 +8,8 @@ export async function GET(request: Request) {
     const period = url.searchParams.get('period');
     const month = url.searchParams.get('month');
     
-    let apiUrl = 'https://heartbible.klutche.com/api/player/get-ranks';
+    // let apiUrl = 'https://heartbible.klutche.com/api/player/get-player-mission-rank';
+    let apiUrl = 'http://localhost:8080/api/player/get-player-mission-rank';
     if (period === 'month' && month) {
       apiUrl += `?period=${period}&month=${month}`;
     } else if (period === 'all') {

@@ -33,9 +33,9 @@ export default function Page() {
   useEffect(() => {
     const fetchRanks = async () => {
       try {
-        const data = await PlayerRankService.getRanks(webviewToken || '', {
+        const data = await PlayerRankService.getPlayerMissionRanks(webviewToken || '', {
           period: periodType,
-          month: periodType === 'month' ? selectedMonth : undefined
+          yearMonthId: periodType === 'month' ? selectedMonth : undefined
         });
         setRanks(data);
       } catch (err) {
