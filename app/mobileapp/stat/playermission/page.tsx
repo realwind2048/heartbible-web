@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { PlayerRankService } from '@/app/services/PlayerRankService';
 import { PlayerRanks } from '@/app/types/player';
 import { RankCard, RANK_TYPES } from '@/app/components/RankCard';
-import { BreadcrumbNavbar } from '@/app/components/navbar/breadcrumb-navbar';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
+import { MobileDefaultNavbar } from '../../component/navbar/MobileDefaultNavbar';
 
 type PeriodType = 'month' | 'all';
 
@@ -24,6 +24,7 @@ export default function Page() {
     const date = new Date();
     date.setMonth(date.getMonth() - i);
     return {
+      key: `month-${i}`,
       value: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`,
       label: `${date.getFullYear()}년 ${date.getMonth() + 1}월`
     };
@@ -49,7 +50,7 @@ export default function Page() {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-100">
-        <BreadcrumbNavbar />
+        <MobileDefaultNavbar title="도전 성경일독 순위" />
         <div className="p-4">
           <div className="max-w-7xl mx-auto">
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -63,11 +64,10 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <BreadcrumbNavbar />
+      <MobileDefaultNavbar title="도전 성경일독 순위" />
       <div className="p-4 sm:p-6">
         <div className="max-w-7xl mx-auto space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <h1 className="text-2xl font-bold text-gray-800">도전 성경일독 순위</h1>
             {periodType === 'month' && (
               <select
                 value={selectedMonth}
@@ -75,7 +75,7 @@ export default function Page() {
                 className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
               >
                 {availableMonths.map((month) => (
-                  <option key={month.value} value={month.value}>
+                  <option key={month.key} value={month.value}>
                     {month.label}
                   </option>
                 ))}
