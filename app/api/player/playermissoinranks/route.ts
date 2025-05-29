@@ -6,12 +6,12 @@ export async function GET(request: Request) {
     const authHeader = request.headers.get('Authorization');
     const url = new URL(request.url);
     const period = url.searchParams.get('period');
-    const month = url.searchParams.get('month');
+    const yearMonthId = url.searchParams.get('yearMonthId');
     
     // let apiUrl = 'https://heartbible.klutche.com/api/player/get-player-mission-rank';
     let apiUrl = 'http://localhost:8080/api/player/get-player-mission-rank';
-    if (period === 'month' && month) {
-      apiUrl += `?period=${period}&month=${month}`;
+    if (period === 'month' && yearMonthId) {
+      apiUrl += `?period=${period}&yearMonthId=${yearMonthId}`;
     } else if (period === 'all') {
       apiUrl += `?period=${period}`;
     }
