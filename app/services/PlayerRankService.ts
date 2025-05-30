@@ -8,7 +8,7 @@ interface RankParams {
 export class PlayerRankService {
   static async getRanks(token: string | null): Promise<PlayerRanks> {
     try {
-      let url = '/api/player/ranks';
+      const url = '/api/player/ranks';
       let response;
       if (token) {
         response = await fetch(url, {

@@ -16,16 +16,17 @@ export default function Page() {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [periodType, setPeriodType] = useState<PeriodType>('month');
 
-  // 사용 가능한 월 목록 생성 (현재 월부터 6개월 전까지)
-  const availableMonths = Array.from({ length: 6 }, (_, i) => {
-    const date = new Date();
-    date.setMonth(date.getMonth() - i);
-    return {
-      key: `month-${i}`,
-      value: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`,
-      label: `${date.getFullYear()}년 ${date.getMonth() + 1}월`
-    };
-  });
+  // 월 선택 셀렉터 임시 숨김
+  // // 사용 가능한 월 목록 생성 (현재 월부터 6개월 전까지)
+  // const availableMonths = Array.from({ length: 6 }, (_, i) => {
+  //   const date = new Date();
+  //   date.setMonth(date.getMonth() - i);
+  //   return {
+  //     key: `month-${i}`,
+  //     value: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`,
+  //     label: `${date.getFullYear()}년 ${date.getMonth() + 1}월`
+  //   };
+  // });
 
   useEffect(() => {
     // 클라이언트 사이드에서만 실행
