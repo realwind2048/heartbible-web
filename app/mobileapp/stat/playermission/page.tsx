@@ -6,6 +6,7 @@ import { PlayerRanks } from '@/app/types/player';
 import { RankCard, RANK_TYPES } from '@/app/components/RankCard';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { MobileDefaultNavbar } from '../../component/navbar/MobileDefaultNavbar';
+import { useHandleNavbarBack } from '@/app/hooks/useHandleNavbarBack';
 
 type PeriodType = 'month' | 'all';
 
@@ -15,6 +16,7 @@ export default function Page() {
   const { token: webviewToken } = useWebviewParams();
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [periodType, setPeriodType] = useState<PeriodType>('month');
+  const handleNavbarBackEvent = useHandleNavbarBack();
 
   // 월 선택 셀렉터 임시 숨김
   // // 사용 가능한 월 목록 생성 (현재 월부터 6개월 전까지)
@@ -55,7 +57,7 @@ export default function Page() {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-100">
-        <MobileDefaultNavbar title="도전 성경일독 순위" />
+        <MobileDefaultNavbar title="도전 성경일독 순위" onBackClick={handleNavbarBackEvent} />
         <div className="p-4">
           <div className="max-w-7xl mx-auto">
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -69,7 +71,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <MobileDefaultNavbar title="도전 성경일독 순위" />
+      <MobileDefaultNavbar title="도전 성경일독 순위" onBackClick={handleNavbarBackEvent} />
       <div className="p-4 sm:p-6">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* 월 선택 셀렉터 임시 숨김
