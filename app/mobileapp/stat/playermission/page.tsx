@@ -71,6 +71,7 @@ export default function Page() {
       <MobileDefaultNavbar title="도전 성경일독 순위" />
       <div className="p-4 sm:p-6">
         <div className="max-w-7xl mx-auto space-y-6">
+          {/* 월 선택 셀렉터 임시 숨김
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             {periodType === 'month' && (
               <select
@@ -86,6 +87,7 @@ export default function Page() {
               </select>
             )}
           </div>
+          */}
 
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">
             <div className="grid grid-cols-2 divide-x divide-gray-200">
