@@ -60,7 +60,7 @@ export const RankCard = ({ type, items }: RankCardProps) => (
     <div className="space-y-2">
       {items.map((item, index) => (
         <div
-          key={item.id}
+          key={item.id || index}
           className={`flex items-center justify-between p-2 rounded-lg transition-colors ${
             item.isMyRank ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
           }`}
