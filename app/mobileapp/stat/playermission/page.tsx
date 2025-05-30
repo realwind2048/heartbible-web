@@ -13,10 +13,7 @@ export default function Page() {
   const [ranks, setRanks] = useState<PlayerRanks | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { token: webviewToken } = useWebviewParams();
-  const [selectedMonth, setSelectedMonth] = useState<string>(() => {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  });
+  const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [periodType, setPeriodType] = useState<PeriodType>('month');
 
   // 사용 가능한 월 목록 생성 (현재 월부터 6개월 전까지)
@@ -29,6 +26,13 @@ export default function Page() {
       label: `${date.getFullYear()}년 ${date.getMonth() + 1}월`
     };
   });
+
+  useEffect(() => {
+    // 클라이언트 사이드에서만 실행
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    setSelectedMonth(currentMonth);
+  }, []);
 
   useEffect(() => {
     const fetchRanks = async () => {
