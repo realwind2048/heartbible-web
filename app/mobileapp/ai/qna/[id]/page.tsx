@@ -279,6 +279,7 @@ export default function QnADetailPage() {
               <Adsense
                 client="ca-pub-1576539061828377"
                 slot="8537003555"
+                style={{ display: 'block' }}
                 format="auto"
                 responsive={true}
                 className="w-full"
