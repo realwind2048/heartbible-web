@@ -13,7 +13,7 @@ type PeriodType = 'month' | 'all';
 export default function Page() {
   const [ranks, setRanks] = useState<PlayerRanks | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { token: webviewToken } = useWebviewParams();
+  const { token: webviewToken, isLoading } = useWebviewParams();
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [periodType, setPeriodType] = useState<PeriodType>('month');
   const handleNavbarBackEvent = useHandleNavbarBack();
@@ -42,6 +42,8 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
+    if (isLoading) return;
+
     const fetchRanks = async () => {
       // 캐시된 데이터가 있으면 사용
       if (cachedRanks[periodType]) {
@@ -55,7 +57,6 @@ export default function Page() {
           yearMonthId: periodType === 'month' ? selectedMonth : undefined
         });
         setRanks(data);
-        // 데이터 캐싱
         setCachedRanks(prev => ({
           ...prev,
           [periodType]: data
@@ -67,7 +68,7 @@ export default function Page() {
     };
 
     fetchRanks();
-  }, [webviewToken, periodType, selectedMonth, cachedRanks]);
+  }, [webviewToken, periodType, selectedMonth, isLoading]);
 
   if (error) {
     return (
