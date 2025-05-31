@@ -17,6 +17,10 @@ export default function Page() {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [periodType, setPeriodType] = useState<PeriodType>('month');
   const handleNavbarBackEvent = useHandleNavbarBack();
+  const [cachedRanks, setCachedRanks] = useState<Record<PeriodType, PlayerRanks | null>>({
+    month: null,
+    all: null
+  });
 
   // 월 선택 셀렉터 임시 숨김
   // // 사용 가능한 월 목록 생성 (현재 월부터 6개월 전까지)
@@ -39,12 +43,23 @@ export default function Page() {
 
   useEffect(() => {
     const fetchRanks = async () => {
+      // 캐시된 데이터가 있으면 사용
+      if (cachedRanks[periodType]) {
+        setRanks(cachedRanks[periodType]);
+        return;
+      }
+
       try {
         const data = await PlayerRankService.getPlayerMissionRanks(webviewToken || '', {
           period: periodType,
           yearMonthId: periodType === 'month' ? selectedMonth : undefined
         });
         setRanks(data);
+        // 데이터 캐싱
+        setCachedRanks(prev => ({
+          ...prev,
+          [periodType]: data
+        }));
       } catch (err) {
         setError('순위 데이터를 불러오는데 실패했습니다.');
         console.error('Error fetching ranks:', err);
@@ -52,7 +67,7 @@ export default function Page() {
     };
 
     fetchRanks();
-  }, [webviewToken, periodType, selectedMonth]);
+  }, [webviewToken, periodType, selectedMonth, cachedRanks]);
 
   if (error) {
     return (
