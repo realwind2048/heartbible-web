@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { PlayerRankService } from '@/app/services/PlayerRankService';
 import { PlayerRanks } from '@/app/types/player';
 import { RankCard, RANK_TYPES } from '@/app/components/RankCard';
@@ -41,34 +41,34 @@ export default function Page() {
     setSelectedMonth(currentMonth);
   }, []);
 
-  useEffect(() => {
+  const fetchRanks = useCallback(async () => {
     if (isLoading) return;
 
-    const fetchRanks = async () => {
-      // 캐시된 데이터가 있으면 사용
-      if (cachedRanks[periodType]) {
-        setRanks(cachedRanks[periodType]);
-        return;
-      }
+    // 캐시된 데이터가 있으면 사용
+    if (cachedRanks[periodType]) {
+      setRanks(cachedRanks[periodType]);
+      return;
+    }
 
-      try {
-        const data = await PlayerRankService.getPlayerMissionRanks(webviewToken || '', {
-          period: periodType,
-          yearMonthId: periodType === 'month' ? selectedMonth : undefined
-        });
-        setRanks(data);
-        setCachedRanks(prev => ({
-          ...prev,
-          [periodType]: data
-        }));
-      } catch (err) {
-        setError('순위 데이터를 불러오는데 실패했습니다.');
-        console.error('Error fetching ranks:', err);
-      }
-    };
+    try {
+      const data = await PlayerRankService.getPlayerMissionRanks(webviewToken || '', {
+        period: periodType,
+        yearMonthId: periodType === 'month' ? selectedMonth : undefined
+      });
+      setRanks(data);
+      setCachedRanks(prev => ({
+        ...prev,
+        [periodType]: data
+      }));
+    } catch (err) {
+      setError('순위 데이터를 불러오는데 실패했습니다.');
+      console.error('Error fetching ranks:', err);
+    }
+  }, [webviewToken, periodType, selectedMonth, isLoading, cachedRanks]);
 
+  useEffect(() => {
     fetchRanks();
-  }, [webviewToken, periodType, selectedMonth, isLoading]);
+  }, [fetchRanks]);
 
   if (error) {
     return (
