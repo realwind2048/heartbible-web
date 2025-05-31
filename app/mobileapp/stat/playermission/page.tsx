@@ -37,7 +37,9 @@ export default function Page() {
   useEffect(() => {
     // 클라이언트 사이드에서만 실행
     const now = new Date();
-    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    // KST로 변환 (UTC+9)
+    const kstDate = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+    const currentMonth = `${kstDate.getFullYear()}-${String(kstDate.getMonth() + 1).padStart(2, '0')}`;
     setSelectedMonth(currentMonth);
   }, []);
 
