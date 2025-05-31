@@ -58,33 +58,40 @@ export const RankCard = ({ type, items }: RankCardProps) => (
   <div className="bg-white rounded-lg shadow-md p-4">
     <h2 className="text-lg font-bold mb-3 text-gray-800">{rankTitles[type]}</h2>
     <div className="space-y-2">
-      {items.map((item, index) => (
-        <div
-          key={item.id || index}
-          className={`flex items-center justify-between p-2 rounded-lg transition-colors ${
-            item.isMyRank ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
-          }`}
-        >
-          <div className="flex items-center space-x-2">
-            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-semibold
-              ${index === 0 ? 'bg-yellow-400' : 
-                index === 1 ? 'bg-gray-400' : 
-                index === 2 ? 'bg-amber-600' : 
-                'bg-gray-300'}`}>
-              {index + 1}
-            </span>
-            <span className="font-medium text-gray-700 text-sm">{item.name}</span>
-            {item.isMyRank && (
-              <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
-                내 순위
-              </span>
-            )}
-          </div>
-          <span className="text-gray-600 text-sm">
-            {getRankValue(item, type)}
-          </span>
+      {items.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-8 text-center">
+          <p className="text-gray-600 mb-2">아직 기록이 없어요</p>
+          <p className="text-sm text-gray-500">첫 기록을 남겨보세요</p>
         </div>
-      ))}
+      ) : (
+        items.map((item, index) => (
+          <div
+            key={item.id || index}
+            className={`flex items-center justify-between p-2 rounded-lg transition-colors ${
+              item.isMyRank ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
+            }`}
+          >
+            <div className="flex items-center space-x-2">
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-semibold
+                ${index === 0 ? 'bg-yellow-400' : 
+                  index === 1 ? 'bg-gray-400' : 
+                  index === 2 ? 'bg-amber-600' : 
+                  'bg-gray-300'}`}>
+                {index + 1}
+              </span>
+              <span className="font-medium text-gray-700 text-sm">{item.name}</span>
+              {item.isMyRank && (
+                <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
+                  내 순위
+                </span>
+              )}
+            </div>
+            <span className="text-gray-600 text-sm">
+              {getRankValue(item, type)}
+            </span>
+          </div>
+        ))
+      )}
     </div>
   </div>
 ); 
