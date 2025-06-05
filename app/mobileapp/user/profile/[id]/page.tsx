@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { Card, CardContent } from '../../../../components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '../../../../components/ui/avatar';
+import { Card, CardContent } from '../../../../../components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '../../../../../components/ui/avatar';
 import { notFound } from 'next/navigation';
 
 interface UserProfile {
