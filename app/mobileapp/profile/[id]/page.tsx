@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Card, CardContent } from '../../../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../../components/ui/avatar';
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 
 interface UserProfile {
   id: string;
@@ -19,13 +20,16 @@ interface PageProps {
 }
 
 async function getUserProfile(userId: string): Promise<UserProfile> {
+  const headersList = headers();
+  const host = headersList.get('host');
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+
   try {
-    const response = await fetch(`/api/user/profile/${userId}`, {
+    const response = await fetch(`${protocol}://${host}/api/user/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      // NEXT.js에서 기본적으로 캐시를 사용하므로, 실시간 데이터가 필요한 경우 cache: 'no-store' 설정
       cache: 'no-store'
     });
 
@@ -44,12 +48,12 @@ async function getUserProfile(userId: string): Promise<UserProfile> {
 }
 
 export default async function ProfilePage({ params }: PageProps) {
+  const userId = await Promise.resolve(params.id);
   let userProfile: UserProfile;
   
   try {
-    userProfile = await getUserProfile(params.id);
+    userProfile = await getUserProfile(userId);
   } catch (error) {
-    // 에러 페이지로 리다이렉트하거나 에러 컴포넌트를 표시할 수 있습니다
     return (
       <div className="container mx-auto p-4 text-center">
         <h1 className="text-2xl font-bold text-red-600">오류가 발생했습니다</h1>
