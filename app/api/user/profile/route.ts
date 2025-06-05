@@ -1,16 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { apiHostUseCase } from '@/app/useCases/apiHostUseCase';
 
-const API_HOST = process.env.NEXT_PUBLIC_API_HOST || 'https://heartbible.klutche.com';
-const USE_PRODUCTION_API = false; // 실제 API 호출이 필요할 때 true로 변경
-const LOCAL_API_HOST = 'http://localhost:3000';
-
-function getApiHost() {
-  if (process.env.NODE_ENV === 'production' || USE_PRODUCTION_API) {
-    return API_HOST;
-  }
-  return LOCAL_API_HOST;
-}
+// 이 API에서 production API 사용 여부 설정
+apiHostUseCase.setUseProductionApi(false);
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,8 +17,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const apiUrl = `${getApiHost()}/api/user/profile/${userId}`;
-    console.log(`Calling API: ${apiUrl}`); // API 호출 URL 로깅
+    const apiUrl = apiHostUseCase.getFullApiUrl(`/api/user/profile/${userId}`);
+    console.log(`Calling API: ${apiUrl}`);
     
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
