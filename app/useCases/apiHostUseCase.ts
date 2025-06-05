@@ -2,18 +2,18 @@ const PRODUCTION_API_HOST = 'https://heartbible.klutche.com';
 const LOCAL_API_HOST = 'http://localhost:3000';
 
 class ApiHostUseCase {
-  private useProductionApi: boolean;
+  private useLocalHost: boolean;
 
   constructor() {
-    this.useProductionApi = false;
+    this.useLocalHost = false;
   }
 
-  setUseProductionApi(value: boolean) {
-    this.useProductionApi = value;
+  setUseLocalHost(value: boolean) {
+    this.useLocalHost = value;
   }
 
   getApiHost(): string {
-    if (process.env.NODE_ENV === 'production' || this.useProductionApi) {
+    if (process.env.NODE_ENV === 'production' || !this.useLocalHost) {
       return PRODUCTION_API_HOST;
     }
     return LOCAL_API_HOST;

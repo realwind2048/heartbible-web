@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { apiHostUseCase } from '@/app/useCases/apiHostUseCase';
 
-// 이 API에서 production API 사용 여부 설정
-apiHostUseCase.setUseProductionApi(false);
+// 개발 환경에서 로컬 API 사용 여부 설정
+apiHostUseCase.setUseLocalHost(true);
 
 export async function GET(request: NextRequest) {
   try {
