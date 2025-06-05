@@ -1,16 +1,28 @@
 import Image from 'next/image';
-import { Card, CardContent } from '../../../components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '../../../components/ui/avatar';
+import { Card, CardContent } from '../../../../components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '../../../../components/ui/avatar';
 
-export default function ProfilePage() {
-  // 실제 앱에서는 이 데이터를 API나 상태 관리 도구에서 가져와야 합니다
-  const userProfile = {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+async function getUserProfile(userId: string) {
+  // TODO: API를 통해 실제 사용자 데이터를 가져오는 로직 구현
+  // 현재는 더미 데이터 반환
+  return {
+    id: userId,
     name: '홍길동',
     email: 'hong@example.com',
     joinDate: '2024-01-01',
     profileImage: '/placeholder-avatar.jpg',
-    bio: '하트바이블 열심히 사용중입니다.',
+    bio: '마음말씀 열심히 사용중입니다.',
   };
+}
+
+export default async function ProfilePage({ params }: PageProps) {
+  const userProfile = await getUserProfile(params.id);
 
   return (
     <div className="container mx-auto p-4">
@@ -44,10 +56,15 @@ export default function ProfilePage() {
                 <h2 className="text-lg font-semibold">가입일</h2>
                 <p className="text-gray-600">{userProfile.joinDate}</p>
               </div>
+
+              <div>
+                <h2 className="text-lg font-semibold">사용자 ID</h2>
+                <p className="text-gray-600">{userProfile.id}</p>
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
   );
-}
+} 
