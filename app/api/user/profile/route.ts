@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
+    const authHeader = request.headers.get('Authorization');
     const userId = request.headers.get('X-User-Id');
 
     if (!userId) {
@@ -12,21 +13,37 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // TODO: 실제 데이터베이스에서 사용자 정보를 가져오는 로직으로 대체
-    const userProfile = {
-      id: userId,
-      name: '홍길동',
-      email: 'hong@example.com',
-      joinDate: '2024-01-01',
-      profileImage: '/placeholder-avatar.jpg',
-      bio: '마음말씀 열심히 사용중입니다.',
+    const apiUrl = `https://heartbible.klutche.com/api/user/profile/${userId}`;
+    
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
     };
 
-    return NextResponse.json(userProfile);
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+
+    const response = await fetch(apiUrl, {
+      headers,
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return NextResponse.json(
+          { error: '사용자를 찾을 수 없습니다.' },
+          { status: 404 }
+        );
+      }
+      throw new Error(`API 요청 실패: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
   } catch (error) {
-    console.error('Error in profile API:', error);
+    console.error('프로필 데이터 조회 중 오류 발생:', error);
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다.' },
+      { error: '프로필 데이터를 가져오는데 실패했습니다.' },
       { status: 500 }
     );
   }
