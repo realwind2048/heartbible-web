@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { Card, CardContent } from '../../../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../../components/ui/avatar';
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
 
 interface UserProfile {
   id: string;
@@ -20,15 +19,12 @@ interface PageProps {
 }
 
 async function getUserProfile(userId: string): Promise<UserProfile> {
-  const headersList = headers();
-  const host = headersList.get('host');
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-
   try {
-    const response = await fetch(`${protocol}://${host}/api/user/profile`, {
+    const response = await fetch(`http://localhost:3000/api/user/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'X-User-Id': userId
       },
       cache: 'no-store'
     });
