@@ -1,6 +1,16 @@
 import Image from 'next/image';
 import { Card, CardContent } from '../../../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../../components/ui/avatar';
+import { notFound } from 'next/navigation';
+
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  joinDate: string;
+  profileImage: string;
+  bio: string;
+}
 
 interface PageProps {
   params: {
@@ -8,21 +18,45 @@ interface PageProps {
   };
 }
 
-async function getUserProfile(userId: string) {
-  // TODO: API를 통해 실제 사용자 데이터를 가져오는 로직 구현
-  // 현재는 더미 데이터 반환
-  return {
-    id: userId,
-    name: '홍길동',
-    email: 'hong@example.com',
-    joinDate: '2024-01-01',
-    profileImage: '/placeholder-avatar.jpg',
-    bio: '마음말씀 열심히 사용중입니다.',
-  };
+async function getUserProfile(userId: string): Promise<UserProfile> {
+  try {
+    const response = await fetch(`/api/user/profile/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // NEXT.js에서 기본적으로 캐시를 사용하므로, 실시간 데이터가 필요한 경우 cache: 'no-store' 설정
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        notFound();
+      }
+      throw new Error('Failed to fetch user profile');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  const userProfile = await getUserProfile(params.id);
+  let userProfile: UserProfile;
+  
+  try {
+    userProfile = await getUserProfile(params.id);
+  } catch (error) {
+    // 에러 페이지로 리다이렉트하거나 에러 컴포넌트를 표시할 수 있습니다
+    return (
+      <div className="container mx-auto p-4 text-center">
+        <h1 className="text-2xl font-bold text-red-600">오류가 발생했습니다</h1>
+        <p className="text-gray-600">사용자 정보를 불러오는 중 문제가 발생했습니다.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4">
