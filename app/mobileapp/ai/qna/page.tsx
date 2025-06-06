@@ -83,9 +83,8 @@ export default function AIQnAPage() {
     setMessages(prev => [...prev, userMessage]);
     setQuery('');
     setIsLoading(true);
-
     try {
-      const response = await fetch('/api/ai/qna', {
+      const response = await fetch('/api/ai-chat/ai-chat-v1-create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +101,7 @@ export default function AIQnAPage() {
       if (!response.ok) throw new Error('API 요청 실패');
 
       const data = await response.json();
-      typeAssistantMessage(data.message.content);
+      typeAssistantMessage(data.aiMessage);
 
     } catch (error) {
       console.error('Error:', error);
