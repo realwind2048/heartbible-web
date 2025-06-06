@@ -123,12 +123,12 @@ export default function AIPage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
 
-      <div className="px-4 py-2 bg-yellow-50 border-b border-yellow-200">
-        <div className="flex items-center text-yellow-800">
+      <div className="px-4 py-2 bg-green-50 border-b border-green-200">
+        <div className="flex items-center text-green-800">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-sm">말씀 길잡이 서비스 점검 중입니다. 잠시 후 다시 이용해 주시기 바랍니다.</p>
+          <p className="text-sm">말씀 길잡이 서비스가 정상적으로 복구되었습니다. 기다려 주셔서 감사합니다 🙇‍♂️</p>
         </div>
       </div>
 
