@@ -20,7 +20,7 @@ interface PageProps {
 
 async function getUserProfile(userId: string): Promise<UserProfile> {
   try {
-    const response = await fetch(`http://localhost:3000/api/user/profile`, {
+    const response = await fetch(`/api/user/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -44,11 +44,11 @@ async function getUserProfile(userId: string): Promise<UserProfile> {
 }
 
 export default async function ProfilePage({ params }: PageProps) {
-  const userId = await Promise.resolve(params.id);
+  const { id } = await params;
   let userProfile: UserProfile;
   
   try {
-    userProfile = await getUserProfile(userId);
+    userProfile = await getUserProfile(id);
   } catch (error) {
     return (
       <div className="container mx-auto p-4 text-center">
