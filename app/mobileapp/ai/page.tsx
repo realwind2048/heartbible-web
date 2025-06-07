@@ -123,6 +123,15 @@ export default function AIPage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
 
+      <div className="px-4 py-2 bg-green-50 border-b border-green-200">
+        <div className="flex items-center text-green-800">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-sm">말씀 길잡이 서비스가 정상적으로 복구되었습니다. 기다려 주셔서 감사합니다 🙇‍♂️</p>
+        </div>
+      </div>
+
       {selectedbibleverses && (
         <div className="px-4 py-2">
           <div className="bg-white rounded-lg shadow-sm p-3">
