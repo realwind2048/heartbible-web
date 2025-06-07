@@ -20,6 +20,7 @@ interface PageProps {
 
 async function getUserProfile(userId: string): Promise<UserProfile> {
   try {
+    // TODO Fix url
     const response = await fetch(`/api/user/profile`, {
       method: 'GET',
       headers: {

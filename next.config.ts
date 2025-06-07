@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
       source: '/api/ai/:path*',
       // destination: 'http://localhost:8080/api/ai/:path*' // 로컬서버
       destination: 'https://heartbible.klutche.com/api/ai/:path*' // 실서버
+    },
+    {
+      source: '/api/user/profile',
+      // destination: 'http://localhost:8080/api/user/profile' // 로컬서버
+      destination: 'https://heartbible.klutche.com/api/user/profile' // 실서버
     }
   ],
 };
