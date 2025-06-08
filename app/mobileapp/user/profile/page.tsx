@@ -6,6 +6,7 @@ import { MobileDefaultNavbar } from '../../component/navbar/MobileDefaultNavbar'
 import { Card, CardContent } from '../../../../components/ui/card';
 import { FirebaseTimestamp } from '@/app/types/firebase';
 import { DateUtil } from '@/app/utils/date';
+import { useHandleNavbarBack } from '@/app/hooks/useHandleNavbarBack';
 
 interface UserProfile {
   userId: string;
@@ -26,6 +27,7 @@ export default function ProfilePage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [newName, setNewName] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
+  const handleNavbarBackEvent = useHandleNavbarBack();
 
   useEffect(() => {
     if (webviewToken) {
@@ -138,7 +140,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <MobileDefaultNavbar />
+      <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="flex-1 p-4">
         <Card className="max-w-2xl mx-auto">
           <CardContent className="p-6">
