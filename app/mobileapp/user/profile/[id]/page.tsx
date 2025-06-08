@@ -3,6 +3,7 @@ import { Card, CardContent } from '../../../../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../../../components/ui/avatar';
 import { notFound } from 'next/navigation';
 
+// WIP
 interface UserProfile {
   id: string;
   name: string;
