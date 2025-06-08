@@ -4,14 +4,16 @@ import { useState, useEffect } from 'react';
 import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { MobileDefaultNavbar } from '../../component/navbar/MobileDefaultNavbar';
 import { Card, CardContent } from '../../../../components/ui/card';
+import { FirebaseTimestamp } from '@/app/types/firebase';
+import { DateUtil } from '@/app/utils/date';
 
 interface UserProfile {
   userId: string;
   name: string;
   email: string;
   bio: string;
-  createdAt: string;
-  modifiedAt: string;
+  createdAt: FirebaseTimestamp;
+  modifiedAt: FirebaseTimestamp;
 }
 
 export default function ProfilePage() {
@@ -45,6 +47,7 @@ export default function ProfilePage() {
         }
 
         const data = await response.json();
+        console.log('Profile data:', data.data);
         setProfile(data.data);
         setError(null);
       } catch (error) {
@@ -122,11 +125,7 @@ export default function ProfilePage() {
                 
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h2 className="text-xl font-semibold text-gray-900 mb-2">가입일</h2>
-                  <p className="text-base text-gray-700">{new Date(profile.createdAt).toLocaleDateString('ko-KR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}</p>
+                  <p className="text-base text-gray-700">{DateUtil.formatFirebaseTimestamp(profile.createdAt)}</p>
                 </div>
               </div>
             </div>
