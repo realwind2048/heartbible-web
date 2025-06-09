@@ -100,7 +100,7 @@ export default function ProfilePage() {
       
       // Android 웹뷰에 이벤트 전송
       if (typeof window !== 'undefined' && window.JSBridge && typeof window.JSBridge.eventUserProfileUpdated === 'function') {
-        window.JSBridge.eventUserProfileUpdated();
+        window.JSBridge.eventUserProfileUpdated(updatedProfile.name);
       }
       
       setIsEditModalOpen(false);
