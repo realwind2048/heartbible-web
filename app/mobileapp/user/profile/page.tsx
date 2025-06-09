@@ -55,6 +55,7 @@ export default function ProfilePage() {
         const data = await response.json();
         console.log('Profile data:', data.data);
         setProfile(data.data);
+        
         setError(null);
       } catch (error) {
         console.error('프로필 로딩 실패:', error);
@@ -89,7 +90,19 @@ export default function ProfilePage() {
       if (!data.result) {
         throw new Error(data.message);
       }
-      setProfile(prev => prev ? { ...prev, name: newName.trim(), lastUserNameChangedTime: data.lastUserNameChangedTime } : null);
+      
+      const updatedProfile: UserProfile = {
+        ...profile!,
+        name: newName.trim(),
+        lastUserNameChangedTime: data.lastUserNameChangedTime
+      };
+      setProfile(updatedProfile);
+      
+      // Android 웹뷰에 이벤트 전송
+      if (typeof window !== 'undefined' && window.JSBridge && typeof window.JSBridge.eventUserProfileUpdated === 'function') {
+        window.JSBridge.eventUserProfileUpdated();
+      }
+      
       setIsEditModalOpen(false);
       setNewName('');
     } catch (error) {
