@@ -28,6 +28,7 @@ export default function ProfilePage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [newName, setNewName] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const handleNavbarBackEvent = useHandleNavbarBack();
 
   useEffect(() => {
@@ -73,7 +74,12 @@ export default function ProfilePage() {
     
     setIsUpdating(true);
     setUpdateError(null);
+    setUpdateSuccess(false);
+
     try {
+      // 3초 딜레이 추가
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
       const response = await fetch(`/api/user/profile/name`, {
         method: 'PUT',
         headers: {
@@ -104,8 +110,13 @@ export default function ProfilePage() {
         window.JSBridge.eventUserNameUpdated(updatedProfile.name);
       }
       
-      setIsEditModalOpen(false);
-      setNewName('');
+      setUpdateSuccess(true);
+      setTimeout(() => {
+        setIsEditModalOpen(false);
+        setNewName('');
+        setUpdateSuccess(false);
+      }, 1500);
+
     } catch (error) {
       console.error('이름 변경 실패:', error);
       setUpdateError(error instanceof Error ? error.message : '이름 변경에 실패했습니다');
@@ -211,6 +222,9 @@ export default function ProfilePage() {
               />
               {updateError && (
                 <p className="mt-2 text-sm text-red-600">{updateError}</p>
+              )}
+              {updateSuccess && (
+                <p className="mt-2 text-sm text-green-600">이름이 성공적으로 변경되었습니다!</p>
               )}
             </div>
             <div className="flex justify-end space-x-3">
