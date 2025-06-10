@@ -195,7 +195,7 @@ export default function ProfilePage() {
       {isEditModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-xl font-semibold mb-4">이름 수정</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">이름 수정</h3>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">현재 이름</label>
               <p className="text-gray-900">{profile?.name}</p>
@@ -206,7 +206,7 @@ export default function ProfilePage() {
                 type="text"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg text-gray-900 font-medium"
                 placeholder="새 이름을 입력하세요"
               />
               {updateError && (
