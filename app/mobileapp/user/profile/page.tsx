@@ -163,8 +163,21 @@ export default function ProfilePage() {
             <CardContent className="p-6">
               <div className="flex flex-col items-center space-y-6">
                 <div className="w-full bg-gray-50 p-4 rounded-lg">
+                  {!profile?.lastUserNameChangedTime && (
+                    <div className="mb-4 bg-blue-50 border border-blue-200 rounded-md p-2 flex items-center">
+                      <div className="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-sm text-blue-700">이름은 한 번만 변경 가능합니다</span>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex justify-between items-center mb-2">
                     <h2 className="text-xl font-semibold text-gray-900">이름</h2>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p className="text-2xl font-bold text-gray-900">{profile?.name || '이름 없음'}</p>
                     {!profile?.lastUserNameChangedTime && (
                       <button
                         onClick={() => {
@@ -172,13 +185,15 @@ export default function ProfilePage() {
                           setIsEditModalOpen(true);
                           setUpdateError(null);
                         }}
-                        className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                        className="p-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                        title="이름 수정"
                       >
-                        수정
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
                       </button>
                     )}
                   </div>
-                  <p className="text-2xl font-bold text-gray-900">{profile?.name || '이름 없음'}</p>
                   <div className="mt-4">
                     <h2 className="text-xl font-semibold text-gray-900 mb-2">이메일</h2>
                     <p className="text-lg text-gray-700">{profile?.email || '이메일 없음'}</p>
