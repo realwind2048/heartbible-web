@@ -9,7 +9,7 @@ import { DateUtil } from '@/app/utils/date';
 import { useHandleNavbarBack } from '@/app/hooks/useHandleNavbarBack';
 
 const NAME_MIN_LENGTH = 2;
-const NAME_MAX_LENGTH = 10;
+const NAME_MAX_LENGTH = 12;
 
 interface UserProfile {
   userId: string;
