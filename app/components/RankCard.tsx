@@ -18,28 +18,31 @@ export const rankTitles: Record<RankType, string> = {
   totalPlayCount: '총 재생 횟수'
 };
 
-const formatTime = (milliseconds: number): string => {
-  const totalSeconds = Math.floor(milliseconds / 1000);
-  const days = Math.floor(totalSeconds / (24 * 60 * 60));
-  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
-  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-  const seconds = totalSeconds % 60;
+const formatTimeLeft = (timeLeft: number) => {
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
   if (days > 0) {
     return `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
-  } else {
+  } else if (hours > 0) {
     return `${hours}시간 ${minutes}분 ${seconds}초`;
+  } else if (minutes > 0) {
+    return `${minutes}분 ${seconds}초`;
+  } else {
+    return `${seconds}초`;
   }
 };
 
 const getRankValue = (item: PlayerRank, type: RankType): string => {
   switch (type) {
     case RANK_TYPES.totalPlayTime:
-      return formatTime(item.totalPlayTime);
+      return formatTimeLeft(item.totalPlayTime);
     case RANK_TYPES.totalPlayVerseCount:
       return `${item.totalPlayVerseCount.toLocaleString()}절`;
     case RANK_TYPES.maxPlayTimeAtOnce:
-      return formatTime(item.maxPlayTimeAtOnce);
+      return formatTimeLeft(item.maxPlayTimeAtOnce);
     case RANK_TYPES.maxPlayVerseCountAtOnce:
       return `${item.maxPlayVerseCountAtOnce.toLocaleString()}절`;
     case RANK_TYPES.totalPlayCount:
