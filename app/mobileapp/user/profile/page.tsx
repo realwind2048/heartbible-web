@@ -161,11 +161,6 @@ export default function ProfilePage() {
     }
   };
 
-  const getInitials = (name: string | undefined) => {
-    if (!name) return '?';
-    return name.charAt(0).toUpperCase();
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
