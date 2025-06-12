@@ -8,6 +8,9 @@ import { FirebaseTimestamp } from '@/app/types/firebase';
 import { DateUtil } from '@/app/utils/date';
 import { useHandleNavbarBack } from '@/app/hooks/useHandleNavbarBack';
 
+const NAME_MIN_LENGTH = 2;
+const NAME_MAX_LENGTH = 10;
+
 interface UserProfile {
   userId: string;
   name: string;
@@ -29,6 +32,8 @@ export default function ProfilePage() {
   const [newName, setNewName] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [isNameValid, setIsNameValid] = useState(false);
   const handleNavbarBackEvent = useHandleNavbarBack();
 
   useEffect(() => {
@@ -68,6 +73,37 @@ export default function ProfilePage() {
 
     fetchProfile();
   }, [token]);
+
+  const validateName = (name: string) => {
+    if (name.length < NAME_MIN_LENGTH) {
+      setNameError(`이름은 최소 ${NAME_MIN_LENGTH}자 이상이어야 합니다`);
+      setIsNameValid(false);
+      return false;
+    }
+    if (name.length > NAME_MAX_LENGTH) {
+      setNameError(`이름은 최대 ${NAME_MAX_LENGTH}자까지 입력 가능합니다`);
+      setIsNameValid(false);
+      return false;
+    }
+    setNameError(null);
+    setIsNameValid(true);
+    return true;
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNewName(value);
+    setUpdateError(null);
+    validateName(value);
+  };
+
+  const handleModalClose = () => {
+    setIsEditModalOpen(false);
+    setUpdateError(null);
+    setNameError(null);
+    setIsNameValid(false);
+    setNewName('');
+  };
 
   const handleNameUpdate = async () => {
     if (!token || !newName.trim()) return;
@@ -231,12 +267,15 @@ export default function ProfilePage() {
               <input
                 type="text"
                 value={newName}
-                onChange={(e) => setNewName(e.target.value)}
+                onChange={handleNameChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg text-gray-900 font-medium"
-                placeholder="새 이름을 입력하세요 (2~10자)"
-                maxLength={10}
-                minLength={2}
+                placeholder={`새 이름을 입력하세요 (${NAME_MIN_LENGTH}~${NAME_MAX_LENGTH}자)`}
+                maxLength={NAME_MAX_LENGTH}
+                minLength={NAME_MIN_LENGTH}
               />
+              {nameError && (
+                <p className="mt-2 text-sm text-red-600">{nameError}</p>
+              )}
               {updateError && (
                 <p className="mt-2 text-sm text-red-600">{updateError}</p>
               )}
@@ -246,17 +285,14 @@ export default function ProfilePage() {
             </div>
             <div className="flex justify-end space-x-3">
               <button
-                onClick={() => {
-                  setIsEditModalOpen(false);
-                  setUpdateError(null);
-                }}
+                onClick={handleModalClose}
                 className="px-4 py-2 text-gray-700 bg-gray-100 rounded hover:bg-gray-200 transition-colors"
               >
                 취소
               </button>
               <button
                 onClick={handleNameUpdate}
-                disabled={isUpdating || !newName.trim() || updateSuccess || newName.trim() === profile?.name}
+                disabled={isUpdating || !newName.trim() || updateSuccess || !isNameValid}
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isUpdating ? '저장 중...' : (updateSuccess ? '저장 완료' : '저장')}
