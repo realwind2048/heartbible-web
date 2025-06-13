@@ -21,13 +21,7 @@ const aiFeatures = [
     icon: HelpCircle,
     href: '/mobileapp/ai/qna',
     color: 'bg-green-500',
-  },
-  {
-    title: 'Q&A 내역',
-    description: '이전에 나눈 Q&A 대화를 확인해보세요',
-    icon: History,
-    href: '/mobileapp/ai/qna/history',
-    color: 'bg-orange-500',
+    requiresLogin: false,
   },
   {
     title: '기도문 작성',
@@ -35,6 +29,15 @@ const aiFeatures = [
     icon: PenTool,
     href: '/mobileapp/ai/prayer',
     color: 'bg-indigo-500',
+    requiresLogin: false,
+  },
+  {
+    title: 'Q&A 내역',
+    description: '이전에 나눈 Q&A 대화를 확인해보세요',
+    icon: History,
+    href: '/mobileapp/ai/qna/history',
+    color: 'bg-orange-500',
+    requiresLogin: true,
   },
   {
     title: '기도문 작성 내역',
@@ -42,6 +45,7 @@ const aiFeatures = [
     icon: History,
     href: '/mobileapp/ai/prayer/history',
     color: 'bg-purple-500',
+    requiresLogin: true,
   },
   // {
   //   title: 'AI와 전화',
@@ -101,14 +105,8 @@ export default function AIPage() {
     setShowLoginModal(false);
   };
 
-  const handleFeatureClick = (e: React.MouseEvent, href: string) => {
-    // 로그인이 필요한 기능 목록
-    const loginRequiredFeatures = [
-      '/mobileapp/ai/qna/history',
-      '/mobileapp/ai/prayer/history'
-    ];
-
-    if (!hasToken && loginRequiredFeatures.includes(href)) {
+  const handleFeatureClick = (e: React.MouseEvent, href: string, requiresLogin: boolean) => {
+    if (!hasToken && requiresLogin) {
       e.preventDefault();
       setShowLoginModal(true);
     }
@@ -155,7 +153,7 @@ export default function AIPage() {
             <Link
               key={feature.title}
               href={feature.href}
-              onClick={(e) => handleFeatureClick(e, feature.href)}
+              onClick={(e) => handleFeatureClick(e, feature.href, feature.requiresLogin)}
               className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <div className="p-4 flex items-center space-x-4">
