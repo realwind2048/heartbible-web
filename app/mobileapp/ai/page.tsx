@@ -150,17 +150,6 @@ export default function AIPage() {
       )}
 
       <div className="flex-1 p-4">
-        {!hasToken && (
-          <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
-            <p className="text-center text-gray-700 mb-4">로그인이 필요한 기능이에요.</p>
-            <button
-              onClick={handleLogin}
-              className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
-            >
-              로그인하기
-            </button>
-          </div>
-        )}
         <div className="grid grid-cols-1 gap-4">
           {aiFeatures.map((feature) => (
             <Link
