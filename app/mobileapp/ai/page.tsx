@@ -148,32 +148,71 @@ export default function AIPage() {
       )}
 
       <div className="flex-1 p-4">
-        <div className="grid grid-cols-1 gap-4">
-          {aiFeatures.map((feature) => (
-            <Link
-              key={feature.title}
-              href={feature.href}
-              onClick={(e) => handleFeatureClick(e, feature.href, feature.requiresLogin)}
-              className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-            >
-              <div className="p-4 flex items-center space-x-4">
-                <div className={`${feature.color} p-3 rounded-lg`}>
-                  <feature.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
-                    {feature.requiresLogin && !hasToken && (
-                      <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
-                        로그인 필요
-                      </span>
-                    )}
+        <div className="grid grid-cols-1 gap-6">
+          {/* 기본 기능 섹션 */}
+          <div className="space-y-4">
+            <h3 className="text-base font-semibold text-gray-800 mb-2 px-1">AI 기능</h3>
+            {aiFeatures.filter(feature => !feature.href.includes('/history')).map((feature) => (
+              <Link
+                key={feature.title}
+                href={feature.href}
+                onClick={(e) => handleFeatureClick(e, feature.href, feature.requiresLogin)}
+                className="block bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100"
+              >
+                <div className="p-5 flex items-center space-x-4">
+                  <div className={`${feature.color} p-3.5 rounded-xl shadow-sm`}>
+                    <feature.icon className="w-6 h-6 text-white" />
                   </div>
-                  <p className="text-sm text-gray-600">{feature.description}</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                      {feature.requiresLogin && !hasToken && (
+                        <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">
+                          로그인 필요
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
+
+          {/* 내역 섹션 */}
+          <div className="mt-2">
+            <div className="flex items-center gap-2 mb-3 px-1">
+              <h3 className="text-base font-semibold text-gray-800">내역</h3>
+              <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent"></div>
+            </div>
+            <div className="space-y-4">
+              {aiFeatures.filter(feature => feature.href.includes('/history')).map((feature) => (
+                <Link
+                  key={feature.title}
+                  href={feature.href}
+                  onClick={(e) => handleFeatureClick(e, feature.href, feature.requiresLogin)}
+                  className="block bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100"
+                >
+                  <div className="p-5 flex items-center space-x-4">
+                    <div className={`${feature.color} p-3.5 rounded-xl shadow-sm`}>
+                      <feature.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                        {feature.requiresLogin && !hasToken && (
+                          <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">
+                            로그인 필요
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
