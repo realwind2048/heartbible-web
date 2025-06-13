@@ -101,8 +101,14 @@ export default function AIPage() {
     setShowLoginModal(false);
   };
 
-  const handleFeatureClick = (e: React.MouseEvent) => {
-    if (!hasToken) {
+  const handleFeatureClick = (e: React.MouseEvent, href: string) => {
+    // 로그인이 필요한 기능 목록
+    const loginRequiredFeatures = [
+      '/mobileapp/ai/qna/history',
+      '/mobileapp/ai/prayer/history'
+    ];
+
+    if (!hasToken && loginRequiredFeatures.includes(href)) {
       e.preventDefault();
       setShowLoginModal(true);
     }
@@ -160,7 +166,7 @@ export default function AIPage() {
             <Link
               key={feature.title}
               href={feature.href}
-              onClick={handleFeatureClick}
+              onClick={(e) => handleFeatureClick(e, feature.href)}
               className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <div className="p-4 flex items-center space-x-4">
