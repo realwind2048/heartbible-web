@@ -24,12 +24,6 @@ export default function AIPrayerPage() {
 
   const handleSubmit = async () => {
     console.log('handleSubmit');
-    if (!token) {
-      alert('로그인이 필요합니다.');
-      console.log('token 없음');
-      return;
-    }
-
     if (!prayerContent.trim()) {
       alert('기도 내용을 입력해주세요.');
       console.log('기도 내용 없음');
@@ -44,7 +38,7 @@ export default function AIPrayerPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          ...(token && { 'Authorization': `Bearer ${token}` }),
         },
         body: JSON.stringify({
           content: prayerContent,
