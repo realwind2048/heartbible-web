@@ -161,7 +161,14 @@ export default function AIPage() {
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                    {feature.requiresLogin && !hasToken && (
+                      <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
+                        로그인 필요
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-gray-600">{feature.description}</p>
                 </div>
               </div>
