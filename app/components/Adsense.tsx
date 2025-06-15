@@ -31,6 +31,17 @@ export default function Adsense({
   adid,
   shouldShowAd = true
 }: AdsenseProps) {
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production' && shouldShowAd && (!adid || !TEST_DEVICE_IDS.includes(adid))) {
+      try {
+        // 광고 스크립트 실행
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error('AdSense Error:', e);
+      }
+    }
+  }, [adid, shouldShowAd]);
+
   if (process.env.NODE_ENV !== 'production') {
     return null;
   }
@@ -50,15 +61,6 @@ export default function Adsense({
       </div>
     );
   }
-
-  useEffect(() => {
-    try {
-      // 광고 스크립트 실행
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error('AdSense Error:', e);
-    }
-  }, []);
 
   return (
     <div className={`adsense-container ${className}`}>
