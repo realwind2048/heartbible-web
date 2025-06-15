@@ -33,7 +33,7 @@ export default function AIQnAPage() {
     }
   }, [verse]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuery(e.target.value);
   };
 
@@ -238,12 +238,23 @@ export default function AIQnAPage() {
       <div className="sticky bottom-0 border-t bg-white p-2 sm:p-4">
         <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto">
           <div className="flex gap-2 sm:gap-4 items-center">
-            <input
+            <textarea
               value={query}
               onChange={handleInputChange}
               placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
-              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
+              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 resize-none overflow-y-auto min-h-[40px] max-h-[120px]"
               disabled={isTyping}
+              rows={1}
+              style={{
+                height: 'auto',
+                minHeight: '40px',
+                maxHeight: '120px'
+              }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = 'auto';
+                target.style.height = `${Math.min(target.scrollHeight, 120)}px`;
+              }}
             />
             <button
               type="submit"
