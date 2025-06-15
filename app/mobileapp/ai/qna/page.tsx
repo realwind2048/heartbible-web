@@ -25,6 +25,7 @@ export default function AIQnAPage() {
   const [showGuide, setShowGuide] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(!!verse);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
@@ -83,9 +84,8 @@ export default function AIQnAPage() {
     setMessages(prev => [...prev, userMessage]);
     setQuery('');
     // textarea 높이 초기화
-    const textarea = e.currentTarget.querySelector('textarea');
-    if (textarea) {
-      textarea.style.height = '40px';
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '40px';
     }
     setIsLoading(true);
     try {
@@ -95,7 +95,7 @@ export default function AIQnAPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          token: webviewToken,
+          ...(webviewToken && { token: webviewToken }),
           adid: adid || '',
           lang: lang || 'ko',
           appVersionCode: versioncode || '',
@@ -121,7 +121,7 @@ export default function AIQnAPage() {
   }, [query, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setQuery, setIsLoading]);
 
   useEffect(() => {
-    if (verse && !initialQuerySent.current && webviewToken) {
+    if (verse && !initialQuerySent.current) {
       initialQuerySent.current = true;
       const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent);
@@ -244,6 +244,7 @@ export default function AIQnAPage() {
         <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto">
           <div className="flex gap-2 sm:gap-4 items-center">
             <textarea
+              ref={textareaRef}
               value={query}
               onChange={handleInputChange}
               placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
