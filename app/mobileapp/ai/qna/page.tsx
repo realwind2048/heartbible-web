@@ -174,7 +174,7 @@ export default function AIQnAPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid, isParamsLoaded]);
+  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid, isParamsLoaded, lang, versioncode]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
