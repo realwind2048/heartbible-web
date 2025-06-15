@@ -82,6 +82,11 @@ export default function AIQnAPage() {
 
     setMessages(prev => [...prev, userMessage]);
     setQuery('');
+    // textarea 높이 초기화
+    const textarea = e.currentTarget.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = '40px';
+    }
     setIsLoading(true);
     try {
       const response = await fetch('/api/ai-chat/ai-chat-v1-create', {
@@ -242,7 +247,7 @@ export default function AIQnAPage() {
               value={query}
               onChange={handleInputChange}
               placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
-              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 resize-none overflow-y-auto min-h-[40px] max-h-[120px]"
+              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 resize-none overflow-y-auto min-h-[40px] max-h-[120px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full"
               disabled={isTyping}
               rows={1}
               style={{
