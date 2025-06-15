@@ -15,9 +15,10 @@ interface Message {
 export default function AIQnAPage() {
   const searchParams = useSearchParams();
   const verse = searchParams.get('verse');
-  const [query, setQuery] = useState(verse ? `${verse}에 대해 설명해주세요.` : '');
+  const [query, setQuery] = useState('');
   const initialQuerySent = useRef(false);
   const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
+  const [isParamsLoaded, setIsParamsLoaded] = useState(false);
   
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,10 +30,25 @@ export default function AIQnAPage() {
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
-    if (verse) {
-      setQuery(`${verse}에 대해 설명해주세요.`);
-    }
-  }, [verse]);
+    // 모든 필요한 파라미터들이 준비되었는지 확인
+    const checkParams = () => {
+      // 실제 값이 있는지 확인 (undefined나 빈 문자열이 아닌지)
+      const hasValidParams = Boolean(adid) && Boolean(lang) && Boolean(versioncode);
+      
+      if (hasValidParams) {
+        console.log('Params loaded with values:', { adid, lang, versioncode });
+        setIsParamsLoaded(true);
+        // 파라미터가 로드된 후에 verse 값 설정
+        if (verse) {
+          setQuery(`${verse}에 대해 설명해주세요.`);
+        }
+      } else {
+        console.log('Waiting for params to be loaded...', { adid, lang, versioncode });
+      }
+    };
+    
+    checkParams();
+  }, [adid, lang, versioncode, verse]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuery(e.target.value);
@@ -121,7 +137,8 @@ export default function AIQnAPage() {
   }, [query, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setQuery, setIsLoading]);
 
   useEffect(() => {
-    if (verse && !initialQuerySent.current) {
+    if (verse && !initialQuerySent.current && isParamsLoaded) {
+      console.log('Sending initial query with params:', { adid, lang, versioncode });
       initialQuerySent.current = true;
       const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent);
@@ -157,7 +174,7 @@ export default function AIQnAPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid]);
+  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid, isParamsLoaded]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
