@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { Card, CardContent } from '../../../../../components/ui/card';
 import { DateUtil } from '@/app/utils/date';
 import { FirebaseTimestamp } from '@/app/types/firebase';
+import { MobileDefaultNavbar } from '../../../component/navbar/MobileDefaultNavbar';
+import { useHandleNavbarBack } from '@/app/hooks/useHandleNavbarBack';
 
 interface UserProfile {
   userId: string;
@@ -18,6 +20,7 @@ interface UserProfile {
 export default function ProfileViewPage() {
   const params = useParams();
   const id = params.id as string;
+  const handleNavbarBackEvent = useHandleNavbarBack();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +60,7 @@ export default function ProfileViewPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
+      <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
       <div className="flex-1 p-4">
         {isLoading ? (
           <div className="flex-1 flex items-center justify-center">
