@@ -15,9 +15,10 @@ interface Message {
 export default function AIQnAPage() {
   const searchParams = useSearchParams();
   const verse = searchParams.get('verse');
-  const [query, setQuery] = useState(verse ? `${verse}에 대해 설명해주세요.` : '');
+  const [query, setQuery] = useState('');
   const initialQuerySent = useRef(false);
   const { token: webviewToken, adid, lang, versioncode } = useWebviewParams();
+  const [isParamsLoaded, setIsParamsLoaded] = useState(false);
   
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,15 +26,31 @@ export default function AIQnAPage() {
   const [showGuide, setShowGuide] = useState(false);
   const [hasShownWelcome, setHasShownWelcome] = useState(!!verse);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeText = `안녕하세요! 저는 성경 말씀을 이해하는 데 도움을 드리는 AI 말씀 길잡이입니다. 성경 말씀에 대해 궁금하신 점이 있다면 언제든 물어보세요!`;
 
   useEffect(() => {
-    if (verse) {
-      setQuery(`${verse}에 대해 설명해주세요.`);
-    }
-  }, [verse]);
+    // 모든 필요한 파라미터들이 준비되었는지 확인
+    const checkParams = () => {
+      // 실제 값이 있는지 확인 (undefined나 빈 문자열이 아닌지)
+      const hasValidParams = Boolean(adid) && Boolean(lang) && Boolean(versioncode);
+      
+      if (hasValidParams) {
+        console.log('Params loaded with values:', { adid, lang, versioncode });
+        setIsParamsLoaded(true);
+        // 파라미터가 로드된 후에 verse 값 설정
+        if (verse) {
+          setQuery(`${verse}에 대해 설명해주세요.`);
+        }
+      } else {
+        console.log('Waiting for params to be loaded...', { adid, lang, versioncode });
+      }
+    };
+    
+    checkParams();
+  }, [adid, lang, versioncode, verse]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuery(e.target.value);
   };
 
@@ -82,6 +99,10 @@ export default function AIQnAPage() {
 
     setMessages(prev => [...prev, userMessage]);
     setQuery('');
+    // textarea 높이 초기화
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '40px';
+    }
     setIsLoading(true);
     try {
       const response = await fetch('/api/ai-chat/ai-chat-v1-create', {
@@ -90,7 +111,7 @@ export default function AIQnAPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          token: webviewToken,
+          ...(webviewToken && { token: webviewToken }),
           adid: adid || '',
           lang: lang || 'ko',
           appVersionCode: versioncode || '',
@@ -116,7 +137,8 @@ export default function AIQnAPage() {
   }, [query, isLoading, webviewToken, adid, lang, versioncode, typeAssistantMessage, setMessages, setQuery, setIsLoading]);
 
   useEffect(() => {
-    if (verse && !initialQuerySent.current && webviewToken) {
+    if (verse && !initialQuerySent.current && isParamsLoaded) {
+      console.log('Sending initial query with params:', { adid, lang, versioncode });
       initialQuerySent.current = true;
       const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
       handleSubmit(fakeEvent);
@@ -152,7 +174,7 @@ export default function AIQnAPage() {
 
       typeMessage();
     }
-  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid]);
+  }, [messages.length, hasShownWelcome, setMessages, query, handleSubmit, welcomeText, webviewToken, verse, adid, isParamsLoaded, lang, versioncode]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -238,12 +260,24 @@ export default function AIQnAPage() {
       <div className="sticky bottom-0 border-t bg-white p-2 sm:p-4">
         <form onSubmit={handleSubmit} className="w-full max-w-4xl mx-auto">
           <div className="flex gap-2 sm:gap-4 items-center">
-            <input
+            <textarea
+              ref={textareaRef}
               value={query}
               onChange={handleInputChange}
               placeholder={isTyping ? "잠시만 기다려주세요..." : "성경 말씀에 대해 물어보세요..."}
-              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
+              className="flex-1 min-w-0 rounded-lg border border-gray-300 px-3 py-2 sm:px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 resize-none overflow-y-auto min-h-[40px] max-h-[120px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full"
               disabled={isTyping}
+              rows={1}
+              style={{
+                height: 'auto',
+                minHeight: '40px',
+                maxHeight: '120px'
+              }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = 'auto';
+                target.style.height = `${Math.min(target.scrollHeight, 120)}px`;
+              }}
             />
             <button
               type="submit"

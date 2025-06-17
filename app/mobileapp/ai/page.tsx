@@ -21,13 +21,7 @@ const aiFeatures = [
     icon: HelpCircle,
     href: '/mobileapp/ai/qna',
     color: 'bg-green-500',
-  },
-  {
-    title: 'Q&A 내역',
-    description: '이전에 나눈 Q&A 대화를 확인해보세요',
-    icon: History,
-    href: '/mobileapp/ai/qna/history',
-    color: 'bg-orange-500',
+    requiresLogin: false,
   },
   {
     title: '기도문 작성',
@@ -35,6 +29,15 @@ const aiFeatures = [
     icon: PenTool,
     href: '/mobileapp/ai/prayer',
     color: 'bg-indigo-500',
+    requiresLogin: false,
+  },
+  {
+    title: 'Q&A 내역',
+    description: '이전에 나눈 Q&A 대화를 확인해보세요',
+    icon: History,
+    href: '/mobileapp/ai/qna/history',
+    color: 'bg-orange-500',
+    requiresLogin: true,
   },
   {
     title: '기도문 작성 내역',
@@ -42,6 +45,7 @@ const aiFeatures = [
     icon: History,
     href: '/mobileapp/ai/prayer/history',
     color: 'bg-purple-500',
+    requiresLogin: true,
   },
   // {
   //   title: 'AI와 전화',
@@ -101,8 +105,8 @@ export default function AIPage() {
     setShowLoginModal(false);
   };
 
-  const handleFeatureClick = (e: React.MouseEvent) => {
-    if (!hasToken) {
+  const handleFeatureClick = (e: React.MouseEvent, href: string, requiresLogin: boolean) => {
+    if (!hasToken && requiresLogin) {
       e.preventDefault();
       setShowLoginModal(true);
     }
@@ -122,15 +126,6 @@ export default function AIPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
-
-      <div className="px-4 py-2 bg-green-50 border-b border-green-200">
-        <div className="flex items-center text-green-800">
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p className="text-sm">말씀 길잡이 서비스가 정상적으로 복구되었습니다. 기다려 주셔서 감사합니다 🙇‍♂️</p>
-        </div>
-      </div>
 
       {selectedbibleverses && (
         <div className="px-4 py-2">
@@ -153,36 +148,71 @@ export default function AIPage() {
       )}
 
       <div className="flex-1 p-4">
-        {!hasToken && (
-          <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
-            <p className="text-center text-gray-700 mb-4">로그인이 필요한 기능이에요.</p>
-            <button
-              onClick={handleLogin}
-              className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
-            >
-              로그인하기
-            </button>
+        <div className="grid grid-cols-1 gap-6">
+          {/* 기본 기능 섹션 */}
+          <div className="space-y-4">
+            <h3 className="text-base font-semibold text-gray-800 mb-2 px-1">AI 기능</h3>
+            {aiFeatures.filter(feature => !feature.href.includes('/history')).map((feature) => (
+              <Link
+                key={feature.title}
+                href={feature.href}
+                onClick={(e) => handleFeatureClick(e, feature.href, feature.requiresLogin)}
+                className="block bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100"
+              >
+                <div className="p-5 flex items-center space-x-4">
+                  <div className={`${feature.color} p-3.5 rounded-xl shadow-sm`}>
+                    <feature.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                      {feature.requiresLogin && !hasToken && (
+                        <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">
+                          로그인 필요
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-        )}
-        <div className="grid grid-cols-1 gap-4">
-          {aiFeatures.map((feature) => (
-            <Link
-              key={feature.title}
-              href={feature.href}
-              onClick={handleFeatureClick}
-              className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-            >
-              <div className="p-4 flex items-center space-x-4">
-                <div className={`${feature.color} p-3 rounded-lg`}>
-                  <feature.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
-                  <p className="text-sm text-gray-600">{feature.description}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
+
+          {/* 내역 섹션 */}
+          <div className="mt-2">
+            <div className="flex items-center gap-2 mb-3 px-1">
+              <h3 className="text-base font-semibold text-gray-800">내역</h3>
+              <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent"></div>
+            </div>
+            <div className="space-y-4">
+              {aiFeatures.filter(feature => feature.href.includes('/history')).map((feature) => (
+                <Link
+                  key={feature.title}
+                  href={feature.href}
+                  onClick={(e) => handleFeatureClick(e, feature.href, feature.requiresLogin)}
+                  className="block bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100"
+                >
+                  <div className="p-5 flex items-center space-x-4">
+                    <div className={`${feature.color} p-3.5 rounded-xl shadow-sm`}>
+                      <feature.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <h2 className="text-lg font-semibold text-gray-800">{feature.title}</h2>
+                        {feature.requiresLogin && !hasToken && (
+                          <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">
+                            로그인 필요
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

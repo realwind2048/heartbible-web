@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from "react";
+
 // 테스트 기기 ID 목록
 const TEST_DEVICE_IDS = [
   'da44ec65-95ce-4df5-8e32-1e8905ca288f', // 애뮬레이터 (memium phone api 34, pc)
@@ -29,6 +31,17 @@ export default function Adsense({
   adid,
   shouldShowAd = true
 }: AdsenseProps) {
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production' && shouldShowAd && (!adid || !TEST_DEVICE_IDS.includes(adid))) {
+      try {
+        // 광고 스크립트 실행
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error('AdSense Error:', e);
+      }
+    }
+  }, [adid, shouldShowAd]);
+
   if (process.env.NODE_ENV !== 'production') {
     return null;
   }
@@ -51,8 +64,6 @@ export default function Adsense({
 
   return (
     <div className={`adsense-container ${className}`}>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1576539061828377"
-        crossOrigin="anonymous"></script>
       <ins
         className="adsbygoogle"
         style={{ display: 'block', ...style }}
@@ -61,9 +72,6 @@ export default function Adsense({
         data-ad-format={format}
         data-full-width-responsive={responsive}
       />
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
     </div>
   );
 }
