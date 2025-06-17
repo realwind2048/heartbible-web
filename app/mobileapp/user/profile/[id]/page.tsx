@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Card, CardContent } from '../../../../../components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '../../../../../components/ui/avatar';
 import { DateUtil } from '@/app/utils/date';
 import { FirebaseTimestamp } from '@/app/types/firebase';
 
@@ -88,15 +87,6 @@ export default function ProfileViewPage() {
             <CardContent className="p-6">
               <div className="flex flex-col items-center space-y-6">
                 <div className="w-full bg-gray-50 p-4 rounded-lg flex flex-col items-center">
-                  <Avatar className="w-24 h-24 mb-4">
-                    <AvatarImage 
-                      src={profile.profileImage || ''} 
-                      alt={profile.name}
-                      width={96}
-                      height={96}
-                    />
-                    <AvatarFallback>{profile.name?.[0] || '?'}</AvatarFallback>
-                  </Avatar>
                   <h2 className="text-xl font-semibold text-gray-900">이름</h2>
                   <p className="text-2xl font-bold text-gray-900">{profile.name || '이름 없음'}</p>
                   <div className="mt-4 w-full">
