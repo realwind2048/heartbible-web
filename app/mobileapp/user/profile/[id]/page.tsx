@@ -89,8 +89,8 @@ export default function ProfileViewPage() {
         ) : (
           <Card className="max-w-2xl mx-auto">
             <CardContent className="p-6">
-              <div className="flex flex-col items-center space-y-6">
-                <div className="w-full bg-gray-50 p-4 rounded-lg flex flex-col items-center">
+              <div className="flex flex-col space-y-6">
+                <div className="w-full bg-gray-50 p-4 rounded-lg flex flex-col">
                   <h2 className="text-xl font-semibold text-gray-900">이름</h2>
                   <p className="text-2xl font-bold text-gray-900">{profile.name || '이름 없음'}</p>
                   <div className="mt-4 w-full">
