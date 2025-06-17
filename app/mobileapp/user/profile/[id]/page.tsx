@@ -93,10 +93,6 @@ export default function ProfileViewPage() {
                 <div className="w-full bg-gray-50 p-4 rounded-lg flex flex-col">
                   <h2 className="text-xl font-semibold text-gray-900">이름</h2>
                   <p className="text-2xl font-bold text-gray-900">{profile.name || '이름 없음'}</p>
-                  <div className="mt-4 w-full">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2">이메일</h2>
-                    <p className="text-lg text-gray-700">{profile.email || '이메일 없음'}</p>
-                  </div>
                 </div>
                 <div className="w-full space-y-6">
                   {profile.bio && (
@@ -105,25 +101,6 @@ export default function ProfileViewPage() {
                       <p className="text-base text-gray-700 leading-relaxed">{profile.bio}</p>
                     </div>
                   )}
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2">가입일</h2>
-                    <p className="text-base text-gray-700">
-                      {(() => {
-                        if (!profile.createdAt) return '';
-                        if (typeof profile.createdAt === 'string') {
-                          const date = new Date(profile.createdAt);
-                          return date.toLocaleDateString('ko-KR', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          });
-                        }
-                        return DateUtil.formatFirebaseTimestamp(profile.createdAt);
-                      })()}
-                    </p>
-                  </div>
                 </div>
               </div>
             </CardContent>
