@@ -60,7 +60,7 @@ export default function ProfileViewPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} />
+      <MobileDefaultNavbar onBackClick={handleNavbarBackEvent} title={profile?.name || '프로필'} />
       <div className="flex-1 p-4">
         {isLoading ? (
           <div className="flex-1 flex items-center justify-center">
