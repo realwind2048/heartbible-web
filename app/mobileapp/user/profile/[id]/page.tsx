@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { Card, CardContent } from '../../../../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../../../../components/ui/avatar';
 import { DateUtil } from '@/app/utils/date';
@@ -15,28 +16,24 @@ interface UserProfile {
   profileImage?: string;
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+export default function ProfileViewPage() {
+  const params = useParams();
+  const id = params.id as string;
 
-export default function ProfileViewPage({ params }: PageProps) {
-  const { id } = params;
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!id) return;
     const fetchProfile = async () => {
       setIsLoading(true);
       setFetchError(null);
       try {
-        const response = await fetch(`/api/user/profile`, {
+        const response = await fetch(`/api/user/profile/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'X-User-Id': id,
           },
         });
         if (!response.ok) {
