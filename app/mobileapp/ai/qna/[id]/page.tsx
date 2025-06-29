@@ -6,7 +6,6 @@ import { useWebviewParams } from '@/app/hooks/useWebviewParams';
 import { useRouter, useParams } from 'next/navigation';
 import { QnAHistory } from '@/app/types/firebase';
 import { DateUtil } from '@/app/utils/date';
-import Adsense from '@/app/components/Adsense';
 
 export default function QnADetailPage() {
   const router = useRouter();
@@ -274,20 +273,6 @@ export default function QnADetailPage() {
           </div>
         ) : (
           <>
-            {/* AdSense 배너 */}
-            <div className="mb-6">
-              <Adsense
-                client="ca-pub-1576539061828377"
-                slot="8537003555"
-                style={{ display: 'block' }}
-                format="auto"
-                responsive={true}
-                className="w-full"
-                adid={adid || undefined}
-                shouldShowAd={shouldShowAd}
-              />
-            </div>
-
             <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
               <div>
                 <div className="flex items-center justify-between mb-2">
