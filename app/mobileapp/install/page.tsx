@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '마음말씀 - 앱 설치하기',
     description: descriptionText,
-    url: 'https://heartbible.app/mobileapp/share', // Replace with your actual domain
+    url: 'https://heartbible.app/mobileapp/install', // Replace with your actual domain
     images: [
       {
         url: OG_IMAGE_URL,
