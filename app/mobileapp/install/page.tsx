@@ -1,5 +1,5 @@
 
-import ShareLayout from './components/ShareLayout';
+import InstallLayout from '@/app/mobileapp/install/components/InstallLayout';
 import { Metadata } from 'next';
 import { OG_IMAGE_URL } from '@/libs/constants';
 
@@ -24,15 +24,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SharePage() {
+export default function InstallPage() {
   return (
-    <ShareLayout>
+    <InstallLayout>
       <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
         마음말씀
       </h1>
       <p className="text-base sm:text-lg text-gray-600 mb-8">
         {descriptionText}
       </p>
-    </ShareLayout>
+    </InstallLayout>
   );
 }

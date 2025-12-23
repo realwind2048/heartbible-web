@@ -2,11 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-interface ShareLayoutProps {
+interface InstallLayoutProps {
   children: ReactNode;
 }
 
-export default function ShareLayout({ children }: ShareLayoutProps) {
+export default function InstallLayout({ children }: InstallLayoutProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-800">
       <main className="flex flex-col items-center justify-center w-full flex-1 px-4 sm:px-20 text-center">
