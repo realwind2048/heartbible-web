@@ -21,14 +21,14 @@ export default function ShareLayout({ children }: ShareLayoutProps) {
           />
           {children}
           <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xs mt-8">
-            <Link href="#" passHref className="flex-1">
-                <div className="bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
-                  App Store
-                </div>
-            </Link>
-            <Link href="#" passHref className="flex-1">
+            <Link href="https://play.google.com/store/apps/details?id=com.klutche.heartbible" passHref className="flex-1">
               <div className="bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors">
-                  Google Play
+                Google Play
+              </div>
+            </Link>
+            <Link href="https://apps.apple.com/kr/app/마음말씀/id6755225845" passHref className="flex-1">
+              <div className="bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                App Store
               </div>
             </Link>
           </div>
