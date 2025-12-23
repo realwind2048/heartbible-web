@@ -6,10 +6,10 @@ import { OG_IMAGE_URL } from '@/libs/constants';
 const descriptionText = "매일의 위로와 힘, 당신의 따뜻한 신앙 동반자";
 
 export const metadata: Metadata = {
-  title: '마음말씀 - 공유하기',
+  title: '마음말씀 - 앱 설치하기',
   description: descriptionText,
   openGraph: {
-    title: '마음말씀 - 공유하기',
+    title: '마음말씀 - 앱 설치하기',
     description: descriptionText,
     url: 'https://heartbible.app/mobileapp/share', // Replace with your actual domain
     images: [
