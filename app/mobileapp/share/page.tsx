@@ -1,5 +1,5 @@
 
-import ShareLayout from '@/app/mobileapp/share/components/ShareLayout';
+import ShareLayout from './components/ShareLayout';
 
 export default function SharePage() {
   return (
