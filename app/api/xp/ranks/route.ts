@@ -5,8 +5,8 @@ export async function GET(request: Request) {
     const authHeader = request.headers.get('Authorization');
     
     // XP 랭킹을 가져오는 서버 API URL
-    let apiUrl = 'https://heartbible.klutche.com/api/xp/rank/global';
-    // let apiUrl = 'http://localhost:8080/api/xp/rank/global';
+    const apiUrl = 'https://heartbible.klutche.com/api/xp/rank/global';
+    // const apiUrl = 'http://localhost:8080/api/xp/rank/global';
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
